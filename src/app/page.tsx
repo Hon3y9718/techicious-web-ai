@@ -40,7 +40,7 @@ export default function Home() {
               <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
                 Techicious is your partner in building brilliant, modern web applications. Because tech should be delicious.
               </p>
-              <div className="space-x-4">
+              <div className="flex flex-wrap justify-center gap-2 sm:gap-4">
                 <Link href="/contact">
                   <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">
                     Start Your Project
