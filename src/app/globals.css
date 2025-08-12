@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --background: 270 20% 96%;
+    --background: 0 0% 100%;
     --foreground: 289 10% 20%;
     --card: 0 0% 100%;
     --card-foreground: 289 10% 20%;
@@ -55,5 +55,31 @@
   }
   body {
     @apply bg-background text-foreground;
+    transition: background-color 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
   }
+}
+
+@keyframes fly-up {
+  0% {
+    transform: translateY(100vh) scale(0.5);
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100vh) scale(1.2);
+    opacity: 0;
+  }
+}
+
+.flying-creature {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 50px; /* Adjust size as needed */
+  height: 50px; /* Adjust size as needed */
+  animation: fly-up 3s linear forwards;
+  pointer-events: none;
+  z-index: 9999;
 }

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ThemeToggle } from "../theme/theme-toggle";
 
 const navLinks = [
   { href: "/portfolio", label: "Portfolio" },
@@ -31,7 +32,13 @@ export default function Header() {
         </div>
 
         <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
-          <nav className="hidden md:flex gap-6">
+           <div className="flex-1 md:flex-none">
+            <Link href="/" className="flex items-center md:hidden">
+              <span className="font-bold text-2xl font-headline">Techicious</span>
+            </Link>
+          </div>
+
+          <nav className="hidden md:flex gap-6 items-center">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -44,9 +51,11 @@ export default function Header() {
                 {link.label}
               </Link>
             ))}
+            <ThemeToggle />
           </nav>
 
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center gap-2">
+            <ThemeToggle />
             <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon">
@@ -78,10 +87,6 @@ export default function Header() {
               </SheetContent>
             </Sheet>
           </div>
-
-          <Link href="/" className="flex items-center md:hidden">
-            <span className="font-bold text-2xl font-headline">Techicious</span>
-          </Link>
         </div>
       </div>
     </header>
