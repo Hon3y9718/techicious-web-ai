@@ -38,7 +38,7 @@ export default function Home() {
                 We Serve Delicious Tech
               </h1>
               <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
-                At Techicious, we craft exceptional digital experiences, blending powerful technology with delightful design.
+                Techicious is your partner in building brilliant, modern web applications. Because tech should be delicious.
               </p>
               <div className="space-x-4">
                 <Link href="/contact">
