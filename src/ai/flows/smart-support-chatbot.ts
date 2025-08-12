@@ -1,7 +1,7 @@
 'use server';
 
 /**
- * @fileOverview A smart support chatbot for the CodeCrafters website.
+ * @fileOverview A smart support chatbot for the Techicious website.
  *
  * - smartSupportChatbot - A function that handles the chatbot interaction.
  * - SmartSupportChatbotInput - The input type for the smartSupportChatbot function.
@@ -29,16 +29,16 @@ const prompt = ai.definePrompt({
   name: 'smartSupportChatbotPrompt',
   input: {schema: SmartSupportChatbotInputSchema},
   output: {schema: SmartSupportChatbotOutputSchema},
-  prompt: `You are a smart support chatbot for CodeCrafters, a software development startup.
+  prompt: `You are a smart support chatbot for Techicious, a software development startup.
 
   Your goal is to answer questions about the company's services and expertise.
 
-  Use the following information about CodeCrafters to answer the user's query:
-  - CodeCrafters is a software development startup that specializes in building modern web applications.
-  - CodeCrafters has expertise in NextJS, Firebase, and Genkit.
-  - CodeCrafters offers services such as web development, mobile development, and AI development.
+  Use the following information about Techicious to answer the user's query:
+  - Techicious is a software development startup that specializes in building modern web applications. We serve "Delicious Tech".
+  - Techicious has expertise in NextJS, Firebase, and Genkit.
+  - Techicious offers services such as web development, mobile development, and AI development.
 
-  If the user asks a question that is not related to CodeCrafters, you should politely decline to answer.
+  If the user asks a question that is not related to Techicious, you should politely decline to answer.
 
   Query: {{{query}}}`,
 });

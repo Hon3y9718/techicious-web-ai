@@ -11,7 +11,7 @@ export default function AboutPage() {
         <div className="container px-4 md:px-6 text-center">
           <div className="space-y-4">
             <h1 className="font-headline text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
-              About CodeCrafters
+              About Techicious
             </h1>
             <p className="mx-auto max-w-[700px] text-primary-foreground/80 md:text-xl">
               We are a team of passionate developers, designers, and strategists dedicated to building the future of the web.

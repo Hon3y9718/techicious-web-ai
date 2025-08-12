@@ -13,10 +13,10 @@ export default function Home() {
           <div className="container px-4 md:px-6 text-center">
             <div className="space-y-4">
               <h1 className="font-headline text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl">
-                We Craft Code, You Craft the Future
+                We Serve Delicious Tech
               </h1>
               <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
-                CodeCrafters is your partner in building brilliant, modern web applications. We turn your vision into reality with cutting-edge tech and a passion for perfection.
+                Techicious is your partner in building brilliant, modern web applications. Because tech should be delicious.
               </p>
               <div className="space-x-4">
                 <Link href="/contact">

@@ -27,7 +27,7 @@ export default function Header() {
         <div className="mr-4 hidden md:flex">
           <Link href="/" className="flex items-center space-x-2">
             <Logo className="h-8 w-8 text-primary" />
-            <span className="hidden font-bold sm:inline-block font-headline">CodeCrafters</span>
+            <span className="hidden font-bold sm:inline-block font-headline">Techicious</span>
           </Link>
         </div>
 
@@ -59,7 +59,7 @@ export default function Header() {
                 <div className="px-2 py-6">
                   <Link href="/" className="flex items-center space-x-2 mb-8">
                      <Logo className="h-8 w-8 text-primary" />
-                     <span className="font-bold font-headline">CodeCrafters</span>
+                     <span className="font-bold font-headline">Techicious</span>
                   </Link>
                   <div className="flex flex-col space-y-4">
                     {navLinks.map((link) => (
@@ -83,7 +83,7 @@ export default function Header() {
 
           <Link href="/" className="flex items-center space-x-2 md:hidden">
              <Logo className="h-8 w-8 text-primary" />
-            <span className="font-bold font-headline">CodeCrafters</span>
+            <span className="font-bold font-headline">Techicious</span>
           </Link>
         </div>
       </div>

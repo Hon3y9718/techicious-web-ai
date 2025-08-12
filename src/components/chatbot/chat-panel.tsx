@@ -60,7 +60,7 @@ export default function ChatPanel({ onClose }: ChatPanelProps) {
   
   useEffect(() => {
     setMessages([
-        {who: "bot", message: "Hello! I'm the CodeCrafters support bot. How can I help you today?"}
+        {who: "bot", message: "Hello! I'm the Techicious support bot. How can I help you today?"}
     ]);
   }, []);
 
@@ -69,7 +69,7 @@ export default function ChatPanel({ onClose }: ChatPanelProps) {
       <div className="flex items-center justify-between p-4 border-b">
         <div className="flex items-center gap-2">
             <Logo className="h-8 w-8 text-primary" />
-            <h3 className="text-lg font-headline font-semibold">CodeCrafters Support</h3>
+            <h3 className="text-lg font-headline font-semibold">Techicious Support</h3>
         </div>
         <Button variant="ghost" size="icon" onClick={onClose}>
           <X className="h-4 w-4" />

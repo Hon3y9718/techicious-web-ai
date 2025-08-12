@@ -9,8 +9,8 @@ import ChatWidget from '@/components/chatbot/chat-widget';
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata: Metadata = {
-  title: 'CodeCrafters | Next-Gen Software Solutions',
-  description: 'CodeCrafters is a software development startup specializing in building modern web applications with NextJS, Firebase, and Genkit.',
+  title: 'Techicious | Delicious Tech Solutions',
+  description: 'Techicious is a software development startup specializing in building modern web applications with NextJS, Firebase, and Genkit.',
 };
 
 export default function RootLayout({

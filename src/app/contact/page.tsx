@@ -49,7 +49,7 @@ export default function ContactPage() {
                     </div>
                      <div className="flex items-center gap-4">
                         <Mail className="h-6 w-6 text-primary" />
-                        <span className="text-muted-foreground">hello@codecrafters.com</span>
+                        <span className="text-muted-foreground">hello@techicious.com</span>
                     </div>
                      <div className="flex items-center gap-4">
                         <MapPin className="h-6 w-6 text-primary" />

@@ -11,10 +11,10 @@ export default function Footer() {
           <div className="space-y-4">
             <Link href="/" className="flex items-center space-x-2">
               <Logo className="h-8 w-8 text-primary" />
-              <span className="text-xl font-bold font-headline">CodeCrafters</span>
+              <span className="text-xl font-bold font-headline">Techicious</span>
             </Link>
             <p className="text-sm text-muted-foreground">
-              We Craft Code, You Craft the Future.
+              We serve Delicious Tech.
             </p>
             <div className="flex space-x-2">
                 <Button variant="ghost" size="icon" asChild>
@@ -55,7 +55,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="mt-8 border-t pt-4 text-center text-sm text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} CodeCrafters. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Techicious. All rights reserved.</p>
         </div>
       </div>
     </footer>
