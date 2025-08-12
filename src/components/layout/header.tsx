@@ -10,9 +10,9 @@ import { cn } from "@/lib/utils";
 import { ThemeToggle } from "../theme/theme-toggle";
 
 const navLinks = [
-  { href: "/portfolio", label: "Portfolio" },
-  { href: "/products", label: "Products" },
-  { href: "/blog", label: "Resources" },
+  // { href: "/portfolio", label: "Portfolio" },
+  // { href: "/products", label: "Products" },
+  // { href: "/blog", label: "Resources" },
   { href: "/about", label: "About" },
   { href: "/careers", label: "Careers" },
   { href: "/contact", label: "Contact" },
