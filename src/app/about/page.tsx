@@ -7,7 +7,7 @@ import { CheckCircle } from "lucide-react";
 export default function AboutPage() {
   return (
     <>
-      <section className="w-full py-20 md:py-32 lg:py-40 bg-primary text-primary-foreground">
+      <section className="w-full py-20 md:py-32 lg:py-40 bg-secondary text-primary-foreground">
         <div className="container px-4 md:px-6 text-center">
           <div className="space-y-4">
             <h1 className="font-headline text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
@@ -62,7 +62,7 @@ export default function AboutPage() {
         </div>
       </section>
       
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-secondary">
+      {/* <section className="w-full py-12 md:py-24 lg:py-32 bg-secondary">
         <div className="container px-4 md:px-6">
           <div className="space-y-4 text-center mb-12">
             <h2 className="text-3xl font-bold font-headline tracking-tighter sm:text-4xl md:text-5xl">Meet the Team</h2>
@@ -88,7 +88,7 @@ export default function AboutPage() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
     </>
   );
 }

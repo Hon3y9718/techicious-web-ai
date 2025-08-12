@@ -10,9 +10,9 @@ import { cn } from "@/lib/utils";
 import { ThemeToggle } from "../theme/theme-toggle";
 
 const navLinks = [
-  { href: "/portfolio", label: "Portfolio" },
-  { href: "/products", label: "Products" },
-  { href: "/blog", label: "Resources" },
+  // { href: "/portfolio", label: "Portfolio" },
+  // { href: "/products", label: "Products" },
+  // { href: "/blog", label: "Resources" },
   { href: "/about", label: "About" },
   { href: "/careers", label: "Careers" },
   { href: "/contact", label: "Contact" },
@@ -31,31 +31,7 @@ export default function Header() {
           </Link>
         </div>
 
-        <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
-           <div className="flex-1 md:flex-none">
-            <Link href="/" className="flex items-center md:hidden">
-              <span className="font-bold text-2xl font-headline">Techicious</span>
-            </Link>
-          </div>
-
-          <nav className="hidden md:flex gap-6 items-center">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={cn(
-                    "text-sm font-medium transition-colors hover:text-primary",
-                    pathname === link.href ? "text-primary" : "text-muted-foreground"
-                )}
-              >
-                {link.label}
-              </Link>
-            ))}
-            <ThemeToggle />
-          </nav>
-
-          <div className="md:hidden flex items-center gap-2">
-            <ThemeToggle />
+        <div className="flex w-full items-center justify-between md:hidden">
             <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon">
@@ -86,8 +62,29 @@ export default function Header() {
                 </div>
               </SheetContent>
             </Sheet>
-          </div>
+          
+            <Link href="/" className="flex items-center">
+              <span className="font-bold text-2xl font-headline">Techicious</span>
+            </Link>
+
+            <ThemeToggle />
         </div>
+
+        <nav className="hidden md:flex flex-1 justify-end items-center gap-6">
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={cn(
+                  "text-sm font-medium transition-colors hover:text-primary",
+                  pathname === link.href ? "text-primary" : "text-muted-foreground"
+              )}
+            >
+              {link.label}
+            </Link>
+          ))}
+          <ThemeToggle />
+        </nav>
       </div>
     </header>
   );

@@ -21,7 +21,7 @@ export default function ContactPage() {
 
   return (
     <>
-      <section className="w-full py-20 md:py-32 lg:py-40 bg-primary text-primary-foreground">
+      <section className="w-full py-20 md:py-32 lg:py-40 bg-secondary text-primary-foreground">
         <div className="container px-4 md:px-6 text-center">
           <div className="space-y-4">
             <h1 className="font-headline text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
