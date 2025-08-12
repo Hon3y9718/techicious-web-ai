@@ -109,7 +109,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="ai-capabilities" className="w-full py-12 md:py-24 lg:py-32 bg-secondary">
+        <section id="ai-capabilities" className="w-full py-12 md:py-24 lg:py-32 bg-secondary/50">
           <div className="container px-4 md:px-6">
             <div className="text-center space-y-4 mb-12">
               <h2 className="text-3xl font-bold font-headline tracking-tighter sm:text-4xl md:text-5xl">Unlock a Smarter Future</h2>
@@ -118,51 +118,45 @@ export default function Home() {
               </p>
             </div>
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-              <div className="group relative overflow-hidden rounded-lg transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl">
-                <Card className="h-full">
-                  <CardHeader className="flex flex-row items-center gap-4">
-                    <div className="bg-primary/10 p-3 rounded-full">
-                      <Bot className="h-8 w-8 text-primary" />
-                    </div>
-                    <CardTitle className="font-headline text-2xl">AI Chatbots</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground">
-                      Engage users with intelligent, 24/7 customer support and lead generation bots.
-                    </p>
-                  </CardContent>
-                </Card>
-              </div>
-              <div className="group relative overflow-hidden rounded-lg transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl">
-                <Card className="h-full">
-                  <CardHeader className="flex flex-row items-center gap-4">
-                    <div className="bg-primary/10 p-3 rounded-full">
-                      <FileText className="h-8 w-8 text-primary" />
-                    </div>
-                    <CardTitle className="font-headline text-2xl">Content Generation</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground">
-                      Automate content creation for blogs, marketing, or product descriptions.
-                    </p>
-                  </CardContent>
-                </Card>
-              </div>
-              <div className="group relative overflow-hidden rounded-lg transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl">
-                <Card className="h-full">
-                  <CardHeader className="flex flex-row items-center gap-4">
-                    <div className="bg-primary/10 p-3 rounded-full">
-                      <Search className="h-8 w-8 text-primary" />
-                    </div>
-                    <CardTitle className="font-headline text-2xl">Intelligent Search</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground">
-                       Implement powerful semantic search to understand user intent, not just keywords.
-                    </p>
-                  </CardContent>
-                </Card>
-              </div>
+              <Card className="group relative overflow-hidden rounded-lg border-2 border-transparent transition-all duration-300 hover:border-accent hover:shadow-2xl hover:-translate-y-2">
+                <CardHeader className="flex flex-row items-center gap-4">
+                  <div className="bg-accent/10 p-3 rounded-full transition-colors duration-300 group-hover:bg-accent">
+                    <Bot className="h-8 w-8 text-accent transition-colors duration-300 group-hover:text-accent-foreground" />
+                  </div>
+                  <CardTitle className="font-headline text-2xl">AI Chatbots</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">
+                    Engage users with intelligent, 24/7 customer support and lead generation bots.
+                  </p>
+                </CardContent>
+              </Card>
+               <Card className="group relative overflow-hidden rounded-lg border-2 border-transparent transition-all duration-300 hover:border-accent hover:shadow-2xl hover:-translate-y-2">
+                <CardHeader className="flex flex-row items-center gap-4">
+                  <div className="bg-accent/10 p-3 rounded-full transition-colors duration-300 group-hover:bg-accent">
+                    <FileText className="h-8 w-8 text-accent transition-colors duration-300 group-hover:text-accent-foreground" />
+                  </div>
+                  <CardTitle className="font-headline text-2xl">Content Generation</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">
+                    Automate content creation for blogs, marketing, or product descriptions.
+                  </p>
+                </CardContent>
+              </Card>
+               <Card className="group relative overflow-hidden rounded-lg border-2 border-transparent transition-all duration-300 hover:border-accent hover:shadow-2xl hover:-translate-y-2">
+                <CardHeader className="flex flex-row items-center gap-4">
+                  <div className="bg-accent/10 p-3 rounded-full transition-colors duration-300 group-hover:bg-accent">
+                    <Search className="h-8 w-8 text-accent transition-colors duration-300 group-hover:text-accent-foreground" />
+                  </div>
+                  <CardTitle className="font-headline text-2xl">Intelligent Search</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">
+                     Implement powerful semantic search to understand user intent, not just keywords.
+                  </p>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </section>
