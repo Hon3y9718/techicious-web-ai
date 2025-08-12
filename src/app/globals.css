@@ -55,5 +55,57 @@
   }
   body {
     @apply bg-background text-foreground;
+    transition: background-color 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  }
+
+  .flying-creature {
+    position: absolute;
+    bottom: -50px;
+    animation: fly-up 4s linear forwards;
+    width: 24px;
+    height: 24px;
+  }
+  
+  .flying-creature.bat {
+    animation-name: fly-up, bat-swoop;
+    animation-duration: 4s, 0.5s;
+    animation-timing-function: linear, ease-in-out;
+    animation-iteration-count: 1, infinite;
+    animation-direction: normal, alternate;
+  }
+
+  @keyframes fly-up {
+    from {
+      transform: translateY(0) scale(var(--scale, 1));
+    }
+    to {
+      transform: translateY(-120vh) scale(var(--scale, 1));
+    }
+  }
+
+  @keyframes bat-swoop {
+    from {
+        transform: translateX(-5px);
+    }
+    to {
+        transform: translateX(5px);
+    }
+  }
+  
+  .flying-creature.bird {
+     animation-name: fly-up, bird-flap;
+     animation-duration: 4s, 0.3s;
+     animation-timing-function: linear, ease-in-out;
+     animation-iteration-count: 1, infinite;
+     animation-direction: normal, alternate;
+  }
+  
+  @keyframes bird-flap {
+      from {
+        transform: translateY(-3px) rotate(5deg);
+      }
+      to {
+        transform: translateY(3px) rotate(-5deg);
+      }
   }
 }
