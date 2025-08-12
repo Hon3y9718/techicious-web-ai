@@ -133,7 +133,7 @@ export default function Home() {
               </ul>
             </div>
             <div className="relative flex h-full min-h-[400px] w-full items-center justify-center overflow-hidden rounded-xl">
-              <div className="animate-wiggle">
+              <div>
                 <div className="flex justify-center items-center gap-2">
                   {[...techLogos].slice(0, 3).map((logo) => (
                     <div key={logo.alt} className="w-20 h-20 bg-background/50 rounded-full flex items-center justify-center m-1 transform transition-transform duration-300 hover:scale-110">
