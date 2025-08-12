@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const techLogos = [
-    { src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-wordmark.svg", alt: "AWS" },
+    { src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg", alt: "AWS" },
     { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg", alt: "Flutter" },
     { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg", alt: "Android" },
     { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apple/apple-original.svg", alt: "iOS" },
@@ -109,7 +109,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="ai-capabilities" className="w-full py-12 md:py-24 lg:py-32 bg-secondary/50">
+        <section id="ai-capabilities" className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br from-primary/10 to-background">
           <div className="container px-4 md:px-6">
             <div className="text-center space-y-4 mb-12">
               <h2 className="text-3xl font-bold font-headline tracking-tighter sm:text-4xl md:text-5xl">Our AI Capabilities</h2>
@@ -120,8 +120,8 @@ export default function Home() {
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
               <Card>
                 <CardHeader className="flex flex-row items-center gap-4">
-                  <div className="bg-accent/10 p-3 rounded-full">
-                    <Bot className="h-8 w-8 text-accent" />
+                  <div className="bg-primary/10 p-3 rounded-full">
+                    <Bot className="h-8 w-8 text-primary" />
                   </div>
                   <CardTitle className="font-headline text-2xl">AI Chatbots</CardTitle>
                 </CardHeader>
@@ -133,8 +133,8 @@ export default function Home() {
               </Card>
                <Card>
                 <CardHeader className="flex flex-row items-center gap-4">
-                  <div className="bg-accent/10 p-3 rounded-full">
-                    <FileText className="h-8 w-8 text-accent" />
+                  <div className="bg-primary/10 p-3 rounded-full">
+                    <FileText className="h-8 w-8 text-primary" />
                   </div>
                   <CardTitle className="font-headline text-2xl">Content Generation</CardTitle>
                 </CardHeader>
@@ -146,8 +146,8 @@ export default function Home() {
               </Card>
                <Card>
                 <CardHeader className="flex flex-row items-center gap-4">
-                  <div className="bg-accent/10 p-3 rounded-full">
-                    <Search className="h-8 w-8 text-accent" />
+                  <div className="bg-primary/10 p-3 rounded-full">
+                    <Search className="h-8 w-8 text-primary" />
                   </div>
                   <CardTitle className="font-headline text-2xl">Intelligent Search</CardTitle>
                 </CardHeader>
