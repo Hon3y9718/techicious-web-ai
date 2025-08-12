@@ -14,6 +14,9 @@ const techLogos = [
     { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg", alt: "Next.js" },
     { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg", alt: "Firebase" },
     { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", alt: "React" },
+    { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg", alt: "Google Cloud" },
+    { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg", alt: "TypeScript" },
+    { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg", alt: "JavaScript" },
 ];
 
 export default function Home() {
@@ -122,26 +125,30 @@ export default function Home() {
                 </li>
               </ul>
             </div>
-            <div className="relative flex h-full min-h-[300px] w-full flex-col items-center justify-center overflow-hidden rounded-xl">
-                 <div
-                    className="w-full inline-flex flex-nowrap overflow-hidden [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)]">
-                    <ul
-                        className="flex items-center justify-center md:justify-start [&_li]:mx-8 [&_img]:max-w-none animate-infinite-scroll">
-                        {techLogos.map((logo) => (
-                          <li key={logo.alt}>
-                            <Image src={logo.src} alt={logo.alt} width={64} height={64} className="h-16 w-16" />
-                          </li>
-                        ))}
-                    </ul>
-                    <ul className="flex items-center justify-center md:justify-start [&_li]:mx-8 [&_img]:max-w-none animate-infinite-scroll"
-                        aria-hidden="true">
-                         {techLogos.map((logo) => (
-                          <li key={logo.alt}>
-                            <Image src={logo.src} alt={logo.alt} width={64} height={64} className="h-16 w-16" />
-                          </li>
-                        ))}
-                    </ul>
+            <div className="relative flex h-full min-h-[300px] w-full items-center justify-center overflow-hidden rounded-xl group/honeycomb">
+              <div className="animate-wiggle [animation-play-state:paused] group-hover/honeycomb:[animation-play-state:running]">
+                <div className="flex justify-center items-center gap-2">
+                  {[...techLogos].slice(0, 3).map((logo) => (
+                    <div key={logo.alt} className="w-20 h-20 bg-background/50 rounded-full flex items-center justify-center m-1 transform transition-transform duration-300 hover:scale-110">
+                      <Image src={logo.src} alt={logo.alt} width={48} height={48} className="h-12 w-12" />
+                    </div>
+                  ))}
                 </div>
+                <div className="flex justify-center items-center gap-2 -mt-6">
+                  {[...techLogos].slice(3, 7).map((logo) => (
+                    <div key={logo.alt} className="w-20 h-20 bg-background/50 rounded-full flex items-center justify-center m-1 transform transition-transform duration-300 hover:scale-110">
+                      <Image src={logo.src} alt={logo.alt} width={48} height={48} className="h-12 w-12" />
+                    </div>
+                  ))}
+                </div>
+                <div className="flex justify-center items-center gap-2 -mt-6">
+                   {[...techLogos].slice(7, 12).map((logo) => (
+                    <div key={logo.alt} className="w-20 h-20 bg-background/50 rounded-full flex items-center justify-center m-1 transform transition-transform duration-300 hover:scale-110">
+                      <Image src={logo.src} alt={logo.alt} width={48} height={48} className="h-12 w-12" />
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </section>
