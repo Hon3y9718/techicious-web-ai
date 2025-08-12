@@ -172,15 +172,15 @@ export default function Home() {
               <ul className="grid gap-4">
                 <li className="flex items-center gap-2">
                   <div className="bg-primary/10 p-2 rounded-full"><Code className="w-4 h-4 text-primary" /></div>
-                  <span className="font-medium">Next.js for performant, server-rendered React applications.</span>
+                  <span className="font-medium">Security and responsibility at the core.</span>
                 </li>
                  <li className="flex items-center gap-2">
                   <div className="bg-primary/10 p-2 rounded-full"><Rocket className="w-4 h-4 text-primary" /></div>
-                  <span className="font-medium">Firebase for scalable backends, databases, and authentication.</span>
+                  <span className="font-medium">Blazing fast from idea to launch.</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <div className="bg-primary/10 p-2 rounded-full"><Bot className="w-4 h-4 text-primary" /></div>
-                  <span className="font-medium">Genkit for building and deploying production-ready AI flows.</span>
+                  <span className="font-medium">Efficiency powered by AI.</span>
                 </li>
               </ul>
             </div>
