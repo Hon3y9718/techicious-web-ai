@@ -4,6 +4,18 @@ import { ArrowRight, Bot, Code, Rocket } from "lucide-react";
 import Image from 'next/image';
 import Link from 'next/link';
 
+const techLogos = [
+    { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg", alt: "AWS" },
+    { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg", alt: "Flutter" },
+    { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg", alt: "Android" },
+    { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apple/apple-original.svg", alt: "iOS" },
+    { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg", alt: "Python" },
+    { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg", alt: "Node.js" },
+    { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg", alt: "Next.js" },
+    { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg", alt: "Firebase" },
+    { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", alt: "React" },
+];
+
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
@@ -88,7 +100,7 @@ export default function Home() {
         </section>
 
         <section id="expertise" className="w-full py-12 md:py-24 lg:py-32 bg-secondary">
-          <div className="container grid items-center gap-6 px-4 md:px-6 lg:grid-cols-2 lg:gap-10">
+          <div className="container grid items-center gap-12 px-4 md:px-6 lg:grid-cols-2 lg:gap-16">
             <div className="space-y-4">
               <div className="inline-block rounded-lg bg-primary/10 px-3 py-1 text-sm text-primary">Our Expertise</div>
               <h2 className="text-3xl font-bold font-headline tracking-tighter sm:text-4xl md:text-5xl">The Tech We Love</h2>
@@ -110,14 +122,27 @@ export default function Home() {
                 </li>
               </ul>
             </div>
-             <Image
-              src="https://placehold.co/700x550.png"
-              alt="Expertise"
-              width={700}
-              height={550}
-              className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
-              data-ai-hint="abstract code"
-            />
+            <div className="relative flex h-full min-h-[300px] w-full flex-col items-center justify-center overflow-hidden rounded-xl">
+                 <div
+                    className="w-full inline-flex flex-nowrap overflow-hidden [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)]">
+                    <ul
+                        className="flex items-center justify-center md:justify-start [&_li]:mx-8 [&_img]:max-w-none animate-infinite-scroll">
+                        {techLogos.map((logo) => (
+                          <li key={logo.alt}>
+                            <Image src={logo.src} alt={logo.alt} width={64} height={64} className="h-16 w-16" />
+                          </li>
+                        ))}
+                    </ul>
+                    <ul className="flex items-center justify-center md:justify-start [&_li]:mx-8 [&_img]:max-w-none animate-infinite-scroll"
+                        aria-hidden="true">
+                         {techLogos.map((logo) => (
+                          <li key={logo.alt}>
+                            <Image src={logo.src} alt={logo.alt} width={64} height={64} className="h-16 w-16" />
+                          </li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
           </div>
         </section>
 
