@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowRight, Bot, Code, Rocket } from "lucide-react";
+import { ArrowRight, Bot, Code, Cpu, FileText, Rocket, Search } from "lucide-react";
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -60,9 +60,9 @@ export default function Home() {
         <section id="services" className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
             <div className="text-center space-y-4 mb-12">
-              <h2 className="text-3xl font-bold font-headline tracking-tighter sm:text-4xl md:text-5xl">Our Services</h2>
+              <h2 className="text-3xl font-bold font-headline tracking-tighter sm:text-4xl md:text-5xl">Our Core Services</h2>
               <p className="mx-auto max-w-[700px] text-muted-foreground md:text-lg">
-                From concept to deployment, we provide end-to-end solutions.
+                From robust web platforms to intelligent AI, we build solutions that drive results.
               </p>
             </div>
             <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-3">
@@ -71,31 +71,18 @@ export default function Home() {
                   <div className="bg-primary/10 p-3 rounded-full">
                     <Rocket className="h-8 w-8 text-primary" />
                   </div>
-                  <CardTitle className="font-headline text-2xl">Web Development</CardTitle>
+                  <CardTitle className="font-headline text-2xl">Web & Mobile</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground">
-                    Blazing-fast, scalable, and secure web applications built with modern frameworks like Next.js.
+                    Blazing-fast, scalable, and secure applications for web and mobile, built with modern frameworks.
                   </p>
                 </CardContent>
               </Card>
               <Card className="transform transition-transform duration-300 hover:scale-105 hover:shadow-xl">
                 <CardHeader className="flex flex-row items-center gap-4">
                   <div className="bg-primary/10 p-3 rounded-full">
-                     <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-primary" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 4.5h14a1.5 1.5 0 0 1 1.5 1.5v12a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 18V6A1.5 1.5 0 0 1 5 4.5Z"/><path d="M8 10h8"/><path d="M10 14h4"/></svg>
-                  </div>
-                  <CardTitle className="font-headline text-2xl">Mobile Development</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">
-                    Engaging and intuitive mobile experiences for iOS and Android, connecting you with users on the go.
-                  </p>
-                </CardContent>
-              </Card>
-              <Card className="transform transition-transform duration-300 hover:scale-105 hover:shadow-xl">
-                <CardHeader className="flex flex-row items-center gap-4">
-                  <div className="bg-primary/10 p-3 rounded-full">
-                    <Bot className="h-8 w-8 text-primary" />
+                    <Cpu className="h-8 w-8 text-primary" />
                   </div>
                   <CardTitle className="font-headline text-2xl">AI Development</CardTitle>
                 </CardHeader>
@@ -105,11 +92,82 @@ export default function Home() {
                   </p>
                 </CardContent>
               </Card>
+              <Card className="transform transition-transform duration-300 hover:scale-105 hover:shadow-xl">
+                <CardHeader className="flex flex-row items-center gap-4">
+                  <div className="bg-primary/10 p-3 rounded-full">
+                    <Code className="h-8 w-8 text-primary" />
+                  </div>
+                  <CardTitle className="font-headline text-2xl">Full-Stack Solutions</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">
+                    End-to-end development, from concept and design to deployment and maintenance.
+                  </p>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </section>
 
-        <section id="expertise" className="w-full py-12 md:py-24 lg:py-32 bg-secondary">
+        <section id="ai-capabilities" className="w-full py-12 md:py-24 lg:py-32 bg-secondary">
+          <div className="container px-4 md:px-6">
+            <div className="text-center space-y-4 mb-12">
+              <h2 className="text-3xl font-bold font-headline tracking-tighter sm:text-4xl md:text-5xl">Unlock a Smarter Future</h2>
+              <p className="mx-auto max-w-[700px] text-muted-foreground md:text-lg">
+                Integrate intelligent features into your applications. Here's a taste of what we can build with AI.
+              </p>
+            </div>
+            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+              <div className="group relative overflow-hidden rounded-lg transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl">
+                <Card className="h-full">
+                  <CardHeader className="flex flex-row items-center gap-4">
+                    <div className="bg-primary/10 p-3 rounded-full">
+                      <Bot className="h-8 w-8 text-primary" />
+                    </div>
+                    <CardTitle className="font-headline text-2xl">AI Chatbots</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground">
+                      Engage users with intelligent, 24/7 customer support and lead generation bots.
+                    </p>
+                  </CardContent>
+                </Card>
+              </div>
+              <div className="group relative overflow-hidden rounded-lg transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl">
+                <Card className="h-full">
+                  <CardHeader className="flex flex-row items-center gap-4">
+                    <div className="bg-primary/10 p-3 rounded-full">
+                      <FileText className="h-8 w-8 text-primary" />
+                    </div>
+                    <CardTitle className="font-headline text-2xl">Content Generation</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground">
+                      Automate content creation for blogs, marketing, or product descriptions.
+                    </p>
+                  </CardContent>
+                </Card>
+              </div>
+              <div className="group relative overflow-hidden rounded-lg transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl">
+                <Card className="h-full">
+                  <CardHeader className="flex flex-row items-center gap-4">
+                    <div className="bg-primary/10 p-3 rounded-full">
+                      <Search className="h-8 w-8 text-primary" />
+                    </div>
+                    <CardTitle className="font-headline text-2xl">Intelligent Search</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground">
+                       Implement powerful semantic search to understand user intent, not just keywords.
+                    </p>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="expertise" className="w-full py-12 md:py-24 lg:py-32">
           <div className="container grid items-center gap-12 px-4 md:px-6 lg:grid-cols-2 lg:gap-16">
             <div className="space-y-4">
               <div className="inline-block rounded-lg bg-primary/10 px-3 py-1 text-sm text-primary">Our Expertise</div>

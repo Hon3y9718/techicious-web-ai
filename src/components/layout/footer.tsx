@@ -38,9 +38,9 @@ export default function Footer() {
             <div>
               <h4 className="font-semibold font-headline mb-2">Services</h4>
               <ul className="space-y-2 text-sm">
-                <li><Link href="/#services" className="text-muted-foreground hover:text-primary">Web Development</Link></li>
-                <li><Link href="/#services" className="text-muted-foreground hover:text-primary">Mobile Development</Link></li>
-                <li><Link href="/#services" className="text-muted-foreground hover:text-primary">AI Development</Link></li>
+                <li><Link href="/#services" className="text-muted-foreground hover:text-primary">Web & Mobile</Link></li>
+                <li><Link href="/#ai-capabilities" className="text-muted-foreground hover:text-primary">AI Development</Link></li>
+                <li><Link href="/#services" className="text-muted-foreground hover:text-primary">Full-Stack Solutions</Link></li>
               </ul>
             </div>
             <div>
