@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const techLogos = [
-    { src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg", alt: "AWS" },
+    { src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-wordmark.svg", alt: "AWS" },
     { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg", alt: "Flutter" },
     { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg", alt: "Android" },
     { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apple/apple-original.svg", alt: "iOS" },
@@ -71,7 +71,7 @@ export default function Home() {
                   <div className="bg-primary/10 p-3 rounded-full">
                     <Rocket className="h-8 w-8 text-primary" />
                   </div>
-                  <CardTitle className="font-headline text-2xl">Web & Mobile</CardTitle>
+                  <CardTitle className="font-headline text-2xl">Web &amp; Mobile</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground">
@@ -112,16 +112,16 @@ export default function Home() {
         <section id="ai-capabilities" className="w-full py-12 md:py-24 lg:py-32 bg-secondary/50">
           <div className="container px-4 md:px-6">
             <div className="text-center space-y-4 mb-12">
-              <h2 className="text-3xl font-bold font-headline tracking-tighter sm:text-4xl md:text-5xl">Unlock a Smarter Future</h2>
+              <h2 className="text-3xl font-bold font-headline tracking-tighter sm:text-4xl md:text-5xl">Our AI Capabilities</h2>
               <p className="mx-auto max-w-[700px] text-muted-foreground md:text-lg">
                 Integrate intelligent features into your applications. Here's a taste of what we can build with AI.
               </p>
             </div>
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-              <Card className="group relative overflow-hidden rounded-lg border-2 border-transparent transition-all duration-300 hover:border-accent hover:shadow-2xl hover:-translate-y-2">
+              <Card>
                 <CardHeader className="flex flex-row items-center gap-4">
-                  <div className="bg-accent/10 p-3 rounded-full transition-colors duration-300 group-hover:bg-accent">
-                    <Bot className="h-8 w-8 text-accent transition-colors duration-300 group-hover:text-accent-foreground" />
+                  <div className="bg-accent/10 p-3 rounded-full">
+                    <Bot className="h-8 w-8 text-accent" />
                   </div>
                   <CardTitle className="font-headline text-2xl">AI Chatbots</CardTitle>
                 </CardHeader>
@@ -131,10 +131,10 @@ export default function Home() {
                   </p>
                 </CardContent>
               </Card>
-               <Card className="group relative overflow-hidden rounded-lg border-2 border-transparent transition-all duration-300 hover:border-accent hover:shadow-2xl hover:-translate-y-2">
+               <Card>
                 <CardHeader className="flex flex-row items-center gap-4">
-                  <div className="bg-accent/10 p-3 rounded-full transition-colors duration-300 group-hover:bg-accent">
-                    <FileText className="h-8 w-8 text-accent transition-colors duration-300 group-hover:text-accent-foreground" />
+                  <div className="bg-accent/10 p-3 rounded-full">
+                    <FileText className="h-8 w-8 text-accent" />
                   </div>
                   <CardTitle className="font-headline text-2xl">Content Generation</CardTitle>
                 </CardHeader>
@@ -144,10 +144,10 @@ export default function Home() {
                   </p>
                 </CardContent>
               </Card>
-               <Card className="group relative overflow-hidden rounded-lg border-2 border-transparent transition-all duration-300 hover:border-accent hover:shadow-2xl hover:-translate-y-2">
+               <Card>
                 <CardHeader className="flex flex-row items-center gap-4">
-                  <div className="bg-accent/10 p-3 rounded-full transition-colors duration-300 group-hover:bg-accent">
-                    <Search className="h-8 w-8 text-accent transition-colors duration-300 group-hover:text-accent-foreground" />
+                  <div className="bg-accent/10 p-3 rounded-full">
+                    <Search className="h-8 w-8 text-accent" />
                   </div>
                   <CardTitle className="font-headline text-2xl">Intelligent Search</CardTitle>
                 </CardHeader>
