@@ -1,4 +1,4 @@
-'use server';
+"use server";
 
 /**
  * @fileOverview A smart support chatbot for the Techicious website.
@@ -8,49 +8,51 @@
  * - SmartSupportChatbotOutput - The return type for the smartSupportChatbot function.
  */
 
-import {ai} from '@/ai/genkit';
-import {z} from 'genkit';
+import { ai } from "@/ai/genkit";
+import { z } from "genkit";
 
 const SmartSupportChatbotInputSchema = z.object({
-  query: z.string().describe('The user query for the chatbot.'),
+  query: z.string().describe("The user query for the chatbot."),
 });
-export type SmartSupportChatbotInput = z.infer<typeof SmartSupportChatbotInputSchema>;
+export type SmartSupportChatbotInput = z.infer<
+  typeof SmartSupportChatbotInputSchema
+>;
 
 const SmartSupportChatbotOutputSchema = z.object({
-  response: z.string().describe('The response from the chatbot.'),
+  response: z.string().describe("The response from the chatbot."),
 });
-export type SmartSupportChatbotOutput = z.infer<typeof SmartSupportChatbotOutputSchema>;
+export type SmartSupportChatbotOutput = z.infer<
+  typeof SmartSupportChatbotOutputSchema
+>;
 
-export async function smartSupportChatbot(input: SmartSupportChatbotInput): Promise<SmartSupportChatbotOutput> {
+export async function smartSupportChatbot(
+  input: SmartSupportChatbotInput
+): Promise<SmartSupportChatbotOutput> {
   return smartSupportChatbotFlow(input);
 }
 
 const prompt = ai.definePrompt({
-  name: 'smartSupportChatbotPrompt',
-  input: {schema: SmartSupportChatbotInputSchema},
-  output: {schema: SmartSupportChatbotOutputSchema},
-  prompt: `You are a smart support chatbot for Techicious, a software development startup.
+  name: "smartSupportChatbotPrompt",
+  input: { schema: SmartSupportChatbotInputSchema },
+  output: { schema: SmartSupportChatbotOutputSchema },
+  prompt: `You are Techicious Assistant, the smart support chatbot for Techicious — a software development startup serving “Delicious Tech.”
+Your mission is to answer questions about our services, expertise, and technologies.
+We specialize in building modern, high-performance web applications.
+Our core expertise: ERPs, Social Apps, and Banking Systems.
+Our services include: Web Development, Mobile Development, and AI Development.
+If a question is outside the scope of Techicious, politely let the user know. Then, invite them to share their name, email, and query so that one of our experts can reach out promptly with the right answers and solutions.
 
-  Your goal is to answer questions about the company's services and expertise.
-
-  Use the following information about Techicious to answer the user's query:
-  - Techicious is a software development startup that specializes in building modern web applications. We serve "Delicious Tech".
-  - Techicious has expertise in NextJS, Firebase, and Genkit.
-  - Techicious offers services such as web development, mobile development, and AI development.
-
-  If the user asks a question that is not related to Techicious, you should politely decline to answer.
-
-  Query: {{{query}}}`,
+Query: {{{query}}}`,
 });
 
 const smartSupportChatbotFlow = ai.defineFlow(
   {
-    name: 'smartSupportChatbotFlow',
+    name: "smartSupportChatbotFlow",
     inputSchema: SmartSupportChatbotInputSchema,
     outputSchema: SmartSupportChatbotOutputSchema,
   },
-  async input => {
-    const {output} = await prompt(input);
+  async (input) => {
+    const { output } = await prompt(input);
     return output!;
   }
 );
