@@ -17,6 +17,13 @@ const techLogos = [
     { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg", alt: "Google Cloud" },
     { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg", alt: "TypeScript" },
     { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg", alt: "JavaScript" },
+    { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg", alt: "Docker" },
+    { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg", alt: "Kubernetes" },
+    { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg", alt: "HTML5" },
+    { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg", alt: "CSS3" },
+    { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg", alt: "TailwindCSS" },
+    { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg", alt: "Figma" },
+    { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg", alt: "Java" },
 ];
 
 export default function Home() {
@@ -125,8 +132,8 @@ export default function Home() {
                 </li>
               </ul>
             </div>
-            <div className="relative flex h-full min-h-[300px] w-full items-center justify-center overflow-hidden rounded-xl group/honeycomb">
-              <div className="animate-wiggle [animation-play-state:paused] group-hover/honeycomb:[animation-play-state:running]">
+            <div className="relative flex h-full min-h-[400px] w-full items-center justify-center overflow-hidden rounded-xl">
+              <div className="animate-wiggle">
                 <div className="flex justify-center items-center gap-2">
                   {[...techLogos].slice(0, 3).map((logo) => (
                     <div key={logo.alt} className="w-20 h-20 bg-background/50 rounded-full flex items-center justify-center m-1 transform transition-transform duration-300 hover:scale-110">
@@ -143,6 +150,20 @@ export default function Home() {
                 </div>
                 <div className="flex justify-center items-center gap-2 -mt-6">
                    {[...techLogos].slice(7, 12).map((logo) => (
+                    <div key={logo.alt} className="w-20 h-20 bg-background/50 rounded-full flex items-center justify-center m-1 transform transition-transform duration-300 hover:scale-110">
+                      <Image src={logo.src} alt={logo.alt} width={48} height={48} className="h-12 w-12" />
+                    </div>
+                  ))}
+                </div>
+                <div className="flex justify-center items-center gap-2 -mt-6">
+                  {[...techLogos].slice(12, 16).map((logo) => (
+                    <div key={logo.alt} className="w-20 h-20 bg-background/50 rounded-full flex items-center justify-center m-1 transform transition-transform duration-300 hover:scale-110">
+                      <Image src={logo.src} alt={logo.alt} width={48} height={48} className="h-12 w-12" />
+                    </div>
+                  ))}
+                </div>
+                <div className="flex justify-center items-center gap-2 -mt-6">
+                  {[...techLogos].slice(16, 19).map((logo) => (
                     <div key={logo.alt} className="w-20 h-20 bg-background/50 rounded-full flex items-center justify-center m-1 transform transition-transform duration-300 hover:scale-110">
                       <Image src={logo.src} alt={logo.alt} width={48} height={48} className="h-12 w-12" />
                     </div>
