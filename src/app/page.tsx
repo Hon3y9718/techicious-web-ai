@@ -31,7 +31,7 @@ export default function Home() {
     <div className="flex flex-col min-h-screen">
       <main className="flex-1">
         <section className="w-full py-20 md:py-32 lg:py-40 xl:py-48 bg-grid-slate-100/[0.05] dark:bg-grid-slate-900/[0.2] relative">
-          <div className="absolute pointer-events-none inset-0 flex items-center justify-center bg-background [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
+          <div className="absolute pointer-events-none inset-0 flex items-center justify-center bg-background dark:[mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
           <div className="container px-4 md:px-6 text-center">
             <div className="space-y-4">
               <h1 className="font-headline text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl">
