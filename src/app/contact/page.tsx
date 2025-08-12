@@ -21,14 +21,14 @@ export default function ContactPage() {
 
   return (
     <>
-      <section className="w-full py-20 md:py-32 lg:py-40 bg-secondary text-primary-foreground">
+      <section className="w-full py-20 md:py-32 lg:py-40 bg-secondary">
         <div className="container px-4 md:px-6 text-center">
           <div className="space-y-4">
             <h1 className="font-headline text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
               Get in Touch
             </h1>
-            <p className="mx-auto max-w-[700px] text-primary-foreground/80 md:text-xl">
-              Have a project in mind or just want to say hi? We'd love to hear from you.
+            <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
+              Have an idea in mind or just want to say hi? We'd love to hear from you.
             </p>
           </div>
         </div>
@@ -45,16 +45,16 @@ export default function ContactPage() {
                 <div className="space-y-4">
                     <div className="flex items-center gap-4">
                         <Phone className="h-6 w-6 text-primary" />
-                        <span className="text-muted-foreground">+1 (555) 123-4567</span>
+                        <span className="text-muted-foreground">+91 9717468168</span>
                     </div>
                      <div className="flex items-center gap-4">
                         <Mail className="h-6 w-6 text-primary" />
-                        <span className="text-muted-foreground">hello@techicious.com</span>
+                        <span className="text-muted-foreground">sales@techicious.com</span>
                     </div>
-                     <div className="flex items-center gap-4">
+                     {/* <div className="flex items-center gap-4">
                         <MapPin className="h-6 w-6 text-primary" />
-                        <span className="text-muted-foreground">123 Tech Street, Innovation City</span>
-                    </div>
+                        <span className="text-muted-foreground"></span>
+                    </div> */}
                 </div>
             </div>
             <div className="lg:col-span-3">

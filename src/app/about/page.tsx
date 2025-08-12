@@ -7,14 +7,14 @@ import { CheckCircle } from "lucide-react";
 export default function AboutPage() {
   return (
     <>
-      <section className="w-full py-20 md:py-32 lg:py-40 bg-secondary text-primary-foreground">
+      <section className="w-full py-20 md:py-32 lg:py-40 bg-secondary">
         <div className="container px-4 md:px-6 text-center">
           <div className="space-y-4">
             <h1 className="font-headline text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
               About Techicious
             </h1>
-            <p className="mx-auto max-w-[700px] text-primary-foreground/80 md:text-xl">
-              We are a team of passionate developers, designers, and strategists dedicated to building the future of the web.
+            <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
+              We are a team of passionate developers, designers, and strategists dedicated to building the future with your ideas.
             </p>
           </div>
         </div>
@@ -26,10 +26,10 @@ export default function AboutPage() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold font-headline tracking-tighter sm:text-4xl">Our Mission & Vision</h2>
               <p className="text-muted-foreground text-lg">
-                Our mission is to empower businesses by crafting exceptional software that is not only functional but also a joy to use. We believe in the power of technology to solve complex problems and drive progress.
+                Our missions is to help businesses level up with software that's powerful, reliable, and a delight to use. Every project is built on clear processes, creative thinking, and just the right dose of AI—only where it makes things faster, smarter, or more impactful. Our goal? To turn big ideas like yours, into tools that truly work to change the world a little bit.
               </p>
               <p className="text-muted-foreground text-lg">
-                Our vision is to be a leading force in digital innovation, known for our technical excellence, creative solutions, and unwavering commitment to our clients' success.
+                Our vision is to shape the future of digital products with smart design, solid engineering, and a sprinkle of innovation. We blend human insight with AI in a way that's purposeful and effective, building solutions that are fast, secure, and ready for what's next.
               </p>
             </div>
             <div className="space-y-6">
@@ -54,6 +54,13 @@ export default function AboutPage() {
                   <div>
                     <h3 className="font-semibold">Quality</h3>
                     <p className="text-muted-foreground">We are committed to the highest standards of quality, from code to customer service.</p>
+                  </div>
+                </li>
+                <li className="flex items-start gap-4">
+                  <CheckCircle className="h-6 w-6 text-primary mt-1 flex-shrink-0" />
+                  <div>
+                    <h3 className="font-semibold">Speed</h3>
+                    <p className="text-muted-foreground">We move fast without cutting corners, turning ideas into functional products in record time.</p>
                   </div>
                 </li>
               </ul>

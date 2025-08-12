@@ -38,7 +38,7 @@ export default function Home() {
                 We Serve Delicious Tech
               </h1>
               <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
-                Techicious is your partner in building brilliant, modern web applications. Because tech should be delicious.
+                Techicious is your partner in building brilliant, modern, reliable Software. Because tech should be delicious.
               </p>
               <div className="flex flex-wrap justify-center gap-2 sm:gap-4">
                 <Link href="/contact">
@@ -62,7 +62,7 @@ export default function Home() {
             <div className="text-center space-y-4 mb-12">
               <h2 className="text-3xl font-bold font-headline tracking-tighter sm:text-4xl md:text-5xl">Our Core Services</h2>
               <p className="mx-auto max-w-[700px] text-muted-foreground md:text-lg">
-                From robust web platforms to intelligent AI, we build solutions that drive results.
+                From robust web platforms to intelligent AI, we build all that drive results.
               </p>
             </div>
             <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-3">
@@ -97,7 +97,7 @@ export default function Home() {
                   <div className="bg-primary/10 p-3 rounded-full">
                     <Code className="h-8 w-8 text-primary" />
                   </div>
-                  <CardTitle className="font-headline text-2xl">Full-Stack Solutions</CardTitle>
+                  <CardTitle className="font-headline text-2xl">Full-Stack</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground">
@@ -167,7 +167,7 @@ export default function Home() {
               <div className="inline-block rounded-lg bg-primary/10 px-3 py-1 text-sm text-primary">Our Expertise</div>
               <h2 className="text-3xl font-bold font-headline tracking-tighter sm:text-4xl md:text-5xl">The Tech We Love</h2>
               <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                We thrive on the cutting edge. Our expertise in these technologies allows us to build powerful, efficient, and scalable solutions for our clients.
+                We thrive on the cutting edge. Our expertise in these technologies allows us to build powerful, efficient, and scalable systems for our clients.
               </p>
               <ul className="grid gap-4">
                 <li className="flex items-center gap-2">

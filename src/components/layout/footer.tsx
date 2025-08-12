@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Github, Twitter, Linkedin } from "lucide-react";
+import { Github, Twitter, Linkedin, Instagram } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -16,13 +16,16 @@ export default function Footer() {
             </p>
             <div className="flex space-x-2">
                 <Button variant="ghost" size="icon" asChild>
-                    <Link href="https://twitter.com"><Twitter className="h-5 w-5" /></Link>
+                    <Link href="https://x.com/Techicious_" target="_blank" rel="noopener noreferrer"><Twitter className="h-5 w-5" /></Link>
                 </Button>
                 <Button variant="ghost" size="icon" asChild>
-                    <Link href="https://github.com"><Github className="h-5 w-5" /></Link>
+                    <Link href="https://www.instagram.com/techicious_" target="_blank" rel="noopener noreferrer"><Instagram className="h-5 w-5" /></Link>
                 </Button>
                 <Button variant="ghost" size="icon" asChild>
-                    <Link href="https://linkedin.com"><Linkedin className="h-5 w-5" /></Link>
+                    <Link href="https://www.linkedin.com/company/techicious" target="_blank" rel="noopener noreferrer"><Linkedin className="h-5 w-5" /></Link>
+                </Button>
+                <Button variant="ghost" size="icon" asChild>
+                    <Link href="https://github.com/Techicious" target="_blank" rel="noopener noreferrer"><Github className="h-5 w-5" /></Link>
                 </Button>
             </div>
           </div>
