@@ -5,8 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, Code } from "lucide-react";
-import { Logo } from "@/components/icons/logo";
+import { Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
@@ -26,9 +25,8 @@ export default function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center">
         <div className="mr-4 hidden md:flex">
-          <Link href="/" className="flex items-center space-x-2">
-            <Logo className="h-8 w-8 text-primary" />
-            <span className="hidden font-bold sm:inline-block font-headline">Techicious</span>
+          <Link href="/" className="flex items-center">
+            <span className="font-bold text-2xl font-headline">Techicious</span>
           </Link>
         </div>
 
@@ -59,8 +57,7 @@ export default function Header() {
               <SheetContent side="left">
                 <div className="px-2 py-6">
                   <Link href="/" className="flex items-center space-x-2 mb-8">
-                     <Logo className="h-8 w-8 text-primary" />
-                     <span className="font-bold font-headline">Techicious</span>
+                     <span className="font-bold text-2xl font-headline">Techicious</span>
                   </Link>
                   <div className="flex flex-col space-y-4">
                     {navLinks.map((link) => (
@@ -82,9 +79,8 @@ export default function Header() {
             </Sheet>
           </div>
 
-          <Link href="/" className="flex items-center space-x-2 md:hidden">
-             <Logo className="h-8 w-8 text-primary" />
-            <span className="font-bold font-headline">Techicious</span>
+          <Link href="/" className="flex items-center md:hidden">
+            <span className="font-bold text-2xl font-headline">Techicious</span>
           </Link>
         </div>
       </div>

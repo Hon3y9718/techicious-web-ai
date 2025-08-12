@@ -1,4 +1,3 @@
-import { Logo } from "@/components/icons/logo";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Github, Twitter, Linkedin } from "lucide-react";
@@ -10,7 +9,6 @@ export default function Footer() {
         <div className="grid gap-8 md:grid-cols-3">
           <div className="space-y-4">
             <Link href="/" className="flex items-center space-x-2">
-              <Logo className="h-8 w-8 text-primary" />
               <span className="text-xl font-bold font-headline">Techicious</span>
             </Link>
             <p className="text-sm text-muted-foreground">

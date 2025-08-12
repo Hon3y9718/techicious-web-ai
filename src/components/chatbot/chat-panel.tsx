@@ -8,7 +8,6 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { Bot, Send, User, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { Logo } from "../icons/logo";
 
 type Message = {
   who: "user" | "bot";
@@ -68,7 +67,6 @@ export default function ChatPanel({ onClose }: ChatPanelProps) {
     <div className="fixed bottom-20 right-4 w-[calc(100vw-32px)] sm:w-96 bg-card rounded-lg border shadow-2xl z-50 flex flex-col h-[60vh]">
       <div className="flex items-center justify-between p-4 border-b">
         <div className="flex items-center gap-2">
-            <Logo className="h-8 w-8 text-primary" />
             <h3 className="text-lg font-headline font-semibold">Techicious Support</h3>
         </div>
         <Button variant="ghost" size="icon" onClick={onClose}>
