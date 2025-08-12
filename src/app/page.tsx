@@ -38,7 +38,7 @@ export default function Home() {
                 We Serve Delicious Tech
               </h1>
               <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
-                Techicious is your partner in building brilliant, modern web applications. Because tech should be delicious.
+                At Techicious, we craft exceptional digital experiences, blending powerful technology with delightful design.
               </p>
               <div className="space-x-4">
                 <Link href="/contact">
@@ -112,7 +112,7 @@ export default function Home() {
         <section id="ai-capabilities" className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br from-primary/10 to-background">
           <div className="container px-4 md:px-6">
             <div className="text-center space-y-4 mb-12">
-              <h2 className="text-3xl font-bold font-headline tracking-tighter sm:text-4xl md:text-5xl">Unlock the Future with AI</h2>
+              <h2 className="text-3xl font-bold font-headline tracking-tighter sm:text-4xl md:text-5xl">Unlock the Future: Powered by AI</h2>
               <p className="mx-auto max-w-[700px] text-muted-foreground md:text-lg">
                 Integrate intelligent features into your applications. Here's a taste of what we can build with AI.
               </p>

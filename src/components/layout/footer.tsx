@@ -12,7 +12,7 @@ export default function Footer() {
               <span className="text-xl font-bold font-headline">Techicious</span>
             </Link>
             <p className="text-sm text-muted-foreground">
-              We serve Delicious Tech.
+              Crafting exceptional digital experiences.
             </p>
             <div className="flex space-x-2">
                 <Button variant="ghost" size="icon" asChild>
