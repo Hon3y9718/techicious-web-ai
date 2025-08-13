@@ -57,7 +57,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="mt-8 border-t pt-4 text-center text-sm text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} Techicious. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Techicious Innovations Pvt. Ltd. All rights reserved.</p>
         </div>
       </div>
     </footer>
