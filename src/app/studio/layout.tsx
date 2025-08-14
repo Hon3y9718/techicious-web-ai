@@ -29,7 +29,7 @@ export default function StudioLayout({ children }: { children: React.ReactNode }
 
   return (
     <div className="pt-16">
-        <SidebarProvider>
+        <SidebarProvider className="mt-5">
           <Sidebar>
               <SidebarHeader>
                   <div className="flex items-center justify-between">
