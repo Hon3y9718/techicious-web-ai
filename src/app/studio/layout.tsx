@@ -28,26 +28,28 @@ export default function StudioLayout({ children }: { children: React.ReactNode }
   }
 
   return (
-    <SidebarProvider>
-      <Sidebar>
-          <SidebarHeader>
-             <div className="flex items-center justify-between">
-                <Link href="/" className="flex items-center">
-                    <span className="font-bold text-lg font-headline">Techicious</span>
-                </Link>
-                <SidebarTrigger />
-             </div>
-          </SidebarHeader>
-          <SidebarContent>
-            <StudioSidebar />
-          </SidebarContent>
-          <SidebarFooter>
-            <Button variant="ghost" onClick={logout}>Logout</Button>
-          </SidebarFooter>
-      </Sidebar>
-      <SidebarInset>
-        {children}
-      </SidebarInset>
-    </SidebarProvider>
+    <div className="flex h-[calc(100vh-4rem)] mt-16">
+        <SidebarProvider>
+          <Sidebar>
+              <SidebarHeader>
+                 <div className="flex items-center justify-between">
+                    <Link href="/" className="flex items-center">
+                        <span className="font-bold text-lg font-headline">Techicious</span>
+                    </Link>
+                    <SidebarTrigger />
+                 </div>
+              </SidebarHeader>
+              <SidebarContent>
+                <StudioSidebar />
+              </SidebarContent>
+              <SidebarFooter>
+                <Button variant="ghost" onClick={logout}>Logout</Button>
+              </SidebarFooter>
+          </Sidebar>
+          <SidebarInset>
+            {children}
+          </SidebarInset>
+        </SidebarProvider>
+    </div>
   );
 }
