@@ -2,7 +2,7 @@
 "use client";
 
 import { useState, useRef, ChangeEvent, KeyboardEvent } from 'react';
-import { Bold, Italic, Heading2, Link, List, ListOrdered, Quote, Code, ChevronDown, Image as ImageIcon } from 'lucide-react';
+import { Bold, Italic, Heading2, Link as LinkIcon, List, ListOrdered, Quote, Code, ChevronDown, Image as ImageIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -13,6 +13,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible"
+import { Label } from '@/components/ui/label';
 
 
 type Tool = {
@@ -23,6 +24,7 @@ type Tool = {
 
 export default function WritePage() {
   const [title, setTitle] = useState('');
+  const [heroImageUrl, setHeroImageUrl] = useState('');
   const [content, setContent] = useState('');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [isOpen, setIsOpen] = useState(false)
@@ -72,7 +74,7 @@ export default function WritePage() {
     { name: 'code', icon: Code, action: () => applyStyle('`') },
     { name: 'ul', icon: List, action: () => applyList('-') },
     { name: 'ol', icon: ListOrdered, action: () => applyList('1.') },
-    { name: 'link', icon: Link, action: () => {
+    { name: 'link', icon: LinkIcon, action: () => {
         const url = prompt("Enter URL:");
         if (url) applyStyle('[', `](${url})`);
     }},
@@ -104,6 +106,17 @@ export default function WritePage() {
             onChange={(e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
           />
           
+          <div className="space-y-2">
+            <Label htmlFor="hero-image" className="font-semibold">Hero Image URL</Label>
+            <Input
+              id="hero-image"
+              type="text"
+              placeholder="https://.../your-hero-image.png"
+              value={heroImageUrl}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => setHeroImageUrl(e.target.value)}
+            />
+          </div>
+
           <div className="flex items-start gap-4">
              <div className="bg-background border rounded-lg sticky top-20">
                 <div className="p-2 flex flex-col items-center gap-1">
@@ -149,7 +162,7 @@ export default function WritePage() {
                   <CardContent className="pt-6">
                     <div className="bg-secondary p-4 rounded-md overflow-x-auto">
                         <pre className="text-sm whitespace-pre-wrap">
-                            {`---\ntitle: "${title}"\nslug: "${title.toLowerCase().replace(/\s+/g, '-').slice(0, 50)}"\nauthor: "Your Name"\ndate: "${new Date().toISOString().split('T')[0]}"\nsummary: "A brief summary of the post."\n---\n\n${content}`}
+                            {`---\ntitle: "${title}"\nslug: "${title.toLowerCase().replace(/\\s+/g, '-').slice(0, 50)}"\nimage: "${heroImageUrl}"\nauthor: "Your Name"\ndate: "${new Date().toISOString().split('T')[0]}"\nsummary: "A brief summary of the post."\n---\n\n${content}`}
                         </pre>
                     </div>
                      <p className="text-xs text-muted-foreground mt-4">
