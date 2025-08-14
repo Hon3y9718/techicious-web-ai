@@ -5,10 +5,10 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/auth-context";
 import { firestore } from "@/lib/firebase";
-import { collection, getDocs, deleteDoc, doc, orderBy, query } from "firebase/firestore";
+import { collection, getDocs, deleteDoc, doc, updateDoc, serverTimestamp, orderBy, query } from "firebase/firestore";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { MoreHorizontal, PlusCircle, Trash2, Pencil } from "lucide-react";
+import { MoreHorizontal, PlusCircle, Trash2, Pencil, Send } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -29,9 +29,15 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
 
 
-type Project = { id: string; title: string; description: string; };
+type Project = { 
+    id: string; 
+    title: string; 
+    description: string; 
+    status: 'draft' | 'published';
+};
 
 
 export default function ProjectsPage() {
@@ -52,7 +58,7 @@ export default function ProjectsPage() {
       setLoading(true);
       try {
         const projectsCollection = collection(firestore, 'portfolio');
-        const projectsQuery = query(projectsCollection, orderBy('title', 'asc'));
+        const projectsQuery = query(projectsCollection, orderBy('createdAt', 'desc'));
         const projectsSnapshot = await getDocs(projectsQuery);
         const projectsList = projectsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Project));
         setProjects(projectsList);
@@ -84,6 +90,25 @@ export default function ProjectsPage() {
     }
   };
 
+  const handlePublish = async (projectId: string, title: string) => {
+    try {
+      const projectRef = doc(firestore, "portfolio", projectId);
+      await updateDoc(projectRef, {
+        status: 'published',
+        publishedAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+      });
+      toast({
+        title: "Project Published!",
+        description: `"${title}" is now live.`,
+      });
+      fetchData();
+    } catch (error) {
+      console.error("Error publishing project:", error);
+      toast({ title: "Error", description: "Failed to publish project.", variant: "destructive" });
+    }
+  };
+
   if (authLoading || loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -93,15 +118,15 @@ export default function ProjectsPage() {
   }
 
   return (
-     <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
+     <div className="flex-1 w-full space-y-4 p-4 md:p-8 pt-6">
         <div className="flex items-center justify-between">
             <div>
                 <h2 className="text-3xl font-bold tracking-tight">Portfolio Projects</h2>
                 <p className="text-muted-foreground">Showcase your best work.</p>
             </div>
-            {/* <Link href="/studio/projects/new">
-                <Button disabled><PlusCircle className="mr-2 h-4 w-4" />New Project</Button>
-            </Link> */}
+            <Link href="/studio/projects/new">
+                <Button><PlusCircle className="mr-2 h-4 w-4" />New Project</Button>
+            </Link>
         </div>
         <Card>
             <CardContent className="p-0">
@@ -109,6 +134,7 @@ export default function ProjectsPage() {
                     <TableHeader>
                     <TableRow>
                         <TableHead>Title</TableHead>
+                        <TableHead>Status</TableHead>
                         <TableHead>Description</TableHead>
                         <TableHead className="text-right">Actions</TableHead>
                     </TableRow>
@@ -117,14 +143,28 @@ export default function ProjectsPage() {
                     {projects.length > 0 ? projects.map((project) => (
                         <TableRow key={project.id}>
                         <TableCell className="font-medium">{project.title}</TableCell>
-                        <TableCell className="max-w-sm truncate">{project.description}</TableCell>
+                        <TableCell>
+                            <Badge variant={project.status === 'published' ? 'default' : 'secondary'}>
+                                {project.status}
+                            </Badge>
+                        </TableCell>
+                        <TableCell className="max-w-sm truncate text-muted-foreground">{project.description}</TableCell>
                         <TableCell className="text-right">
                             <AlertDialog>
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild><Button variant="ghost" className="h-8 w-8 p-0"><MoreHorizontal className="h-4 w-4" /></Button></DropdownMenuTrigger>
                                 <DropdownMenuContent align="end">
-                                {/* <DropdownMenuItem disabled asChild><Link href={`/studio/projects/edit/${project.id}`}><Pencil className="mr-2 h-4 w-4" />Edit</Link></DropdownMenuItem> */}
-                                <AlertDialogTrigger asChild><DropdownMenuItem className="text-red-500 focus:text-red-500"><Trash2 className="mr-2 h-4 w-4" />Delete</DropdownMenuItem></AlertDialogTrigger>
+                                    <DropdownMenuItem asChild>
+                                        <Link href={`/studio/projects/edit/${project.id}`}>
+                                            <Pencil className="mr-2 h-4 w-4" /> Edit
+                                        </Link>
+                                    </DropdownMenuItem>
+                                    {project.status === 'draft' && (
+                                        <DropdownMenuItem onClick={() => handlePublish(project.id, project.title)}>
+                                            <Send className="mr-2 h-4 w-4" /> Publish
+                                        </DropdownMenuItem>
+                                    )}
+                                    <AlertDialogTrigger asChild><DropdownMenuItem className="text-red-500 focus:text-red-500"><Trash2 className="mr-2 h-4 w-4" />Delete</DropdownMenuItem></AlertDialogTrigger>
                                 </DropdownMenuContent>
                             </DropdownMenu>
                             <AlertDialogContent>
@@ -134,7 +174,7 @@ export default function ProjectsPage() {
                             </AlertDialog>
                         </TableCell>
                         </TableRow>
-                    )) : <TableRow><TableCell colSpan={3} className="h-24 text-center">No projects yet.</TableCell></TableRow>}
+                    )) : <TableRow><TableCell colSpan={4} className="h-24 text-center">No projects yet.</TableCell></TableRow>}
                     </TableBody>
                 </Table>
             </CardContent>

@@ -4,11 +4,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Calendar, User } from "lucide-react";
 import { firestore } from "@/lib/firebase";
-import { collection, getDocs, orderBy, query } from "firebase/firestore";
+import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 
 async function getBlogPosts() {
     const postsCollection = collection(firestore, 'blogs');
-    const q = query(postsCollection, orderBy('createdAt', 'desc'));
+    const q = query(
+        postsCollection,
+        where('status', '==', 'published'),
+        orderBy('publishedAt', 'desc')
+    );
     const postsSnapshot = await getDocs(q);
     const postsList = postsSnapshot.docs.map(doc => {
         const data = doc.data();
@@ -18,7 +22,7 @@ async function getBlogPosts() {
             title: data.title,
             content: data.content,
             heroImage: data.heroImage,
-            createdAt: data.createdAt.toDate(),
+            publishedAt: data.publishedAt.toDate(),
         };
     });
     return postsList;
@@ -70,7 +74,7 @@ export default async function BlogPage() {
                        </div>
                        <div className="flex items-center gap-2">
                          <Calendar className="h-4 w-4" />
-                         <span>{new Date(post.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                         <span>{new Date(post.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
                        </div>
                     </div>
                   </CardContent>

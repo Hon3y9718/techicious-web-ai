@@ -10,7 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { MapPin } from "lucide-react";
 import { firestore } from "@/lib/firebase";
-import { collection, getDocs, orderBy, query } from "firebase/firestore";
+import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
 type Job = {
@@ -24,7 +24,11 @@ type Job = {
 
 async function getJobOpenings() {
     const jobsCollection = collection(firestore, 'jobs');
-    const q = query(jobsCollection, orderBy('title', 'asc'));
+    const q = query(
+        jobsCollection,
+        where('status', '==', 'published'),
+        orderBy('publishedAt', 'desc')
+    );
     const jobsSnapshot = await getDocs(q);
     const jobsList = jobsSnapshot.docs.map(doc => {
         const data = doc.data();

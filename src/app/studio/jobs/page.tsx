@@ -1,13 +1,14 @@
+
 "use client";
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/auth-context";
 import { firestore } from "@/lib/firebase";
-import { collection, getDocs, deleteDoc, doc, orderBy, query } from "firebase/firestore";
+import { collection, getDocs, deleteDoc, doc, updateDoc, serverTimestamp, orderBy, query } from "firebase/firestore";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { MoreHorizontal, Trash2 } from "lucide-react";
+import { MoreHorizontal, PlusCircle, Trash2, Pencil, Send } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,8 +28,15 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Card, CardContent } from "@/components/ui/card";
+import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
 
-type Job = { id: string; title: string; location: string };
+type Job = { 
+  id: string; 
+  title: string; 
+  location: string; 
+  status: 'draft' | 'published';
+};
 
 export default function JobsPage() {
   const { user, loading: authLoading } = useAuth();
@@ -48,7 +56,7 @@ export default function JobsPage() {
       setLoading(true);
       try {
         const jobsCollection = collection(firestore, "jobs");
-        const jobsQuery = query(jobsCollection, orderBy("title", "asc"));
+        const jobsQuery = query(jobsCollection, orderBy("createdAt", "desc"));
         const jobsSnapshot = await getDocs(jobsQuery);
         const jobsList = jobsSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() } as Job));
         setJobs(jobsList);
@@ -87,6 +95,25 @@ export default function JobsPage() {
     }
   };
 
+  const handlePublish = async (jobId: string, title: string) => {
+    try {
+      const jobRef = doc(firestore, "jobs", jobId);
+      await updateDoc(jobRef, {
+        status: 'published',
+        publishedAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+      });
+      toast({
+        title: "Job Published!",
+        description: `"${title}" is now live.`,
+      });
+      fetchData();
+    } catch (error) {
+      console.error("Error publishing job:", error);
+      toast({ title: "Error", description: "Failed to publish job.", variant: "destructive" });
+    }
+  };
+
   if (authLoading || loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -96,20 +123,24 @@ export default function JobsPage() {
   }
 
   return (
-    <div className="flex-1 w-full h-full p-4 md:p-8"> {/* <-- full width */}
+    <div className="flex-1 w-full h-full p-4 md:p-8">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h2 className="text-3xl font-bold tracking-tight">Job Openings</h2>
           <p className="text-muted-foreground">Find your next great hire.</p>
         </div>
+        <Link href="/studio/jobs/new">
+          <Button><PlusCircle className="mr-2 h-4 w-4" />New Job</Button>
+        </Link>
       </div>
 
-      <Card className="w-full"> {/* <-- card stretches full width */}
+      <Card className="w-full">
         <CardContent className="p-0">
           <Table>
             <TableHeader>
               <TableRow>
                 <TableHead>Title</TableHead>
+                <TableHead>Status</TableHead>
                 <TableHead>Location</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
               </TableRow>
@@ -119,7 +150,12 @@ export default function JobsPage() {
                 jobs.map((job) => (
                   <TableRow key={job.id}>
                     <TableCell className="font-medium">{job.title}</TableCell>
-                    <TableCell>{job.location}</TableCell>
+                     <TableCell>
+                        <Badge variant={job.status === 'published' ? 'default' : 'secondary'}>
+                            {job.status}
+                        </Badge>
+                    </TableCell>
+                    <TableCell className="text-muted-foreground">{job.location}</TableCell>
                     <TableCell className="text-right">
                       <AlertDialog>
                         <DropdownMenu>
@@ -129,6 +165,16 @@ export default function JobsPage() {
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end">
+                            <DropdownMenuItem asChild>
+                                <Link href={`/studio/jobs/edit/${job.id}`}>
+                                    <Pencil className="mr-2 h-4 w-4" /> Edit
+                                </Link>
+                            </DropdownMenuItem>
+                            {job.status === 'draft' && (
+                                <DropdownMenuItem onClick={() => handlePublish(job.id, job.title)}>
+                                    <Send className="mr-2 h-4 w-4" /> Publish
+                                </DropdownMenuItem>
+                            )}
                             <AlertDialogTrigger asChild>
                               <DropdownMenuItem className="text-red-500 focus:text-red-500">
                                 <Trash2 className="mr-2 h-4 w-4" /> Delete
@@ -159,7 +205,7 @@ export default function JobsPage() {
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan={3} className="h-24 text-center">
+                  <TableCell colSpan={4} className="h-24 text-center">
                     No job openings yet.
                   </TableCell>
                 </TableRow>
