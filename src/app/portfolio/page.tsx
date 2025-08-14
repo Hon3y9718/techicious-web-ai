@@ -1,11 +1,49 @@
-import { portfolioProjects } from "@/lib/data";
+
+"use client";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { firestore } from "@/lib/firebase";
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
+import { useEffect, useState } from "react";
+
+type Project = {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  tech: string[];
+  hint: string;
+};
+
+async function getPortfolioProjects() {
+    const projectsCollection = collection(firestore, 'portfolio');
+    const q = query(projectsCollection, orderBy('title', 'asc'));
+    const projectsSnapshot = await getDocs(q);
+    const projectsList = projectsSnapshot.docs.map(doc => {
+        const data = doc.data();
+        return {
+            id: doc.id,
+            ...data,
+        } as Project;
+    });
+    return projectsList;
+}
 
 export default function PortfolioPage() {
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      const fetchedProjects = await getPortfolioProjects();
+      setProjects(fetchedProjects);
+      setLoading(false);
+    };
+    fetchProjects();
+  }, []);
+
   return (
     <>
       <section className="w-full py-20 md:py-32 lg:py-40 bg-secondary">
@@ -23,35 +61,62 @@ export default function PortfolioPage() {
 
       <section className="w-full py-12 md:py-24 lg:py-32">
         <div className="container px-4 md:px-6">
-          <div className="grid gap-8 md:grid-cols-2">
-            {portfolioProjects.map((project) => (
-              <div key={project.slug} className="group">
-                <Card className="h-full overflow-hidden transition-shadow duration-300 hover:shadow-2xl">
-                    <div className="overflow-hidden">
-                        <Image
-                            src={project.image}
-                            alt={project.title}
-                            width={600}
-                            height={400}
-                            className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
-                            data-ai-hint={project.hint}
-                        />
-                    </div>
-                  <CardHeader>
-                    <CardTitle className="font-headline text-2xl">{project.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <p className="text-muted-foreground">{project.description}</p>
-                    <div className="flex flex-wrap gap-2">
-                        {project.tech.map(tech => (
-                            <Badge key={tech} variant="secondary">{tech}</Badge>
-                        ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            ))}
-          </div>
+          {loading ? (
+             <div className="grid gap-8 md:grid-cols-2">
+                {Array.from({ length: 4 }).map((_, i) => (
+                    <Card key={i} className="h-full">
+                        <div className="w-full h-64 bg-muted animate-pulse" />
+                        <CardHeader>
+                            <div className="h-8 w-3/4 bg-muted animate-pulse rounded-md" />
+                        </CardHeader>
+                        <CardContent className="space-y-4">
+                            <div className="h-4 w-full bg-muted animate-pulse rounded-md" />
+                            <div className="h-4 w-5/6 bg-muted animate-pulse rounded-md" />
+                            <div className="flex flex-wrap gap-2 pt-2">
+                                <div className="h-6 w-20 bg-muted animate-pulse rounded-full" />
+                                <div className="h-6 w-24 bg-muted animate-pulse rounded-full" />
+                                <div className="h-6 w-16 bg-muted animate-pulse rounded-full" />
+                            </div>
+                        </CardContent>
+                    </Card>
+                ))}
+             </div>
+          ) : projects.length > 0 ? (
+            <div className="grid gap-8 md:grid-cols-2">
+              {projects.map((project) => (
+                <div key={project.id} className="group">
+                  <Card className="h-full overflow-hidden transition-shadow duration-300 hover:shadow-2xl">
+                      <div className="overflow-hidden">
+                          <Image
+                              src={project.image || "https://placehold.co/600x400.png"}
+                              alt={project.title}
+                              width={600}
+                              height={400}
+                              className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+                              data-ai-hint={project.hint}
+                          />
+                      </div>
+                    <CardHeader>
+                      <CardTitle className="font-headline text-2xl">{project.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <p className="text-muted-foreground">{project.description}</p>
+                      <div className="flex flex-wrap gap-2">
+                          {project.tech.map(tech => (
+                              <Badge key={tech} variant="secondary">{tech}</Badge>
+                          ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              ))}
+            </div>
+          ) : (
+             <div className="text-center text-muted-foreground py-16">
+                <h2 className="text-2xl font-headline font-semibold">No Projects Found</h2>
+                <p className="mt-2">Check back soon to see what we've been working on.</p>
+            </div>
+          )}
         </div>
       </section>
     </>

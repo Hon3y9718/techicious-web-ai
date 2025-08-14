@@ -1,81 +1,9 @@
-export const portfolioProjects = [
-  {
-    slug: 'project-a',
-    title: 'E-Commerce Platform',
-    description: 'A cutting-edge e-commerce platform with a focus on user experience and scalability, built with Next.js and Firebase.',
-    image: 'https://placehold.co/600x400.png',
-    tech: ['Next.js', 'Firebase', 'Tailwind CSS'],
-    hint: 'online store'
-  },
-  {
-    slug: 'project-b',
-    title: 'AI-Powered Content Generator',
-    description: 'A web app that uses Genkit to generate creative blog posts and marketing copy, helping businesses streamline content creation.',
-    image: 'https://placehold.co/600x400.png',
-    tech: ['Next.js', 'Genkit', 'Firebase'],
-    hint: 'robot writing'
-  },
-  {
-    slug: 'project-c',
-    title: 'Mobile Banking App',
-    description: 'A secure and intuitive mobile banking application for a leading fintech startup, offering seamless financial management.',
-    image: 'https://placehold.co/600x400.png',
-    tech: ['React Native', 'Firebase'],
-    hint: 'mobile finance'
-  },
-  {
-    slug: 'project-d',
-    title: 'SaaS Analytics Dashboard',
-    description: 'A complex data visualization dashboard for a SaaS product, providing real-time insights and reporting.',
-    image: 'https://placehold.co/600x400.png',
-    tech: ['Next.js', 'Recharts', 'Tailwind CSS'],
-    hint: 'data dashboard'
-  },
-];
+
+export const portfolioProjects: any[] = [];
 
 export const blogPosts: any[] = [];
 
-export const jobOpenings = [
-    // {
-    //     id: 'fe-dev-01',
-    //     title: 'Senior Frontend Developer',
-    //     location: 'Remote',
-    //     department: 'Engineering',
-    //     description: 'We are looking for an experienced Frontend Developer to lead the development of our client projects. You will be responsible for building beautiful and performant user interfaces with Next.js and Tailwind CSS.',
-    //     requirements: [
-    //         '5+ years of experience with React and TypeScript.',
-    //         'Deep understanding of Next.js.',
-    //         'Expertise in modern CSS, including Tailwind CSS.',
-    //         'A strong portfolio of web applications.'
-    //     ]
-    // },
-    // {
-    //     id: 'be-dev-01',
-    //     title: 'Backend Engineer (Firebase)',
-    //     location: 'Remote',
-    //     department: 'Engineering',
-    //     description: 'Join our team to design and implement scalable backend systems using Firebase. You will work on everything from database architecture to secure authentication flows.',
-    //      requirements: [
-    //         '3+ years of experience with Firebase (Firestore, Auth, Functions).',
-    //         'Strong knowledge of Node.js.',
-    //         'Experience with building and maintaining APIs.',
-    //         'Understanding of NoSQL database principles.'
-    //     ]
-    // },
-    // {
-    //     id: 'ai-eng-01',
-    //     title: 'AI Engineer (Genkit)',
-    //     location: 'Remote',
-    //     department: 'AI & Innovation',
-    //     description: 'We are seeking a creative AI Engineer to build innovative AI-powered features for our clients. You will be working with Google\'s Genkit to create and deploy powerful AI flows.',
-    //     requirements: [
-    //         'Experience with LLMs and prompt engineering.',
-    //         'Familiarity with AI frameworks, Genkit is a plus.',
-    //         'Solid programming skills in TypeScript or Python.',
-    //         'A passion for exploring the cutting edge of AI.'
-    //     ]
-    // }
-];
+export const jobOpenings: any[] = [];
 
 export const teamMembers = [
     {
