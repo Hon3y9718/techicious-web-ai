@@ -109,6 +109,10 @@ export default function ProjectsPage() {
     }
   };
 
+  const handleRowClick = (id: string) => {
+    router.push(`/studio/projects/edit/${id}`);
+  };
+
   if (authLoading || loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -141,7 +145,7 @@ export default function ProjectsPage() {
                     </TableHeader>
                     <TableBody>
                     {projects.length > 0 ? projects.map((project) => (
-                        <TableRow key={project.id}>
+                        <TableRow key={project.id} onClick={() => handleRowClick(project.id)} className="cursor-pointer">
                         <TableCell className="font-medium">{project.title}</TableCell>
                         <TableCell>
                             <Badge variant={project.status === 'published' ? 'default' : 'secondary'}>
@@ -152,24 +156,33 @@ export default function ProjectsPage() {
                         <TableCell className="text-right">
                             <AlertDialog>
                             <DropdownMenu>
-                                <DropdownMenuTrigger asChild><Button variant="ghost" className="h-8 w-8 p-0"><MoreHorizontal className="h-4 w-4" /></Button></DropdownMenuTrigger>
-                                <DropdownMenuContent align="end">
-                                    <DropdownMenuItem asChild>
-                                        <Link href={`/studio/projects/edit/${project.id}`}>
-                                            <Pencil className="mr-2 h-4 w-4" /> Edit
-                                        </Link>
+                                <DropdownMenuTrigger asChild>
+                                    <Button variant="ghost" className="h-8 w-8 p-0" onClick={(e) => e.stopPropagation()}>
+                                        <MoreHorizontal className="h-4 w-4" />
+                                    </Button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent align="end" onClick={(e) => e.stopPropagation()}>
+                                    <DropdownMenuItem>
+                                        <Pencil className="mr-2 h-4 w-4" /> Edit
                                     </DropdownMenuItem>
                                     {project.status === 'draft' && (
                                         <DropdownMenuItem onClick={() => handlePublish(project.id, project.title)}>
                                             <Send className="mr-2 h-4 w-4" /> Publish
                                         </DropdownMenuItem>
                                     )}
-                                    <AlertDialogTrigger asChild><DropdownMenuItem className="text-red-500 focus:text-red-500"><Trash2 className="mr-2 h-4 w-4" />Delete</DropdownMenuItem></AlertDialogTrigger>
+                                    <AlertDialogTrigger asChild>
+                                        <DropdownMenuItem className="text-red-500 focus:text-red-500" onSelect={(e) => e.preventDefault()}>
+                                            <Trash2 className="mr-2 h-4 w-4" />Delete
+                                        </DropdownMenuItem>
+                                    </AlertDialogTrigger>
                                 </DropdownMenuContent>
                             </DropdownMenu>
-                            <AlertDialogContent>
+                            <AlertDialogContent onClick={(e) => e.stopPropagation()}>
                                 <AlertDialogHeader><AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle><AlertDialogDescription>This will permanently delete the project titled "{project.title}".</AlertDialogDescription></AlertDialogHeader>
-                                <AlertDialogFooter><AlertDialogCancel>Cancel</AlertDialogCancel><AlertDialogAction onClick={() => handleDelete(project.id, project.title)} className="bg-destructive hover:bg-destructive/90">Delete</AlertDialogAction></AlertDialogFooter>
+                                <AlertDialogFooter>
+                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                    <AlertDialogAction onClick={() => handleDelete(project.id, project.title)} className="bg-destructive hover:bg-destructive/90">Delete</AlertDialogAction>
+                                </AlertDialogFooter>
                             </AlertDialogContent>
                             </AlertDialog>
                         </TableCell>
