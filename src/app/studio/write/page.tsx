@@ -2,7 +2,7 @@
 "use client";
 
 import { useState, useRef, ChangeEvent, KeyboardEvent } from 'react';
-import { Bold, Italic, Heading2, Link, List, ListOrdered, Quote, Code, ChevronDown } from 'lucide-react';
+import { Bold, Italic, Heading2, Link, List, ListOrdered, Quote, Code, ChevronDown, Image as ImageIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -16,7 +16,7 @@ import {
 
 
 type Tool = {
-  name: 'bold' | 'italic' | 'heading' | 'link' | 'ul' | 'ol' | 'quote' | 'code';
+  name: 'bold' | 'italic' | 'heading' | 'link' | 'ul' | 'ol' | 'quote' | 'code' | 'image';
   icon: React.ElementType;
   action: (textarea: HTMLTextAreaElement) => void;
 };
@@ -75,6 +75,13 @@ export default function WritePage() {
     { name: 'link', icon: Link, action: () => {
         const url = prompt("Enter URL:");
         if (url) applyStyle('[', `](${url})`);
+    }},
+    { name: 'image', icon: ImageIcon, action: () => {
+        const url = prompt("Enter Image URL:");
+        if (url) {
+            const altText = prompt("Enter Alt Text:", "Image");
+            applyStyle(`\n![${altText}](${url})\n`, '');
+        }
     }},
   ];
 
