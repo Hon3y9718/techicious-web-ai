@@ -7,6 +7,7 @@ import { firestore } from "@/lib/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
+import { marked } from "marked";
 
 
 async function getPost(slug: string) {
@@ -60,6 +61,8 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
     notFound();
   }
 
+  const html = marked(post.content); // Convert markdown to HTML
+
   return (
     <>
       <section className="w-full pt-12">
@@ -93,7 +96,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
       <section className="w-full pb-12 md:pb-24 lg:pb-32">
         <div className="container px-4 md:px-6">
           <article className="prose prose-lg dark:prose-invert mx-auto max-w-4xl">
-             <div dangerouslySetInnerHTML={{ __html: post.content }} />
+             <div dangerouslySetInnerHTML={{ __html: html }} />
           </article>
         </div>
       </section>

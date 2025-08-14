@@ -11,21 +11,21 @@ import { Send } from "lucide-react";
 import { useAuth } from "@/context/auth-context";
 import { useRouter } from "next/navigation";
 import { firestore } from "@/lib/firebase";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { collection, doc, getDocs, query, where, updateDoc, serverTimestamp } from "firebase/firestore";
 import { useToast } from "@/hooks/use-toast";
 
-// Dynamically import editor to prevent SSR issues
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), {
   ssr: false,
   loading: () => <div className="h-[500px] w-full animate-pulse rounded-md bg-muted" />,
 });
 
-export default function CreatePostPage() {
+export default function EditPostPage({ params }: { params: { slug: string } }) {
   const { theme } = useTheme();
   const [title, setTitle] = useState("");
   const [heroImage, setHeroImage] = useState("");
-  const [content, setContent] = useState("## Welcome!\nStart writing here...");
+  const [content, setContent] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [postId, setPostId] = useState<string | null>(null);
   const { user, loading: authLoading } = useAuth();
   const router = useRouter();
   const { toast } = useToast();
@@ -36,17 +36,39 @@ export default function CreatePostPage() {
     }
   }, [user, authLoading, router]);
 
-  const createSlug = (title: string) => {
-    return title
-      .toLowerCase()
-      .replace(/[^a-z0-9 -]/g, '') // remove invalid chars
-      .replace(/\s+/g, '-') // collapse whitespace and replace by -
-      .replace(/-+/g, '-'); // collapse dashes
-  };
+  useEffect(() => {
+    const fetchPost = async () => {
+      if (!params.slug) return;
+      setIsLoading(true);
+      try {
+        const postsCollection = collection(firestore, 'blogs');
+        const q = query(postsCollection, where('slug', '==', params.slug));
+        const postSnapshot = await getDocs(q);
 
-  const handlePublish = async () => {
-    if (!user) {
-        toast({ title: "Error", description: "You must be logged in to publish.", variant: "destructive" });
+        if (!postSnapshot.empty) {
+            const postDoc = postSnapshot.docs[0];
+            const postData = postDoc.data();
+            setPostId(postDoc.id);
+            setTitle(postData.title);
+            setHeroImage(postData.heroImage || "");
+            setContent(postData.content);
+        } else {
+            toast({ title: "Error", description: "Post not found.", variant: "destructive" });
+            router.push('/studio/dashboard');
+        }
+      } catch (error) {
+        console.error("Error fetching post: ", error);
+        toast({ title: "Error", description: "Failed to load post data.", variant: "destructive" });
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchPost();
+  }, [params.slug, router, toast]);
+
+  const handleUpdate = async () => {
+    if (!user || !postId) {
+        toast({ title: "Error", description: "You must be logged in to update.", variant: "destructive" });
         return;
     }
     if (!title.trim() || !content.trim()) {
@@ -56,28 +78,24 @@ export default function CreatePostPage() {
 
     setIsLoading(true);
     try {
-        const slug = createSlug(title);
-        await addDoc(collection(firestore, "blogs"), {
+        const postRef = doc(firestore, "blogs", postId);
+        await updateDoc(postRef, {
             title,
             heroImage,
             content,
-            slug,
-            authorId: user.uid,
-            createdAt: serverTimestamp(),
             updatedAt: serverTimestamp(),
         });
 
         toast({
-            title: "Post Published!",
-            description: "Your new blog post is live.",
+            title: "Post Updated!",
+            description: "Your changes have been saved.",
         });
-        
         router.push('/studio/dashboard');
 
     } catch (error) {
-        console.error("Error publishing post: ", error);
+        console.error("Error updating post: ", error);
         toast({
-            title: "Publishing Failed",
+            title: "Update Failed",
             description: "Something went wrong. Please try again.",
             variant: "destructive",
         });
@@ -86,11 +104,10 @@ export default function CreatePostPage() {
     }
   };
 
-
-  if (authLoading || !user) {
+  if (authLoading || !user || !postId) {
     return (
        <div className="flex items-center justify-center min-h-[calc(100vh-200px)]">
-        <p>Loading...</p>
+        <p>Loading editor...</p>
       </div>
     );
   }
@@ -100,10 +117,10 @@ export default function CreatePostPage() {
       <div className="space-y-6">
         <header className="space-y-2">
           <h1 className="font-headline text-3xl font-bold tracking-tight sm:text-4xl">
-            Create a New Post
+            Edit Post
           </h1>
           <p className="text-muted-foreground">
-            Craft your next masterpiece for the Resource Hub.
+            Make changes to your post and save them.
           </p>
         </header>
 
@@ -130,15 +147,15 @@ export default function CreatePostPage() {
               value={heroImage}
               onChange={(e) => setHeroImage(e.target.value)}
               placeholder="https://example.com/your-image.png"
-               className="h-12"
-               disabled={isLoading}
+              className="h-12"
+              disabled={isLoading}
             />
           </div>
         </div>
 
         <div>
           <Label className="text-lg font-semibold">Content</Label>
-          <div data-color-mode={theme} className="mt-2">
+           <div data-color-mode={theme} className="mt-2">
             <MDEditor
               value={content}
               onChange={(val) => setContent(val || "")}
@@ -148,11 +165,10 @@ export default function CreatePostPage() {
           </div>
         </div>
         
-         <Button onClick={handlePublish} disabled={isLoading} size="lg" className="w-full">
-            {isLoading ? "Publishing..." : <> <Send className="mr-2 h-4 w-4" /> Publish Post </>}
+        <Button onClick={handleUpdate} disabled={isLoading} size="lg" className="w-full">
+            {isLoading ? "Saving..." : <> <Send className="mr-2 h-4 w-4" /> Save Changes </>}
         </Button>
       </div>
     </div>
   );
 }
-

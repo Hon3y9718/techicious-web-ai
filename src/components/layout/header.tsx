@@ -6,13 +6,15 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, Pencil, LogOut, LogIn } from "lucide-react";
+import { Menu, Pencil, LogOut, LayoutDashboard } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "../theme/theme-toggle";
 import { useAuth } from "@/context/auth-context";
 
 const navLinks = [
   { href: "/about", label: "About" },
+  { href: "/blog", label: "Resources" },
+  { href: "/portfolio", label: "Portfolio" },
   { href: "/careers", label: "Careers" },
   { href: "/contact", label: "Contact" },
 ];
@@ -59,10 +61,24 @@ export default function Header() {
                       </Link>
                     ))}
                      {user && (
-                      <Button variant="ghost" onClick={() => { logout(); setIsMenuOpen(false);}} className="justify-start text-lg font-medium text-muted-foreground">
-                        <LogOut className="mr-2 h-5 w-5" />
-                        Logout
-                      </Button>
+                      <div className="border-t pt-4 mt-2 space-y-2">
+                        <Link href="/studio/dashboard" onClick={() => setIsMenuOpen(false)}>
+                          <Button variant="outline" className="w-full justify-start">
+                              <LayoutDashboard className="mr-2 h-4 w-4" />
+                              Dashboard
+                          </Button>
+                        </Link>
+                         <Link href="/studio/write" onClick={() => setIsMenuOpen(false)}>
+                          <Button variant="outline" className="w-full justify-start">
+                              <Pencil className="mr-2 h-4 w-4" />
+                              Write
+                          </Button>
+                        </Link>
+                        <Button variant="ghost" className="w-full justify-start" onClick={() => { logout(); setIsMenuOpen(false); }}>
+                          <LogOut className="mr-2 h-4 w-4" />
+                          Logout
+                        </Button>
+                      </div>
                     )}
                   </div>
                 </div>
@@ -89,8 +105,15 @@ export default function Header() {
               {link.label}
             </Link>
           ))}
+          
           {user && (
-            <>
+            <div className="flex items-center gap-2">
+               <Link href="/studio/dashboard">
+                <Button variant="ghost" size="sm">
+                    <LayoutDashboard className="mr-2 h-4 w-4" />
+                    Dashboard
+                </Button>
+              </Link>
               <Link href="/studio/write">
                 <Button variant="outline" size="sm">
                     <Pencil className="mr-2 h-4 w-4" />
@@ -101,7 +124,7 @@ export default function Header() {
                 <LogOut className="mr-2 h-4 w-4" />
                 Logout
               </Button>
-            </>
+            </div>
           )}
 
           <ThemeToggle />
