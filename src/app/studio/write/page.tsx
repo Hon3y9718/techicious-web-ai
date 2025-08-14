@@ -36,13 +36,28 @@ export default function WritePage() {
     const start = textarea.selectionStart;
     const end = textarea.selectionEnd;
     const selectedText = content.substring(start, end);
-    const newText = `${content.substring(0, start)}${syntaxStart}${selectedText}${syntaxEnd}${content.substring(end)}`;
+
+    let newText;
+    let newCursorStart;
+    let newCursorEnd;
+
+    if (selectedText) {
+      // If text is selected, wrap it
+      newText = `${content.substring(0, start)}${syntaxStart}${selectedText}${syntaxEnd}${content.substring(end)}`;
+      newCursorStart = start + syntaxStart.length;
+      newCursorEnd = newCursorStart + selectedText.length;
+    } else {
+      // If no text is selected, insert syntax and place cursor in the middle
+      newText = `${content.substring(0, start)}${syntaxStart}${syntaxEnd}${content.substring(end)}`;
+      newCursorStart = start + syntaxStart.length;
+      newCursorEnd = newCursorStart;
+    }
     
     setContent(newText);
     textarea.focus();
     setTimeout(() => {
-      textarea.selectionStart = start + syntaxStart.length;
-      textarea.selectionEnd = end + syntaxStart.length;
+      textarea.selectionStart = newCursorStart;
+      textarea.selectionEnd = newCursorEnd;
     }, 0);
   };
   
