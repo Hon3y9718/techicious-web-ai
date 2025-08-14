@@ -6,10 +6,10 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/context/auth-context";
 import { firestore } from "@/lib/firebase";
-import { collection, getDocs, deleteDoc, doc, orderBy, query } from "firebase/firestore";
+import { collection, getDocs, deleteDoc, doc, updateDoc, serverTimestamp, orderBy, query } from "firebase/firestore";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { MoreHorizontal, PlusCircle, Trash2, Pencil, ExternalLink } from "lucide-react";
+import { MoreHorizontal, PlusCircle, Trash2, Pencil, ExternalLink, Send } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -96,6 +96,25 @@ export default function PostsPage() {
         toast({ title: "Error", description: "Failed to delete the post.", variant: "destructive" });
     }
   };
+
+  const handlePublish = async (postId: string, title: string) => {
+    try {
+      const postRef = doc(firestore, "blogs", postId);
+      await updateDoc(postRef, {
+        status: 'published',
+        publishedAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+      });
+      toast({
+        title: "Post Published!",
+        description: `"${title}" is now live.`,
+      });
+      fetchData();
+    } catch (error) {
+      console.error("Error publishing post:", error);
+      toast({ title: "Error", description: "Failed to publish post.", variant: "destructive" });
+    }
+  };
   
   if (authLoading || loading) {
     return (
@@ -144,6 +163,11 @@ export default function PostsPage() {
                                 <DropdownMenuContent align="end">
                                 <DropdownMenuItem asChild><Link href={`/blog/${post.slug}`} target="_blank"><ExternalLink className="mr-2 h-4 w-4" />View</Link></DropdownMenuItem>
                                 <DropdownMenuItem asChild><Link href={`/studio/write/${post.slug}`}><Pencil className="mr-2 h-4 w-4" />Edit</Link></DropdownMenuItem>
+                                {post.status === 'draft' && (
+                                    <DropdownMenuItem onClick={() => handlePublish(post.id, post.title)}>
+                                        <Send className="mr-2 h-4 w-4" /> Post
+                                    </DropdownMenuItem>
+                                )}
                                 <AlertDialogTrigger asChild><DropdownMenuItem className="text-red-500 focus:text-red-500"><Trash2 className="mr-2 h-4 w-4" />Delete</DropdownMenuItem></AlertDialogTrigger>
                                 </DropdownMenuContent>
                             </DropdownMenu>
