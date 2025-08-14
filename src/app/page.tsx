@@ -123,24 +123,11 @@ export default function Home() {
                   <div className="bg-primary/10 p-3 rounded-full">
                     <Bot className="h-8 w-8 text-primary" />
                   </div>
-                  <CardTitle className="font-headline text-2xl">AI Chatbots</CardTitle>
+                  <CardTitle className="font-headline text-2xl">Autonomous AI Agents</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground">
-                    Engage users with intelligent, 24/7 customer support and lead generation bots.
-                  </p>
-                </CardContent>
-              </Card>
-               <Card>
-                <CardHeader className="flex flex-row items-center gap-4">
-                  <div className="bg-primary/10 p-3 rounded-full">
-                    <FileText className="h-8 w-8 text-primary" />
-                  </div>
-                  <CardTitle className="font-headline text-2xl">Content Generation</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">
-                    Automate content creation for blogs, marketing, or product descriptions.
+                    Build intelligent agents that can automate complex workflows, from customer service to data analysis, operating 24/7.
                   </p>
                 </CardContent>
               </Card>
@@ -149,11 +136,24 @@ export default function Home() {
                   <div className="bg-primary/10 p-3 rounded-full">
                     <Search className="h-8 w-8 text-primary" />
                   </div>
-                  <CardTitle className="font-headline text-2xl">Intelligent Search</CardTitle>
+                  <CardTitle className="font-headline text-2xl">Advanced Data Analysis</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground">
-                     Implement powerful semantic search to understand user intent, not just keywords.
+                    Unlock deep insights from your data with AI that can understand context, identify trends, and provide predictive analytics.
+                  </p>
+                </CardContent>
+              </Card>
+               <Card>
+                <CardHeader className="flex flex-row items-center gap-4">
+                  <div className="bg-primary/10 p-3 rounded-full">
+                    <Cpu className="h-8 w-8 text-primary" />
+                  </div>
+                  <CardTitle className="font-headline text-2xl">Custom AI Solutions</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">
+                     Go beyond chatbots. We design and build custom AI models and systems tailored to your unique business needs.
                   </p>
                 </CardContent>
               </Card>
