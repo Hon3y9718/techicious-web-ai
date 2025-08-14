@@ -1,3 +1,4 @@
+
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
@@ -6,6 +7,7 @@ import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
 import ChatWidget from '@/components/chatbot/chat-widget';
 import { ThemeProvider } from '@/components/theme/theme-provider';
+import { AuthProvider } from '@/context/auth-context';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
@@ -34,13 +36,15 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="relative flex min-h-screen flex-col">
-            <Header />
-            <main className="flex-1">{children}</main>
-            <Footer />
-          </div>
-          <ChatWidget />
-          <Toaster />
+          <AuthProvider>
+            <div className="relative flex min-h-screen flex-col">
+              <Header />
+              <main className="flex-1">{children}</main>
+              <Footer />
+            </div>
+            <ChatWidget />
+            <Toaster />
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -6,14 +6,12 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, Pencil } from "lucide-react";
+import { Menu, Pencil, LogOut, LogIn } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "../theme/theme-toggle";
+import { useAuth } from "@/context/auth-context";
 
 const navLinks = [
-  // { href: "/portfolio", label: "Portfolio" },
-  // { href: "/products", label: "Products" },
-  // { href: "/blog", label: "Resources" },
   { href: "/about", label: "About" },
   { href: "/careers", label: "Careers" },
   { href: "/contact", label: "Contact" },
@@ -22,6 +20,7 @@ const navLinks = [
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
+  const { user, logout } = useAuth();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -59,6 +58,12 @@ export default function Header() {
                         {link.label}
                       </Link>
                     ))}
+                     {user && (
+                      <Button variant="ghost" onClick={() => { logout(); setIsMenuOpen(false);}} className="justify-start text-lg font-medium text-muted-foreground">
+                        <LogOut className="mr-2 h-5 w-5" />
+                        Logout
+                      </Button>
+                    )}
                   </div>
                 </div>
               </SheetContent>
@@ -84,12 +89,28 @@ export default function Header() {
               {link.label}
             </Link>
           ))}
-          <Link href="/studio/write">
-            <Button variant="outline" size="sm">
-                <Pencil className="mr-2 h-4 w-4" />
-                Write
-            </Button>
-          </Link>
+          {user ? (
+            <>
+              <Link href="/studio/write">
+                <Button variant="outline" size="sm">
+                    <Pencil className="mr-2 h-4 w-4" />
+                    Write
+                </Button>
+              </Link>
+               <Button variant="ghost" size="sm" onClick={logout}>
+                <LogOut className="mr-2 h-4 w-4" />
+                Logout
+              </Button>
+            </>
+          ) : (
+             <Link href="/login">
+                <Button variant="outline" size="sm">
+                    <LogIn className="mr-2 h-4 w-4" />
+                    Login
+                </Button>
+              </Link>
+          )}
+
           <ThemeToggle />
         </nav>
       </div>

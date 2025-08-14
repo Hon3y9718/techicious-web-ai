@@ -2,7 +2,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import type { PreviewType } from "@uiw/react-md-editor";
 import { Input } from "@/components/ui/input";
@@ -16,6 +16,8 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { ChevronsUpDown } from "lucide-react";
+import { useAuth } from "@/context/auth-context";
+import { useRouter } from "next/navigation";
 
 // Dynamically import editor to prevent SSR issues
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), {
@@ -28,6 +30,23 @@ export default function EditorPage() {
   const [title, setTitle] = useState("");
   const [heroImage, setHeroImage] = useState("");
   const [content, setContent] = useState("## Welcome!\nStart writing here...");
+  const { user, loading } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push("/login");
+    }
+  }, [user, loading, router]);
+
+
+  if (loading || !user) {
+    return (
+       <div className="flex items-center justify-center min-h-[calc(100vh-200px)]">
+        <p>Loading...</p>
+      </div>
+    );
+  }
 
   const generatedMarkdown = `---
 title: "${title}"
@@ -141,3 +160,4 @@ ${content}`;
     </div>
   );
 }
+
