@@ -7,7 +7,7 @@ import { useTheme } from "next-themes";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Send } from "lucide-react";
+import { Send, Save } from "lucide-react";
 import { useAuth } from "@/context/auth-context";
 import { useRouter } from "next/navigation";
 import { firestore } from "@/lib/firebase";
@@ -44,9 +44,9 @@ export default function CreatePostPage() {
       .replace(/-+/g, '-'); // collapse dashes
   };
 
-  const handlePublish = async () => {
+  const handleSave = async (status: 'draft' | 'published') => {
     if (!user) {
-        toast({ title: "Error", description: "You must be logged in to publish.", variant: "destructive" });
+        toast({ title: "Error", description: "You must be logged in.", variant: "destructive" });
         return;
     }
     if (!title.trim() || !content.trim()) {
@@ -57,27 +57,34 @@ export default function CreatePostPage() {
     setIsLoading(true);
     try {
         const slug = createSlug(title);
-        await addDoc(collection(firestore, "blogs"), {
+        const postData: any = {
             title,
             heroImage,
             content,
             slug,
+            status,
             authorId: user.uid,
             createdAt: serverTimestamp(),
             updatedAt: serverTimestamp(),
-        });
+        };
+
+        if (status === 'published') {
+            postData.publishedAt = serverTimestamp();
+        }
+
+        await addDoc(collection(firestore, "blogs"), postData);
 
         toast({
-            title: "Post Published!",
-            description: "Your new blog post is live.",
+            title: status === 'published' ? "Post Published!" : "Draft Saved!",
+            description: status === 'published' ? "Your new blog post is live." : "Your draft has been saved.",
         });
         
-        router.push('/studio/dashboard');
+        router.push('/studio/posts');
 
     } catch (error) {
-        console.error("Error publishing post: ", error);
+        console.error("Error saving post: ", error);
         toast({
-            title: "Publishing Failed",
+            title: "Save Failed",
             description: "Something went wrong. Please try again.",
             variant: "destructive",
         });
@@ -148,11 +155,15 @@ export default function CreatePostPage() {
           </div>
         </div>
         
-         <Button onClick={handlePublish} disabled={isLoading} size="lg" className="w-full">
-            {isLoading ? "Publishing..." : <> <Send className="mr-2 h-4 w-4" /> Publish Post </>}
-        </Button>
+        <div className="flex justify-end gap-4">
+            <Button onClick={() => handleSave('draft')} disabled={isLoading} variant="outline" size="lg">
+                {isLoading ? "Saving..." : <><Save className="mr-2 h-4 w-4" /> Save as Draft</>}
+            </Button>
+            <Button onClick={() => handleSave('published')} disabled={isLoading} size="lg">
+                {isLoading ? "Publishing..." : <> <Send className="mr-2 h-4 w-4" /> Publish Post </>}
+            </Button>
+        </div>
       </div>
     </div>
   );
 }
-

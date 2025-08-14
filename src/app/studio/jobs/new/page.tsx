@@ -51,6 +51,7 @@ export default function NewJobPage() {
         description,
         requirements: requirements.split('\n').filter(req => req.trim() !== ''),
         createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
       });
       toast({
         title: "Job Created",

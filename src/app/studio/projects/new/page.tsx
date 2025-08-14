@@ -51,6 +51,7 @@ export default function NewProjectPage() {
         tech: tech.split(',').map(t => t.trim()).filter(t => t),
         hint,
         createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
       });
       toast({
         title: "Project Created",

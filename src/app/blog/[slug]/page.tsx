@@ -12,7 +12,7 @@ import { marked } from "marked";
 
 async function getPost(slug: string) {
     const postsCollection = collection(firestore, 'blogs');
-    const q = query(postsCollection, where('slug', '==', slug));
+    const q = query(postsCollection, where('slug', '==', slug), where('status', '==', 'published'));
     const postSnapshot = await getDocs(q);
 
     if (postSnapshot.empty) {
@@ -25,7 +25,7 @@ async function getPost(slug: string) {
     return {
         id: doc.id,
         ...data,
-        createdAt: data.createdAt.toDate(),
+        publishedAt: data.publishedAt.toDate(),
     };
 }
 
@@ -78,7 +78,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
                </div>
                <div className="flex items-center gap-2">
                  <Calendar className="h-4 w-4" />
-                 <span>{new Date(post.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                 <span>{new Date(post.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
                </div>
             </div>
           </div>

@@ -26,11 +26,17 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
-type Post = { id: string; title: string; slug: string; createdAt: any; };
+type Post = { 
+  id: string; 
+  title: string; 
+  slug: string; 
+  status: 'draft' | 'published';
+  publishedAt: any; 
+};
 
 export default function PostsPage() {
   const { user, loading: authLoading } = useAuth();
@@ -52,12 +58,16 @@ export default function PostsPage() {
         const postsCollection = collection(firestore, 'blogs');
         const postsQuery = query(postsCollection, orderBy('createdAt', 'desc'));
         const postsSnapshot = await getDocs(postsQuery);
-        const postsList = postsSnapshot.docs.map(doc => ({
-            id: doc.id,
-            title: doc.data().title,
-            slug: doc.data().slug,
-            createdAt: doc.data().createdAt?.toDate(),
-        }));
+        const postsList = postsSnapshot.docs.map(doc => {
+            const data = doc.data();
+            return {
+                id: doc.id,
+                title: data.title,
+                slug: data.slug,
+                status: data.status,
+                publishedAt: data.publishedAt?.toDate(),
+            } as Post
+        });
         setPosts(postsList);
       } catch (error) {
         console.error("Error fetching data: ", error);
@@ -95,7 +105,7 @@ export default function PostsPage() {
   }
 
   return (
-    <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
+    <div className="flex-1 space-y-4 p-4 md:p-8 pt-6 w-full">
         <div className="flex items-center justify-between">
             <div>
                 <h2 className="text-3xl font-bold tracking-tight">Blog Posts</h2>
@@ -111,6 +121,7 @@ export default function PostsPage() {
                     <TableHeader>
                     <TableRow>
                         <TableHead>Title</TableHead>
+                        <TableHead>Status</TableHead>
                         <TableHead>Published On</TableHead>
                         <TableHead className="text-right">Actions</TableHead>
                     </TableRow>
@@ -119,7 +130,12 @@ export default function PostsPage() {
                     {posts.length > 0 ? posts.map((post) => (
                         <TableRow key={post.id}>
                         <TableCell className="font-medium">{post.title}</TableCell>
-                        <TableCell>{post.createdAt ? new Date(post.createdAt).toLocaleDateString() : 'N/A'}</TableCell>
+                        <TableCell>
+                            <Badge variant={post.status === 'published' ? 'default' : 'secondary'}>
+                                {post.status === 'published' ? 'Published' : 'Draft'}
+                            </Badge>
+                        </TableCell>
+                        <TableCell>{post.publishedAt ? new Date(post.publishedAt).toLocaleDateString() : 'N/A'}</TableCell>
                         <TableCell className="text-right">
                             <AlertDialog>
                             <DropdownMenu>
@@ -137,7 +153,7 @@ export default function PostsPage() {
                             </AlertDialog>
                         </TableCell>
                         </TableRow>
-                    )) : <TableRow><TableCell colSpan={3} className="h-24 text-center">No posts yet.</TableCell></TableRow>}
+                    )) : <TableRow><TableCell colSpan={4} className="h-24 text-center">No posts yet.</TableCell></TableRow>}
                     </TableBody>
                 </Table>
             </CardContent>
