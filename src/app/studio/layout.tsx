@@ -66,6 +66,7 @@ export default function StudioLayout({ children }: { children: React.ReactNode }
         );
     }
     
+    
     function MainHeader() {
         const { toggleSidebar } = useSidebar();
         return (
