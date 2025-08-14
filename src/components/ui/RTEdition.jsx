@@ -2,9 +2,7 @@ import { useRef } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 
 const RTEditor = ({ value, setValue }) => {
-  const editorRef = useRef(value);
   const handleEditorChange = (newContent) => {
-    editorRef.current = newContent
     setValue(newContent)
   };
 
@@ -13,8 +11,11 @@ const RTEditor = ({ value, setValue }) => {
       <Editor
         tinymceScriptSrc={'/rte/tinymce/tinymce.min.js'}
         licenseKey='gpl'
-        onInit={(_evt, editor) => setValue(_evt.target.value)}
-        // initialValue={setValue?.current}
+        onInit={(_evt, editor) => {
+           // This is a workaround to set the initial content
+           // because the component does not always pick it up from the value prop on first render.
+           setTimeout(() => editor.setContent(value || ''), 100);
+        }}
         value={value}
         onEditorChange={handleEditorChange}
         init={{

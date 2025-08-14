@@ -1,7 +1,6 @@
 
 "use client";
 
-import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
@@ -173,11 +172,7 @@ export default function EditPostPage({ params }: { params: { slug: string } }) {
         <div>
           <Label className="text-lg font-semibold">Content</Label>
            <div data-color-mode={theme} className="mt-2">
-            <RTEditor value={content} setValue={(val: any) => setContent(val || "")} />
-            {/* <div
-    className="prose max-w-full" // optional: for better styling
-    dangerouslySetInnerHTML={{ __html: content }}
-  /> */}
+             <RTEditor value={content} setValue={setContent} />
           </div>
         </div>
         
