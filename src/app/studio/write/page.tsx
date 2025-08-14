@@ -3,11 +3,12 @@
 
 import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { useTheme } from "next-themes";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Send, Save } from "lucide-react";
+import { Send, Save, ArrowLeft } from "lucide-react";
 import { useAuth } from "@/context/auth-context";
 import { useRouter } from "next/navigation";
 import { firestore } from "@/lib/firebase";
@@ -105,14 +106,20 @@ export default function CreatePostPage() {
   return (
     <div className="container mx-auto max-w-5xl py-8 md:py-12">
       <div className="space-y-6">
-        <header className="space-y-2">
+        <div className="space-y-2">
+            <Button variant="ghost" asChild>
+                <Link href="/studio/posts">
+                    <ArrowLeft className="mr-2 h-4 w-4" />
+                    Back to Posts
+                </Link>
+            </Button>
           <h1 className="font-headline text-3xl font-bold tracking-tight sm:text-4xl">
             Create a New Post
           </h1>
           <p className="text-muted-foreground">
             Craft your next masterpiece for the Resource Hub.
           </p>
-        </header>
+        </div>
 
         <div className="space-y-4">
           <div className="space-y-2">

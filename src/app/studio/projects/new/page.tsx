@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { useAuth } from "@/context/auth-context";
 import { firestore } from "@/lib/firebase";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
@@ -11,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { Send, Save } from "lucide-react";
+import { Send, Save, ArrowLeft } from "lucide-react";
 
 export default function NewProjectPage() {
   const { user, loading: authLoading } = useAuth();
@@ -84,10 +85,16 @@ export default function NewProjectPage() {
   return (
     <div className="flex-1 w-full h-full p-4 md:p-8">
       <div className="max-w-3xl mx-auto">
-        <header className="mb-8">
+        <div className="mb-6">
+            <Button variant="ghost" asChild className="mb-4">
+                <Link href="/studio/projects">
+                    <ArrowLeft className="mr-2 h-4 w-4" />
+                    Back to Projects
+                </Link>
+            </Button>
           <h2 className="text-3xl font-bold tracking-tight">Create New Project</h2>
           <p className="text-muted-foreground">Fill in the details for your new portfolio piece.</p>
-        </header>
+        </div>
 
         <form onSubmit={(e) => e.preventDefault()} className="space-y-6">
           <div className="space-y-2">
