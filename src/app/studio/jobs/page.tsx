@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useEffect, useState } from "react";
@@ -7,7 +8,7 @@ import { firestore } from "@/lib/firebase";
 import { collection, getDocs, deleteDoc, doc, orderBy, query } from "firebase/firestore";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { MoreHorizontal, Trash2 } from "lucide-react";
+import { MoreHorizontal, PlusCircle, Trash2 } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,6 +28,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Card, CardContent } from "@/components/ui/card";
+import Link from "next/link";
 
 type Job = { id: string; title: string; location: string };
 
@@ -96,15 +98,18 @@ export default function JobsPage() {
   }
 
   return (
-    <div className="flex-1 w-full h-full p-4 md:p-8"> {/* <-- full width */}
+    <div className="flex-1 w-full h-full p-4 md:p-8">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h2 className="text-3xl font-bold tracking-tight">Job Openings</h2>
           <p className="text-muted-foreground">Find your next great hire.</p>
         </div>
+        <Link href="/studio/jobs/new">
+          <Button><PlusCircle className="mr-2 h-4 w-4" />New Job</Button>
+        </Link>
       </div>
 
-      <Card className="w-full"> {/* <-- card stretches full width */}
+      <Card className="w-full">
         <CardContent className="p-0">
           <Table>
             <TableHeader>
