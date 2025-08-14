@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -5,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu } from "lucide-react";
+import { Menu, Pencil } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "../theme/theme-toggle";
 
@@ -83,6 +84,12 @@ export default function Header() {
               {link.label}
             </Link>
           ))}
+          <Link href="/studio/write">
+            <Button variant="outline" size="sm">
+                <Pencil className="mr-2 h-4 w-4" />
+                Write
+            </Button>
+          </Link>
           <ThemeToggle />
         </nav>
       </div>
