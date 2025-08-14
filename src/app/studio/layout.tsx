@@ -10,7 +10,7 @@ import {
     SidebarFooter,
     useSidebar,
 } from "@/components/ui/sidebar";
-import { LogOut } from "lucide-react";
+import { LogOut, PanelLeft } from "lucide-react";
 import StudioSidebar from "@/components/layout/studio-sidebar";
 import { useAuth } from "@/context/auth-context";
 import { useRouter } from "next/navigation";
@@ -37,18 +37,13 @@ export default function StudioLayout({ children }: { children: React.ReactNode }
     }
 
     const SidebarTop = () => {
-        const { state, toggleSidebar } = useSidebar();
+        const { state } = useSidebar();
         return (
             <div className="flex items-center justify-between p-2">
-                {state === "collapsed" ? (
-                    <SidebarTrigger onClick={toggleSidebar} />
-                ) : (
-                    <>
-                        <Link href="/" className="flex items-center gap-2">
-                            <span className="font-bold text-lg font-headline">Techicious</span>
-                        </Link>
-                        <SidebarTrigger onClick={toggleSidebar} />
-                    </>
+                {state === "expanded" && (
+                     <Link href="/" className="flex items-center gap-2">
+                        <span className="font-bold text-lg font-headline">Techicious</span>
+                    </Link>
                 )}
             </div>
         );
@@ -70,13 +65,31 @@ export default function StudioLayout({ children }: { children: React.ReactNode }
             </SidebarFooter>
         );
     }
+    
+    
+    function MainHeader() {
+        const { toggleSidebar } = useSidebar();
+        return (
+            <header className="sticky top-0 z-10 flex h-[57px] items-center gap-1 border-b bg-background px-4">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-8 w-8"
+                  onClick={toggleSidebar}
+                >
+                  <PanelLeft className="h-5 w-5" />
+                  <span className="sr-only">Toggle Menu</span>
+                </Button>
+            </header>
+        )
+    }
 
 
     return (
         <div className="min-h-screen w-full">
             <SidebarProvider>
-                <div className="flex h-screen w-full"> {/* <-- ensure full height */}
-                    <Sidebar className="h-full">    {/* <-- make sidebar fill */}
+                <div className="flex h-screen w-full">
+                    <Sidebar className="h-full">
                         <SidebarHeader>
                             <SidebarTop />
                         </SidebarHeader>
@@ -85,7 +98,8 @@ export default function StudioLayout({ children }: { children: React.ReactNode }
                         </SidebarContent>
                         <StudioSidebarFooter logout={logout} />
                     </Sidebar>
-                    <div className="flex-1 overflow-auto bg-background w-full">
+                    <div className="flex-1 overflow-auto bg-background w-full flex flex-col">
+                        <MainHeader />
                         <main className="h-full p-4">{children}</main>
                     </div>
                 </div>
