@@ -63,16 +63,7 @@ export default function Header() {
                      {user && (
                       <div className="border-t pt-4 mt-2 space-y-2">
                         <Link href="/studio/dashboard" onClick={() => setIsMenuOpen(false)}>
-                          <Button variant="outline" className="w-full justify-start">
-                              <LayoutDashboard className="mr-2 h-4 w-4" />
-                              Dashboard
-                          </Button>
-                        </Link>
-                         <Link href="/studio/write" onClick={() => setIsMenuOpen(false)}>
-                          <Button variant="outline" className="w-full justify-start">
-                              <Pencil className="mr-2 h-4 w-4" />
-                              Write
-                          </Button>
+                          Dashboard
                         </Link>
                         <Button variant="ghost" className="w-full justify-start" onClick={() => { logout(); setIsMenuOpen(false); }}>
                           <LogOut className="mr-2 h-4 w-4" />
@@ -108,17 +99,11 @@ export default function Header() {
           
           {user && (
             <div className="flex items-center gap-2">
-               <Link href="/studio/dashboard">
-                <Button variant="ghost" size="sm">
-                    <LayoutDashboard className="mr-2 h-4 w-4" />
-                    Dashboard
-                </Button>
-              </Link>
-              <Link href="/studio/write">
-                <Button variant="outline" size="sm">
-                    <Pencil className="mr-2 h-4 w-4" />
-                    Write
-                </Button>
+               <Link href="/studio/dashboard" className={cn(
+                  "text-sm font-medium transition-colors hover:text-primary",
+                  pathname === "/studio/dashboard" ? "text-primary" : "text-muted-foreground"
+              )}>
+                Dashboard
               </Link>
                <Button variant="ghost" size="sm" onClick={logout}>
                 <LogOut className="mr-2 h-4 w-4" />

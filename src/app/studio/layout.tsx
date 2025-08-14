@@ -75,7 +75,7 @@ export default function StudioLayout({ children }: { children: React.ReactNode }
     return (
         <div className="min-h-screen w-full">
             <SidebarProvider>
-                <div className="flex h-screen"> {/* <-- ensure full height */}
+                <div className="flex h-screen w-full"> {/* <-- ensure full height */}
                     <Sidebar className="h-full">    {/* <-- make sidebar fill */}
                         <SidebarHeader>
                             <SidebarTop />
@@ -85,8 +85,8 @@ export default function StudioLayout({ children }: { children: React.ReactNode }
                         </SidebarContent>
                         <StudioSidebarFooter logout={logout} />
                     </Sidebar>
-                    <div className="flex-1 overflow-auto bg-background">
-                        <main className="h-full w-full p-4">{children}</main>
+                    <div className="flex-1 overflow-auto bg-background w-full">
+                        <main className="h-full p-4">{children}</main>
                     </div>
                 </div>
             </SidebarProvider>
