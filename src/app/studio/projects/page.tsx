@@ -123,7 +123,12 @@ export default function ProjectsPage() {
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild><Button variant="ghost" className="h-8 w-8 p-0"><MoreHorizontal className="h-4 w-4" /></Button></DropdownMenuTrigger>
                                 <DropdownMenuContent align="end">
-                                <AlertDialogTrigger asChild><DropdownMenuItem className="text-red-500 focus:text-red-500"><Trash2 className="mr-2 h-4 w-4" />Delete</DropdownMenuItem></AlertDialogTrigger>
+                                    <DropdownMenuItem asChild>
+                                        <Link href={`/studio/projects/edit/${project.id}`}>
+                                            <Pencil className="mr-2 h-4 w-4" /> Edit
+                                        </Link>
+                                    </DropdownMenuItem>
+                                    <AlertDialogTrigger asChild><DropdownMenuItem className="text-red-500 focus:text-red-500"><Trash2 className="mr-2 h-4 w-4" />Delete</DropdownMenuItem></AlertDialogTrigger>
                                 </DropdownMenuContent>
                             </DropdownMenu>
                             <AlertDialogContent>

@@ -8,7 +8,7 @@ import { firestore } from "@/lib/firebase";
 import { collection, getDocs, deleteDoc, doc, orderBy, query } from "firebase/firestore";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { MoreHorizontal, PlusCircle, Trash2 } from "lucide-react";
+import { MoreHorizontal, PlusCircle, Trash2, Pencil } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -134,6 +134,11 @@ export default function JobsPage() {
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end">
+                            <DropdownMenuItem asChild>
+                                <Link href={`/studio/jobs/edit/${job.id}`}>
+                                    <Pencil className="mr-2 h-4 w-4" /> Edit
+                                </Link>
+                            </DropdownMenuItem>
                             <AlertDialogTrigger asChild>
                               <DropdownMenuItem className="text-red-500 focus:text-red-500">
                                 <Trash2 className="mr-2 h-4 w-4" /> Delete
