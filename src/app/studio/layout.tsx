@@ -85,10 +85,8 @@ export default function StudioLayout({ children }: { children: React.ReactNode }
                         </SidebarContent>
                         <StudioSidebarFooter logout={logout} />
                     </Sidebar>
-                    <div className="flex-1 w-full overflow-auto">
-                        <main className="flex-1 w-full overflow-auto">
-                            {children}
-                        </main>
+                    <div className="flex-1 overflow-auto bg-background">
+                        <main className="h-full w-full p-4">{children}</main>
                     </div>
                 </div>
             </SidebarProvider>
