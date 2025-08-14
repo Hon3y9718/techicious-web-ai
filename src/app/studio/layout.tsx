@@ -1,13 +1,28 @@
 
 "use client";
 
-import { Sidebar, SidebarProvider, SidebarTrigger, SidebarInset, SidebarHeader, SidebarContent, SidebarFooter } from "@/components/ui/sidebar";
+import { Sidebar, SidebarProvider, SidebarTrigger, SidebarInset, SidebarHeader, SidebarContent, SidebarFooter, useSidebar } from "@/components/ui/sidebar";
 import StudioSidebar from "@/components/layout/studio-sidebar";
 import { useAuth } from "@/context/auth-context";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+
+function StudioHeader() {
+    const { state } = useSidebar();
+    return (
+        <header className="flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
+            <div className="md:hidden">
+                <SidebarTrigger />
+            </div>
+            <div className="hidden md:block">
+                {state === 'collapsed' && <SidebarTrigger />}
+            </div>
+            <h1 className="text-xl font-semibold">Studio</h1>
+        </header>
+    );
+}
 
 export default function StudioLayout({ children }: { children: React.ReactNode }) {
   const { user, loading, logout } = useAuth();
@@ -36,6 +51,7 @@ export default function StudioLayout({ children }: { children: React.ReactNode }
                       <Link href="/" className="flex items-center group-data-[collapsible=icon]:hidden">
                           <span className="font-bold text-lg font-headline">Techicious</span>
                       </Link>
+                      <SidebarTrigger className="group-data-[collapsible=icon]:hidden"/>
                   </div>
               </SidebarHeader>
               <SidebarContent>
@@ -46,15 +62,7 @@ export default function StudioLayout({ children }: { children: React.ReactNode }
               </SidebarFooter>
           </Sidebar>
           <SidebarInset>
-              <header className="flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
-                <div className="md:hidden">
-                    <SidebarTrigger />
-                </div>
-                <div className="hidden md:block">
-                    <SidebarTrigger />
-                </div>
-                <h1 className="text-xl font-semibold">Studio</h1>
-              </header>
+              <StudioHeader />
               <main>
                 {children}
               </main>
