@@ -113,6 +113,10 @@ export default function JobsPage() {
       toast({ title: "Error", description: "Failed to publish job.", variant: "destructive" });
     }
   };
+  
+  const handleRowClick = (id: string) => {
+    router.push(`/studio/jobs/edit/${id}`);
+  };
 
   if (authLoading || loading) {
     return (
@@ -148,7 +152,7 @@ export default function JobsPage() {
             <TableBody>
               {jobs.length > 0 ? (
                 jobs.map((job) => (
-                  <TableRow key={job.id}>
+                  <TableRow key={job.id} onClick={() => handleRowClick(job.id)} className="cursor-pointer">
                     <TableCell className="font-medium">{job.title}</TableCell>
                      <TableCell>
                         <Badge variant={job.status === 'published' ? 'default' : 'secondary'}>
@@ -160,11 +164,11 @@ export default function JobsPage() {
                       <AlertDialog>
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" className="h-8 w-8 p-0">
+                            <Button variant="ghost" className="h-8 w-8 p-0" onClick={(e) => e.stopPropagation()}>
                               <MoreHorizontal className="h-4 w-4" />
                             </Button>
                           </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
+                          <DropdownMenuContent align="end" onClick={(e) => e.stopPropagation()}>
                             <DropdownMenuItem asChild>
                                 <Link href={`/studio/jobs/edit/${job.id}`}>
                                     <Pencil className="mr-2 h-4 w-4" /> Edit
@@ -176,7 +180,7 @@ export default function JobsPage() {
                                 </DropdownMenuItem>
                             )}
                             <AlertDialogTrigger asChild>
-                              <DropdownMenuItem className="text-red-500 focus:text-red-500">
+                              <DropdownMenuItem className="text-red-500 focus:text-red-500" onSelect={(e) => e.preventDefault()}>
                                 <Trash2 className="mr-2 h-4 w-4" /> Delete
                               </DropdownMenuItem>
                             </AlertDialogTrigger>
