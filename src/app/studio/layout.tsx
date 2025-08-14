@@ -1,3 +1,4 @@
+
 "use client";
 
 import {
@@ -16,15 +17,6 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-
-function StudioHeader() {
-    const { state, toggleSidebar } = useSidebar();
-    return (
-        <header className="flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
-            <></>
-        </header>
-    );
-}
 
 export default function StudioLayout({ children }: { children: React.ReactNode }) {
     const { user, loading, logout } = useAuth();
@@ -94,8 +86,7 @@ export default function StudioLayout({ children }: { children: React.ReactNode }
                         <StudioSidebarFooter logout={logout} />
                     </Sidebar>
                     <div className="flex-1 w-full overflow-auto">
-                        {/* <StudioHeader /> */}
-                        <main className="flex-1 w-full overflow-auto !max-w-none">
+                        <main className="flex-1 w-full overflow-auto">
                             {children}
                         </main>
                     </div>
