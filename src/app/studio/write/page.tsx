@@ -15,9 +15,13 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { ChevronsUpDown } from "lucide-react";
+import { ChevronsUpDown, Send } from "lucide-react";
 import { useAuth } from "@/context/auth-context";
 import { useRouter } from "next/navigation";
+import { firestore } from "@/lib/firebase";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { useToast } from "@/hooks/use-toast";
+
 
 // Dynamically import editor to prevent SSR issues
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), {
@@ -30,17 +34,75 @@ export default function EditorPage() {
   const [title, setTitle] = useState("");
   const [heroImage, setHeroImage] = useState("");
   const [content, setContent] = useState("## Welcome!\nStart writing here...");
-  const { user, loading } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
+  const { user, loading: authLoading } = useAuth();
   const router = useRouter();
+  const { toast } = useToast();
 
   useEffect(() => {
-    if (!loading && !user) {
+    if (!authLoading && !user) {
       router.push("/login");
     }
-  }, [user, loading, router]);
+  }, [user, authLoading, router]);
+
+  const createSlug = (title: string) => {
+    return title
+      .toLowerCase()
+      .replace(/[^a-z0-9 -]/g, '') // remove invalid chars
+      .replace(/\s+/g, '-') // collapse whitespace and replace by -
+      .replace(/-+/g, '-'); // collapse dashes
+  };
+
+  const handlePublish = async () => {
+    if (!user) {
+        toast({ title: "Error", description: "You must be logged in to publish.", variant: "destructive" });
+        return;
+    }
+    if (!title.trim() || !content.trim()) {
+        toast({ title: "Error", description: "Title and content cannot be empty.", variant: "destructive" });
+        return;
+    }
+
+    setIsLoading(true);
+    try {
+        const slug = createSlug(title);
+        await addDoc(collection(firestore, "blogs"), {
+            title,
+            heroImage,
+            content,
+            slug,
+            authorId: user.uid,
+            createdAt: serverTimestamp(),
+            updatedAt: serverTimestamp(),
+        });
+
+        toast({
+            title: "Post Published!",
+            description: "Your new blog post is live.",
+        });
+
+        // Reset form
+        setTitle("");
+        setHeroImage("");
+        setContent("## Welcome!\nStart writing here...");
+
+        // Optionally, redirect to the blog page
+        router.push('/blog');
+
+    } catch (error) {
+        console.error("Error publishing post: ", error);
+        toast({
+            title: "Publishing Failed",
+            description: "Something went wrong. Please try again.",
+            variant: "destructive",
+        });
+    } finally {
+        setIsLoading(false);
+    }
+  };
 
 
-  if (loading || !user) {
+  if (authLoading || !user) {
     return (
        <div className="flex items-center justify-center min-h-[calc(100vh-200px)]">
         <p>Loading...</p>
@@ -79,6 +141,7 @@ ${content}`;
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Your brilliant blog post title"
               className="text-xl h-12"
+              disabled={isLoading}
             />
           </div>
           <div className="space-y-2">
@@ -91,6 +154,7 @@ ${content}`;
               onChange={(e) => setHeroImage(e.target.value)}
               placeholder="https://example.com/your-image.png"
                className="h-12"
+               disabled={isLoading}
             />
           </div>
         </div>
@@ -156,8 +220,11 @@ ${content}`;
             </Card>
           </CollapsibleContent>
         </Collapsible>
+
+         <Button onClick={handlePublish} disabled={isLoading} size="lg" className="w-full">
+            {isLoading ? "Publishing..." : <> <Send className="mr-2 h-4 w-4" /> Publish Post </>}
+        </Button>
       </div>
     </div>
   );
 }
-
