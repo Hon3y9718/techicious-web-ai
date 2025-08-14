@@ -88,7 +88,7 @@ export default function Home() {
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground">
-                    Leverage the power of AI with custom solutions and integrations using Genkit and other modern AI tools.
+                    Leverage the power of AI with custom tools and integrations using Genkit and other modern AI tools.
                   </p>
                 </CardContent>
               </Card>
