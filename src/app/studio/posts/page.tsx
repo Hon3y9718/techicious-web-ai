@@ -124,8 +124,8 @@ export default function PostsPage() {
     );
   }
 
-  const handleRowClick = (slug: string) => {
-    router.push(`/studio/write/${slug}`);
+  const handleRowClick = (id: string) => {
+    router.push(`/studio/posts/edit/${id}`);
   };
 
   return (
@@ -152,7 +152,7 @@ export default function PostsPage() {
                     </TableHeader>
                     <TableBody>
                     {posts.length > 0 ? posts.map((post) => (
-                        <TableRow key={post.id} onClick={() => handleRowClick(post.slug)} className="cursor-pointer">
+                        <TableRow key={post.id} onClick={() => handleRowClick(post.id)} className="cursor-pointer">
                         <TableCell className="font-medium">{post.title}</TableCell>
                         <TableCell>
                             <Badge variant={post.status === 'published' ? 'default' : 'secondary'}>
@@ -170,7 +170,7 @@ export default function PostsPage() {
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end" onClick={(e) => e.stopPropagation()}>
                                 <DropdownMenuItem asChild><Link href={`/blog/${post.slug}`} target="_blank"><ExternalLink className="mr-2 h-4 w-4" />View</Link></DropdownMenuItem>
-                                <DropdownMenuItem asChild><Link href={`/studio/write/${post.slug}`}><Pencil className="mr-2 h-4 w-4" />Edit</Link></DropdownMenuItem>
+                                <DropdownMenuItem asChild><Link href={`/studio/posts/edit/${post.id}`}><Pencil className="mr-2 h-4 w-4" />Edit</Link></DropdownMenuItem>
                                 {post.status === 'draft' && (
                                     <DropdownMenuItem onClick={() => handlePublish(post.id, post.title)}>
                                         <Send className="mr-2 h-4 w-4" /> Post
@@ -194,3 +194,5 @@ export default function PostsPage() {
     </div>
   );
 }
+
+    
