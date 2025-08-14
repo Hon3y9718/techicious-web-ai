@@ -91,7 +91,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
       </section>
       
       <section className="w-full pb-12 md:pb-24 lg:pb-32">
-        <div className="container px-4 md:px-6" data-color-mode={theme}>
+        <div className="container px-4 md:px-6">
           <article className="prose prose-lg dark:prose-invert mx-auto max-w-4xl">
              <div dangerouslySetInnerHTML={{ __html: post.content }} />
           </article>
