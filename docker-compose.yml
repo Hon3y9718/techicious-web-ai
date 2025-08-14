@@ -11,4 +11,12 @@ services:
     environment:
       - NODE_ENV=production
       - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+      - GEMINI_API_KEY=AIzaSyBx8OZS3ISiG1mlHZqSQkY1bo74gkG1UIM
+      - NEXT_PUBLIC_FIREBASE_API_KEY=AIzaSyDLhZiRmmnj1CcbSTUsMn5xCXhav7c4A8U
+      - NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=techicious-website-25e58.firebaseapp.com
+      - NEXT_PUBLIC_FIREBASE_PROJECT_ID=techicious-website-25e58
+      - NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=techicious-website-25e58.firebasestorage.app
+      - NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=648388960346
+      - NEXT_PUBLIC_FIREBASE_APP_ID=1:648388960346:web:ab1b59df8f2820fa2a3863
+      - NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=G-NHRP0Q3YN2
     restart: unless-stopped
