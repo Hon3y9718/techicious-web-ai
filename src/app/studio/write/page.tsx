@@ -3,6 +3,7 @@
 
 import dynamic from "next/dynamic";
 import { useState } from "react";
+import { useTheme } from "next-themes";
 import type { PreviewType } from "@uiw/react-md-editor";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -23,6 +24,7 @@ const MDEditor = dynamic(() => import("@uiw/react-md-editor"), {
 });
 
 export default function EditorPage() {
+  const { theme } = useTheme();
   const [title, setTitle] = useState("");
   const [heroImage, setHeroImage] = useState("");
   const [content, setContent] = useState("## Welcome!\nStart writing here...");
@@ -83,7 +85,7 @@ ${content}`;
               <TabsTrigger value="live">Live</TabsTrigger>
             </TabsList>
             <TabsContent value="write">
-              <div data-color-mode="dark">
+              <div data-color-mode={theme}>
                 <MDEditor
                   value={content}
                   onChange={(val) => setContent(val || "")}
@@ -93,7 +95,7 @@ ${content}`;
               </div>
             </TabsContent>
              <TabsContent value="preview">
-               <div data-color-mode="dark">
+               <div data-color-mode={theme}>
                 <MDEditor
                   value={content}
                   onChange={(val) => setContent(val || "")}
@@ -103,7 +105,7 @@ ${content}`;
               </div>
             </TabsContent>
              <TabsContent value="live">
-              <div data-color-mode="dark">
+              <div data-color-mode={theme}>
                 <MDEditor
                   value={content}
                   onChange={(val) => setContent(val || "")}
