@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { firestore } from "@/lib/firebase";
-import { collection, getDocs, orderBy, query } from "firebase/firestore";
+import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
 type Project = {
@@ -19,7 +19,11 @@ type Project = {
 
 async function getPortfolioProjects() {
     const projectsCollection = collection(firestore, 'portfolio');
-    const q = query(projectsCollection, orderBy('title', 'asc'));
+    const q = query(
+        projectsCollection,
+        where('status', '==', 'published'),
+        orderBy('publishedAt', 'desc')
+    );
     const projectsSnapshot = await getDocs(q);
     const projectsList = projectsSnapshot.docs.map(doc => {
         const data = doc.data();

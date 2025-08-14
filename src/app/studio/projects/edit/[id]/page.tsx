@@ -11,7 +11,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { Send } from "lucide-react";
+import { Send, Save } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 export default function EditProjectPage() {
   const { user, loading: authLoading } = useAuth();
@@ -25,7 +26,9 @@ export default function EditProjectPage() {
   const [image, setImage] = useState("");
   const [tech, setTech] = useState("");
   const [hint, setHint] = useState("");
+  const [status, setStatus] = useState<'draft' | 'published' | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isFetching, setIsFetching] = useState(true);
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -37,7 +40,7 @@ export default function EditProjectPage() {
     if (!projectId) return;
 
     const fetchProject = async () => {
-      setIsLoading(true);
+      setIsFetching(true);
       try {
         const projectDoc = await getDoc(doc(firestore, "portfolio", projectId));
         if (projectDoc.exists()) {
@@ -47,6 +50,7 @@ export default function EditProjectPage() {
           setImage(projectData.image || "");
           setTech(projectData.tech.join(", "));
           setHint(projectData.hint || "");
+          setStatus(projectData.status || 'draft');
         } else {
           toast({ title: "Error", description: "Project not found.", variant: "destructive" });
           router.push("/studio/projects");
@@ -55,15 +59,14 @@ export default function EditProjectPage() {
         console.error("Error fetching project:", error);
         toast({ title: "Error", description: "Failed to fetch project details.", variant: "destructive" });
       } finally {
-        setIsLoading(false);
+        setIsFetching(false);
       }
     };
 
     fetchProject();
   }, [projectId, router, toast]);
 
-  const handleUpdateProject = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleUpdate = async (newStatus: 'draft' | 'published') => {
     if (!user) {
       toast({ title: "Error", description: "You must be logged in.", variant: "destructive" });
       return;
@@ -76,16 +79,23 @@ export default function EditProjectPage() {
     setIsLoading(true);
     try {
       const projectRef = doc(firestore, "portfolio", projectId);
-      await updateDoc(projectRef, {
+      const updateData: any = {
         title,
         description,
         image,
         tech: tech.split(',').map(t => t.trim()).filter(t => t),
         hint,
+        status: newStatus,
         updatedAt: serverTimestamp(),
-      });
+      };
+
+      if (newStatus === 'published' && status === 'draft') {
+        updateData.publishedAt = serverTimestamp();
+      }
+
+      await updateDoc(projectRef, updateData);
       toast({
-        title: "Project Updated",
+        title: newStatus === 'published' ? "Project Published!" : "Draft Updated!",
         description: `The project "${title}" has been successfully updated.`,
       });
       router.push("/studio/projects");
@@ -101,7 +111,7 @@ export default function EditProjectPage() {
     }
   };
 
-  if (authLoading || !user || isLoading) {
+  if (authLoading || !user || isFetching) {
     return <div className="flex items-center justify-center min-h-screen"><p>Loading...</p></div>;
   }
 
@@ -109,11 +119,14 @@ export default function EditProjectPage() {
     <div className="flex-1 w-full h-full p-4 md:p-8">
       <div className="max-w-3xl mx-auto">
         <header className="mb-8">
-          <h2 className="text-3xl font-bold tracking-tight">Edit Project</h2>
+          <div className="flex items-center gap-4">
+            <h2 className="text-3xl font-bold tracking-tight">Edit Project</h2>
+            {status && <Badge variant={status === 'published' ? 'default' : 'secondary'}>{status}</Badge>}
+          </div>
           <p className="text-muted-foreground">Update the details for your portfolio piece.</p>
         </header>
 
-        <form onSubmit={handleUpdateProject} className="space-y-6">
+        <form onSubmit={(e) => e.preventDefault()} className="space-y-6">
           <div className="space-y-2">
             <Label htmlFor="title">Project Title</Label>
             <Input id="title" value={title} onChange={(e) => setTitle(e.target.value)} disabled={isLoading} required />
@@ -135,9 +148,22 @@ export default function EditProjectPage() {
             <Input id="tech" placeholder="e.g. Next.js, Firebase, Tailwind CSS" value={tech} onChange={(e) => setTech(e.target.value)} disabled={isLoading} required />
           </div>
           
-          <Button type="submit" size="lg" className="w-full" disabled={isLoading}>
-            {isLoading ? "Saving..." : <><Send className="mr-2 h-4 w-4" /> Save Changes</>}
-          </Button>
+           <div className="flex justify-end gap-4 pt-4">
+            {status === 'draft' ? (
+                <>
+                    <Button onClick={() => handleUpdate('draft')} disabled={isLoading} variant="outline" size="lg">
+                        {isLoading ? "Saving..." : <><Save className="mr-2 h-4 w-4" /> Save Draft</>}
+                    </Button>
+                     <Button onClick={() => handleUpdate('published')} disabled={isLoading} size="lg">
+                        {isLoading ? "Publishing..." : <><Send className="mr-2 h-4 w-4" /> Publish</>}
+                    </Button>
+                </>
+            ) : (
+                 <Button onClick={() => handleUpdate('published')} disabled={isLoading} size="lg" className="w-full">
+                    {isLoading ? "Saving..." : <> <Send className="mr-2 h-4 w-4" /> Update Project</>}
+                </Button>
+            )}
+        </div>
         </form>
       </div>
     </div>

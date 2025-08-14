@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { Send } from "lucide-react";
+import { Send, Save } from "lucide-react";
 
 export default function NewJobPage() {
   const { user, loading: authLoading } = useAuth();
@@ -31,8 +31,7 @@ export default function NewJobPage() {
     }
   }, [user, authLoading, router]);
 
-  const handleCreateJob = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSave = async (status: 'draft' | 'published') => {
     if (!user) {
       toast({ title: "Error", description: "You must be logged in.", variant: "destructive" });
       return;
@@ -44,17 +43,25 @@ export default function NewJobPage() {
 
     setIsLoading(true);
     try {
-      await addDoc(collection(firestore, "jobs"), {
+      const jobData: any = {
         title,
         location,
         department,
         description,
         requirements: requirements.split('\n').filter(req => req.trim() !== ''),
+        status,
+        authorId: user.uid,
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
-      });
+      };
+
+      if (status === 'published') {
+        jobData.publishedAt = serverTimestamp();
+      }
+
+      await addDoc(collection(firestore, "jobs"), jobData);
       toast({
-        title: "Job Created",
+        title: status === 'published' ? "Job Published!" : "Draft Saved!",
         description: `The job opening for "${title}" has been created.`,
       });
       router.push("/studio/jobs");
@@ -82,7 +89,7 @@ export default function NewJobPage() {
           <p className="text-muted-foreground">Fill in the details for the new position.</p>
         </header>
 
-        <form onSubmit={handleCreateJob} className="space-y-6">
+        <form onSubmit={(e) => e.preventDefault()} className="space-y-6">
           <div className="space-y-2">
             <Label htmlFor="title">Job Title</Label>
             <Input id="title" value={title} onChange={(e) => setTitle(e.target.value)} disabled={isLoading} />
@@ -105,9 +112,14 @@ export default function NewJobPage() {
             <Label htmlFor="requirements">Requirements (one per line)</Label>
             <Textarea id="requirements" value={requirements} onChange={(e) => setRequirements(e.target.value)} rows={7} disabled={isLoading} />
           </div>
-          <Button type="submit" size="lg" className="w-full" disabled={isLoading}>
-            {isLoading ? "Creating..." : <><Send className="mr-2 h-4 w-4" /> Create Job Opening</>}
-          </Button>
+          <div className="flex justify-end gap-4 pt-4">
+            <Button onClick={() => handleSave('draft')} disabled={isLoading} variant="outline" size="lg">
+              {isLoading ? "Saving..." : <><Save className="mr-2 h-4 w-4" /> Save as Draft</>}
+            </Button>
+            <Button onClick={() => handleSave('published')} disabled={isLoading} size="lg">
+              {isLoading ? "Publishing..." : <><Send className="mr-2 h-4 w-4" /> Publish Job</>}
+            </Button>
+          </div>
         </form>
       </div>
     </div>

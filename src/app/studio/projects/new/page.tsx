@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { Send } from "lucide-react";
+import { Send, Save } from "lucide-react";
 
 export default function NewProjectPage() {
   const { user, loading: authLoading } = useAuth();
@@ -31,8 +31,7 @@ export default function NewProjectPage() {
     }
   }, [user, authLoading, router]);
 
-  const handleCreateProject = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSave = async (status: 'draft' | 'published') => {
     if (!user) {
       toast({ title: "Error", description: "You must be logged in.", variant: "destructive" });
       return;
@@ -44,18 +43,26 @@ export default function NewProjectPage() {
 
     setIsLoading(true);
     try {
-      await addDoc(collection(firestore, "portfolio"), {
+      const projectData: any = {
         title,
         description,
         image,
         tech: tech.split(',').map(t => t.trim()).filter(t => t),
         hint,
+        status,
+        authorId: user.uid,
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
-      });
+      };
+
+      if (status === 'published') {
+        projectData.publishedAt = serverTimestamp();
+      }
+
+      await addDoc(collection(firestore, "portfolio"), projectData);
       toast({
-        title: "Project Created",
-        description: `The project "${title}" has been successfully created.`,
+        title: status === 'published' ? "Project Published!" : "Draft Saved!",
+        description: `The project "${title}" has been saved.`,
       });
       router.push("/studio/projects");
     } catch (error) {
@@ -82,7 +89,7 @@ export default function NewProjectPage() {
           <p className="text-muted-foreground">Fill in the details for your new portfolio piece.</p>
         </header>
 
-        <form onSubmit={handleCreateProject} className="space-y-6">
+        <form onSubmit={(e) => e.preventDefault()} className="space-y-6">
           <div className="space-y-2">
             <Label htmlFor="title">Project Title</Label>
             <Input id="title" value={title} onChange={(e) => setTitle(e.target.value)} disabled={isLoading} required />
@@ -104,9 +111,14 @@ export default function NewProjectPage() {
             <Input id="tech" placeholder="e.g. Next.js, Firebase, Tailwind CSS" value={tech} onChange={(e) => setTech(e.target.value)} disabled={isLoading} required />
           </div>
           
-          <Button type="submit" size="lg" className="w-full" disabled={isLoading}>
-            {isLoading ? "Creating..." : <><Send className="mr-2 h-4 w-4" /> Create Project</>}
-          </Button>
+          <div className="flex justify-end gap-4 pt-4">
+              <Button onClick={() => handleSave('draft')} disabled={isLoading} variant="outline" size="lg">
+                  {isLoading ? "Saving..." : <><Save className="mr-2 h-4 w-4" /> Save as Draft</>}
+              </Button>
+              <Button onClick={() => handleSave('published')} disabled={isLoading} size="lg">
+                  {isLoading ? "Publishing..." : <> <Send className="mr-2 h-4 w-4" /> Publish Project</>}
+              </Button>
+          </div>
         </form>
       </div>
     </div>

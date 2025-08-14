@@ -11,7 +11,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { Send } from "lucide-react";
+import { Send, Save } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 export default function EditJobPage() {
   const { user, loading: authLoading } = useAuth();
@@ -25,7 +26,9 @@ export default function EditJobPage() {
   const [department, setDepartment] = useState("");
   const [description, setDescription] = useState("");
   const [requirements, setRequirements] = useState("");
+  const [status, setStatus] = useState<'draft' | 'published' | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isFetching, setIsFetching] = useState(true);
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -37,7 +40,7 @@ export default function EditJobPage() {
     if (!jobId) return;
 
     const fetchJob = async () => {
-      setIsLoading(true);
+      setIsFetching(true);
       try {
         const jobDoc = await getDoc(doc(firestore, "jobs", jobId));
         if (jobDoc.exists()) {
@@ -47,6 +50,7 @@ export default function EditJobPage() {
           setDepartment(jobData.department);
           setDescription(jobData.description);
           setRequirements(jobData.requirements.join("\n"));
+          setStatus(jobData.status || 'draft');
         } else {
           toast({ title: "Error", description: "Job not found.", variant: "destructive" });
           router.push("/studio/jobs");
@@ -55,15 +59,14 @@ export default function EditJobPage() {
         console.error("Error fetching job:", error);
         toast({ title: "Error", description: "Failed to fetch job details.", variant: "destructive" });
       } finally {
-        setIsLoading(false);
+        setIsFetching(false);
       }
     };
 
     fetchJob();
   }, [jobId, router, toast]);
 
-  const handleUpdateJob = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleUpdate = async (newStatus: 'draft' | 'published') => {
     if (!user) {
       toast({ title: "Error", description: "You must be logged in.", variant: "destructive" });
       return;
@@ -76,16 +79,23 @@ export default function EditJobPage() {
     setIsLoading(true);
     try {
       const jobRef = doc(firestore, "jobs", jobId);
-      await updateDoc(jobRef, {
+      const updateData: any = {
         title,
         location,
         department,
         description,
         requirements: requirements.split('\n').filter(req => req.trim() !== ''),
+        status: newStatus,
         updatedAt: serverTimestamp(),
-      });
+      };
+
+      if (newStatus === 'published' && status === 'draft') {
+        updateData.publishedAt = serverTimestamp();
+      }
+
+      await updateDoc(jobRef, updateData);
       toast({
-        title: "Job Updated",
+        title: newStatus === 'published' ? "Job Published!" : "Draft Updated!",
         description: `The job opening for "${title}" has been updated.`,
       });
       router.push("/studio/jobs");
@@ -101,7 +111,7 @@ export default function EditJobPage() {
     }
   };
 
-  if (authLoading || !user || isLoading) {
+  if (authLoading || !user || isFetching) {
     return <div className="flex items-center justify-center min-h-screen"><p>Loading...</p></div>;
   }
 
@@ -109,11 +119,14 @@ export default function EditJobPage() {
     <div className="flex-1 w-full h-full p-4 md:p-8">
       <div className="max-w-3xl mx-auto">
         <header className="mb-8">
-          <h2 className="text-3xl font-bold tracking-tight">Edit Job Opening</h2>
+            <div className="flex items-center gap-4">
+              <h2 className="text-3xl font-bold tracking-tight">Edit Job Opening</h2>
+              {status && <Badge variant={status === 'published' ? 'default' : 'secondary'}>{status}</Badge>}
+            </div>
           <p className="text-muted-foreground">Update the details for the position.</p>
         </header>
 
-        <form onSubmit={handleUpdateJob} className="space-y-6">
+        <form onSubmit={(e) => e.preventDefault()} className="space-y-6">
           <div className="space-y-2">
             <Label htmlFor="title">Job Title</Label>
             <Input id="title" value={title} onChange={(e) => setTitle(e.target.value)} disabled={isLoading} />
@@ -136,9 +149,22 @@ export default function EditJobPage() {
             <Label htmlFor="requirements">Requirements (one per line)</Label>
             <Textarea id="requirements" value={requirements} onChange={(e) => setRequirements(e.target.value)} rows={7} disabled={isLoading} />
           </div>
-          <Button type="submit" size="lg" className="w-full" disabled={isLoading}>
-            {isLoading ? "Saving..." : <><Send className="mr-2 h-4 w-4" /> Save Changes</>}
-          </Button>
+          <div className="flex justify-end gap-4 pt-4">
+            {status === 'draft' ? (
+              <>
+                <Button onClick={() => handleUpdate('draft')} disabled={isLoading} variant="outline" size="lg">
+                  {isLoading ? "Saving..." : <><Save className="mr-2 h-4 w-4" /> Save Draft</>}
+                </Button>
+                <Button onClick={() => handleUpdate('published')} disabled={isLoading} size="lg">
+                  {isLoading ? "Publishing..." : <><Send className="mr-2 h-4 w-4" /> Publish</>}
+                </Button>
+              </>
+            ) : (
+              <Button onClick={() => handleUpdate('published')} disabled={isLoading} size="lg" className="w-full">
+                {isLoading ? "Saving..." : <><Send className="mr-2 h-4 w-4" /> Update Job</>}
+              </Button>
+            )}
+          </div>
         </form>
       </div>
     </div>
