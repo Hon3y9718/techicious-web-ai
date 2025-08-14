@@ -23,11 +23,11 @@ const storage = getStorage(app);
 
 let analytics: Analytics | undefined;
 if (typeof window !== 'undefined') {
-    isSupported().then((supported) => {
-        if (supported) {
-            analytics = getAnalytics(app);
-        }
-    });
+  isSupported().then((supported) => {
+    if (supported) {
+      analytics = getAnalytics(app);
+    }
+  });
 }
 
 export { app, firestore, auth, storage, analytics };
