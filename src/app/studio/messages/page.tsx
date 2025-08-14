@@ -7,6 +7,7 @@ import { useAuth } from "@/context/auth-context";
 import { firestore } from "@/lib/firebase";
 import { collection, getDocs, deleteDoc, doc, orderBy, query } from "firebase/firestore";
 import { Button } from "@/components/ui/button";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { MoreHorizontal, Trash2 } from "lucide-react";
 import {
   DropdownMenu,
@@ -27,12 +28,6 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Card, CardContent } from "@/components/ui/card";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
 
 type Message = { 
   id: string; 
@@ -100,6 +95,10 @@ export default function MessagesPage() {
     }
   };
 
+  const handleRowClick = (id: string) => {
+    router.push(`/studio/messages/${id}`);
+  };
+
   if (authLoading || loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -117,72 +116,75 @@ export default function MessagesPage() {
         </div>
       </div>
 
-      <Card>
+       <Card>
         <CardContent className="p-0">
-          <Accordion type="single" collapsible className="w-full">
-            {messages.length > 0 ? (
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>From</TableHead>
+                <TableHead>Subject</TableHead>
+                <TableHead>Received</TableHead>
+                <TableHead className="text-right">Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {messages.length > 0 ? (
                 messages.map((message) => (
-                    <AccordionItem value={message.id} key={message.id} className="px-4">
-                        <AccordionTrigger className="hover:no-underline">
-                             <div className="flex items-center justify-between w-full">
-                                <div className="flex items-center gap-4 text-left">
-                                    <div className="font-medium">{message.name}</div>
-                                    <div className="text-muted-foreground hidden md:block">{message.subject}</div>
-                                </div>
-                                <div className="flex items-center gap-4">
-                                     <div className="text-sm text-muted-foreground hidden md:block">
-                                        {new Date(message.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-                                    </div>
-                                    <AlertDialog>
-                                        <DropdownMenu>
-                                            <DropdownMenuTrigger asChild>
-                                                <Button variant="ghost" className="h-8 w-8 p-0" onClick={(e) => e.stopPropagation()}>
-                                                    <MoreHorizontal className="h-4 w-4" />
-                                                </Button>
-                                            </DropdownMenuTrigger>
-                                            <DropdownMenuContent align="end">
-                                                <AlertDialogTrigger asChild>
-                                                    <DropdownMenuItem className="text-red-500 focus:text-red-500" onSelect={(e) => e.preventDefault()}>
-                                                        <Trash2 className="mr-2 h-4 w-4" /> Delete
-                                                    </DropdownMenuItem>
-                                                </AlertDialogTrigger>
-                                            </DropdownMenuContent>
-                                        </DropdownMenu>
-                                         <AlertDialogContent>
-                                            <AlertDialogHeader>
-                                                <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                                                <AlertDialogDescription>
-                                                This will permanently delete this message.
-                                                </AlertDialogDescription>
-                                            </AlertDialogHeader>
-                                            <AlertDialogFooter>
-                                                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                                <AlertDialogAction
-                                                onClick={() => handleDelete(message.id)}
-                                                className="bg-destructive hover:bg-destructive/90"
-                                                >
-                                                Delete
-                                                </AlertDialogAction>
-                                            </AlertDialogFooter>
-                                        </AlertDialogContent>
-                                    </AlertDialog>
-                                </div>
-                            </div>
-                        </AccordionTrigger>
-                        <AccordionContent className="pt-2 pb-4">
-                           <div className="prose prose-sm dark:prose-invert max-w-none">
-                                <h4 className="!mb-2">Email: <a href={`mailto:${message.email}`} className="text-primary hover:underline">{message.email}</a></h4>
-                                <p>{message.message}</p>
-                           </div>
-                        </AccordionContent>
-                    </AccordionItem>
+                  <TableRow key={message.id} onClick={() => handleRowClick(message.id)} className="cursor-pointer">
+                    <TableCell className="font-medium">{message.name}</TableCell>
+                    <TableCell>{message.subject}</TableCell>
+                    <TableCell className="text-muted-foreground">
+                        {new Date(message.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                    </TableCell>
+                    <TableCell className="text-right">
+                       <AlertDialog>
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" className="h-8 w-8 p-0" onClick={(e) => e.stopPropagation()}>
+                                <MoreHorizontal className="h-4 w-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                                <AlertDialogTrigger asChild>
+                                    <DropdownMenuItem className="text-red-500 focus:text-red-500" onSelect={(e) => e.preventDefault()}>
+                                        <Trash2 className="mr-2 h-4 w-4" /> Delete
+                                    </DropdownMenuItem>
+                                </AlertDialogTrigger>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                           <AlertDialogContent>
+                              <AlertDialogHeader>
+                                  <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                                  <AlertDialogDescription>
+                                  This will permanently delete this message.
+                                  </AlertDialogDescription>
+                              </AlertDialogHeader>
+                              <AlertDialogFooter>
+                                  <AlertDialogCancel onClick={(e) => e.stopPropagation()}>Cancel</AlertDialogCancel>
+                                  <AlertDialogAction
+                                  onClick={(e) => {
+                                      e.stopPropagation();
+                                      handleDelete(message.id);
+                                  }}
+                                  className="bg-destructive hover:bg-destructive/90"
+                                  >
+                                  Delete
+                                  </AlertDialogAction>
+                              </AlertDialogFooter>
+                          </AlertDialogContent>
+                      </AlertDialog>
+                    </TableCell>
+                  </TableRow>
                 ))
-            ) : (
-                <div className="text-center h-48 flex items-center justify-center">
-                    <p>No messages yet.</p>
-                </div>
-            )}
-          </Accordion>
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={4} className="h-24 text-center">
+                    No messages yet.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
         </CardContent>
       </Card>
     </div>
