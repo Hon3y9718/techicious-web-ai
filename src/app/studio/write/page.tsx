@@ -1,193 +1,140 @@
 
 "use client";
 
-import { useState, useRef, ChangeEvent, KeyboardEvent } from 'react';
-import { Bold, Italic, Heading2, Link as LinkIcon, List, ListOrdered, Quote, Code, ChevronDown, Image as ImageIcon } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import dynamic from "next/dynamic";
+import { useState } from "react";
+import type { PreviewType } from "@uiw/react-md-editor";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/components/ui/collapsible"
-import { Label } from '@/components/ui/label';
+} from "@/components/ui/collapsible";
+import { ChevronsUpDown } from "lucide-react";
 
+// Dynamically import editor to prevent SSR issues
+const MDEditor = dynamic(() => import("@uiw/react-md-editor"), {
+  ssr: false,
+  loading: () => <div className="h-[500px] w-full animate-pulse rounded-md bg-muted" />,
+});
 
-type Tool = {
-  name: 'bold' | 'italic' | 'heading' | 'link' | 'ul' | 'ol' | 'quote' | 'code' | 'image';
-  icon: React.ElementType;
-  action: (textarea: HTMLTextAreaElement) => void;
-};
+export default function EditorPage() {
+  const [title, setTitle] = useState("");
+  const [heroImage, setHeroImage] = useState("");
+  const [content, setContent] = useState("## Welcome!\nStart writing here...");
 
-export default function WritePage() {
-  const [title, setTitle] = useState('');
-  const [heroImageUrl, setHeroImageUrl] = useState('');
-  const [content, setContent] = useState('');
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const [isOpen, setIsOpen] = useState(false)
+  const generatedMarkdown = `---
+title: "${title}"
+heroImage: "${heroImage}"
+date: "${new Date().toISOString().split("T")[0]}"
+---
 
-  const applyStyle = (syntaxStart: string, syntaxEnd: string = syntaxStart) => {
-    const textarea = textareaRef.current;
-    if (!textarea) return;
-
-    const start = textarea.selectionStart;
-    const end = textarea.selectionEnd;
-    const selectedText = content.substring(start, end);
-
-    let newText;
-    let newCursorStart;
-    let newCursorEnd;
-
-    if (selectedText) {
-      // If text is selected, wrap it
-      newText = `${content.substring(0, start)}${syntaxStart}${selectedText}${syntaxEnd}${content.substring(end)}`;
-      newCursorStart = start + syntaxStart.length;
-      newCursorEnd = newCursorStart + selectedText.length;
-    } else {
-      // If no text is selected, insert syntax and place cursor in the middle
-      newText = `${content.substring(0, start)}${syntaxStart}${syntaxEnd}${content.substring(end)}`;
-      newCursorStart = start + syntaxStart.length;
-      newCursorEnd = newCursorStart;
-    }
-    
-    setContent(newText);
-    textarea.focus();
-    setTimeout(() => {
-      textarea.selectionStart = newCursorStart;
-      textarea.selectionEnd = newCursorEnd;
-    }, 0);
-  };
-  
-  const applyList = (syntax: string) => {
-      const textarea = textareaRef.current;
-      if (!textarea) return;
-      const start = textarea.selectionStart;
-      const lines = content.substring(0, start).split('\n');
-      const currentLineIndex = lines.length - 1;
-      const currentLine = lines[currentLineIndex];
-      
-      const newLines = [...lines];
-      if (currentLine.trim().startsWith(syntax)) {
-        newLines[currentLineIndex] = currentLine.replace(syntax, '');
-      } else {
-        newLines[currentLineIndex] = `${syntax} ${currentLine}`;
-      }
-      
-      const newContent = newLines.join('\n') + content.substring(start);
-      setContent(newContent);
-      textarea.focus();
-  };
-
-  const tools: Tool[] = [
-    { name: 'bold', icon: Bold, action: () => applyStyle('**') },
-    { name: 'italic', icon: Italic, action: () => applyStyle('*') },
-    { name: 'heading', icon: Heading2, action: () => applyStyle('\n## ', '') },
-    { name: 'quote', icon: Quote, action: () => applyStyle('\n> ', '') },
-    { name: 'code', icon: Code, action: () => applyStyle('`') },
-    { name: 'ul', icon: List, action: () => applyList('-') },
-    { name: 'ol', icon: ListOrdered, action: () => applyList('1.') },
-    { name: 'link', icon: LinkIcon, action: () => {
-        const url = prompt("Enter URL:");
-        if (url) applyStyle('[', `](${url})`);
-    }},
-    { name: 'image', icon: ImageIcon, action: () => {
-        const url = prompt("Enter Image URL:");
-        if (url) {
-            const altText = prompt("Enter Alt Text:", "Image");
-            applyStyle(`\n![${altText}](${url})\n`, '');
-        }
-    }},
-  ];
-
-  const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Tab') {
-        e.preventDefault();
-        applyStyle('  ', '');
-    }
-  }
+${content}`;
 
   return (
-    <div className="container mx-auto px-4 py-8 md:py-12">
-      <div className="max-w-4xl mx-auto">
-        <div className="space-y-6">
-          <Input
-            type="text"
-            placeholder="Title"
-            className="text-4xl font-extrabold font-headline h-auto border-0 focus-visible:ring-0 px-0 shadow-none !bg-transparent tracking-tighter"
-            value={title}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
-          />
-          
+    <div className="container mx-auto max-w-5xl py-8 md:py-12">
+      <div className="space-y-6">
+        <header className="space-y-2">
+          <h1 className="font-headline text-3xl font-bold tracking-tight sm:text-4xl">
+            Create a New Post
+          </h1>
+          <p className="text-muted-foreground">
+            Craft your next masterpiece for the Resource Hub.
+          </p>
+        </header>
+
+        <div className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="hero-image" className="font-semibold">Hero Image URL</Label>
+            <Label htmlFor="title" className="text-lg font-semibold">
+              Title
+            </Label>
+            <Input
+              id="title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Your brilliant blog post title"
+              className="text-xl h-12"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="hero-image" className="text-lg font-semibold">
+              Hero Image URL
+            </Label>
             <Input
               id="hero-image"
-              type="text"
-              placeholder="https://.../your-hero-image.png"
-              value={heroImageUrl}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => setHeroImageUrl(e.target.value)}
+              value={heroImage}
+              onChange={(e) => setHeroImage(e.target.value)}
+              placeholder="https://example.com/your-image.png"
+               className="h-12"
             />
           </div>
-
-          <div className="flex items-start gap-4">
-             <div className="bg-background border rounded-lg sticky top-20">
-                <div className="p-2 flex flex-col items-center gap-1">
-                  {tools.map(tool => (
-                    <Button key={tool.name} variant="ghost" size="icon" onClick={() => tool.action(textareaRef.current!)}>
-                       <tool.icon className="h-4 w-4" />
-                    </Button>
-                  ))}
-                </div>
-              </div>
-            <Textarea
-              ref={textareaRef}
-              placeholder="Tell your story..."
-              className="w-full text-lg border-0 resize-none focus-visible:ring-0 px-0 !bg-transparent leading-relaxed"
-              value={content}
-              onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setContent(e.target.value)}
-              onKeyDown={handleKeyDown}
-              rows={15}
-            />
-          </div>
-
-          <div className="flex gap-2">
-            <Button>Publish Post</Button>
-            <Button variant="outline">Save Draft</Button>
-          </div>
-           <p className="text-xs text-muted-foreground mt-2">
-              Note: Publish & Save are for demonstration. Use the markdown below to create a new blog post.
-          </p>
-
-          <Collapsible
-            open={isOpen}
-            onOpenChange={setIsOpen}
-            className="w-full space-y-2"
-          >
-            <CollapsibleTrigger asChild>
-                <Button variant="ghost" className="w-full justify-start px-0 hover:bg-transparent">
-                  <ChevronDown className="h-4 w-4 mr-2 transition-transform duration-200" style={{transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)'}} />
-                  View Generated Markdown
-                </Button>
-            </CollapsibleTrigger>
-            <CollapsibleContent>
-                 <Card>
-                  <CardContent className="pt-6">
-                    <div className="bg-secondary p-4 rounded-md overflow-x-auto">
-                        <pre className="text-sm whitespace-pre-wrap">
-                            {`---\ntitle: "${title}"\nslug: "${title.toLowerCase().replace(/\\s+/g, '-').slice(0, 50)}"\nimage: "${heroImageUrl}"\nauthor: "Your Name"\ndate: "${new Date().toISOString().split('T')[0]}"\nsummary: "A brief summary of the post."\n---\n\n${content}`}
-                        </pre>
-                    </div>
-                     <p className="text-xs text-muted-foreground mt-4">
-                        Copy the markdown above to create a new blog post in <Badge variant="outline" className="ml-1">src/lib/data.ts</Badge>.
-                    </p>
-                  </CardContent>
-                </Card>
-            </CollapsibleContent>
-          </Collapsible>
         </div>
+
+        <div>
+          <Label className="text-lg font-semibold">Content</Label>
+          <Tabs defaultValue="live" className="mt-2">
+            <TabsList>
+              <TabsTrigger value="write">Write</TabsTrigger>
+              <TabsTrigger value="preview">Preview</TabsTrigger>
+              <TabsTrigger value="live">Live</TabsTrigger>
+            </TabsList>
+            <TabsContent value="write">
+              <div data-color-mode="dark">
+                <MDEditor
+                  value={content}
+                  onChange={(val) => setContent(val || "")}
+                  preview="edit"
+                  height={500}
+                />
+              </div>
+            </TabsContent>
+             <TabsContent value="preview">
+               <div data-color-mode="dark">
+                <MDEditor
+                  value={content}
+                  onChange={(val) => setContent(val || "")}
+                  preview="preview"
+                  height={500}
+                />
+              </div>
+            </TabsContent>
+             <TabsContent value="live">
+              <div data-color-mode="dark">
+                <MDEditor
+                  value={content}
+                  onChange={(val) => setContent(val || "")}
+                  preview="live"
+                  height={500}
+                />
+              </div>
+            </TabsContent>
+          </Tabs>
+        </div>
+
+        <Collapsible>
+          <CollapsibleTrigger asChild>
+            <Button variant="outline" className="w-full">
+              <ChevronsUpDown className="mr-2 h-4 w-4" />
+              View Generated Markdown
+            </Button>
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <Card className="mt-4">
+                <CardHeader>
+                    <CardTitle>Generated Markdown</CardTitle>
+                </CardHeader>
+              <CardContent>
+                <pre className="mt-4 p-4 rounded-md bg-secondary text-secondary-foreground overflow-x-auto text-sm">
+                  <code>{generatedMarkdown}</code>
+                </pre>
+              </CardContent>
+            </Card>
+          </CollapsibleContent>
+        </Collapsible>
       </div>
     </div>
   );
