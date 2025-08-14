@@ -33,35 +33,7 @@ export const portfolioProjects = [
   },
 ];
 
-export const blogPosts = [
-  {
-    slug: 'why-nextjs-is-the-future',
-    title: 'Why Next.js is the Future of Web Development',
-    summary: 'An in-depth look at the features that make Next.js the leading framework for building modern, performant web applications.',
-    author: 'Jane Doe',
-    date: '2024-05-15',
-    image: 'https://placehold.co/800x400.png',
-    hint: 'code screen'
-  },
-  {
-    slug: 'getting-started-with-genkit',
-    title: 'Getting Started with Genkit for AI-Powered Apps',
-    summary: 'A beginner-friendly tutorial on setting up your first Genkit project and building a simple AI flow.',
-    author: 'John Smith',
-    date: '2024-05-10',
-    image: 'https://placehold.co/800x400.png',
-    hint: 'ai abstract'
-  },
-  {
-    slug: 'firebase-authentication-deep-dive',
-    title: 'Firebase Authentication: A Deep Dive',
-    summary: 'Explore advanced Firebase Authentication features to secure your application and provide a seamless user login experience.',
-    author: 'Jane Doe',
-    date: '2024-05-01',
-    image: 'https://placehold.co/800x400.png',
-    hint: 'security lock'
-  },
-];
+export const blogPosts: any[] = [];
 
 export const jobOpenings = [
     // {
