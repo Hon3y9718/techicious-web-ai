@@ -3,7 +3,7 @@ import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
-import { getAnalytics, isSupported } from "firebase/analytics";
+import { getAnalytics, isSupported, Analytics } from "firebase/analytics";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDLhZiRmmnj1CcbSTUsMn5xCXhav7c4A8U",
@@ -21,7 +21,7 @@ const firestore = getFirestore(app);
 const auth = getAuth(app);
 const storage = getStorage(app);
 
-let analytics;
+let analytics: Analytics | undefined;
 if (typeof window !== 'undefined') {
     isSupported().then((supported) => {
         if (supported) {
