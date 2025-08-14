@@ -1,7 +1,6 @@
 
 "use client";
 
-import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
@@ -14,18 +13,13 @@ import { useRouter } from "next/navigation";
 import { firestore } from "@/lib/firebase";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { useToast } from "@/hooks/use-toast";
-
-// Dynamically import editor to prevent SSR issues
-const MDEditor = dynamic(() => import("@uiw/react-md-editor"), {
-  ssr: false,
-  loading: () => <div className="h-[500px] w-full animate-pulse rounded-md bg-muted" />,
-});
+import RTEditor from "@/components/ui/RTEdition";
 
 export default function CreatePostPage() {
   const { theme } = useTheme();
   const [title, setTitle] = useState("");
   const [heroImage, setHeroImage] = useState("");
-  const [content, setContent] = useState("## Welcome!\nStart writing here...");
+  const [content, setContent] = useState("Start writing here...");
   const [isLoading, setIsLoading] = useState(false);
   const { user, loading: authLoading } = useAuth();
   const router = useRouter();
@@ -153,12 +147,7 @@ export default function CreatePostPage() {
         <div>
           <Label className="text-lg font-semibold">Content</Label>
           <div data-color-mode={theme} className="mt-2">
-            <MDEditor
-              value={content}
-              onChange={(val) => setContent(val || "")}
-              preview="live"
-              height={500}
-            />
+            <RTEditor value={content} setValue={(val: any) => setContent(val || "")} />
           </div>
         </div>
         

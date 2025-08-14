@@ -15,11 +15,7 @@ import { firestore } from "@/lib/firebase";
 import { collection, doc, getDocs, query, where, updateDoc, serverTimestamp } from "firebase/firestore";
 import { useToast } from "@/hooks/use-toast";
 import { Badge } from "@/components/ui/badge";
-
-const MDEditor = dynamic(() => import("@uiw/react-md-editor"), {
-  ssr: false,
-  loading: () => <div className="h-[500px] w-full animate-pulse rounded-md bg-muted" />,
-});
+import RTEditor from "@/components/ui/RTEdition";
 
 export default function EditPostPage({ params }: { params: { slug: string } }) {
   const { theme } = useTheme();
@@ -177,12 +173,11 @@ export default function EditPostPage({ params }: { params: { slug: string } }) {
         <div>
           <Label className="text-lg font-semibold">Content</Label>
            <div data-color-mode={theme} className="mt-2">
-            <MDEditor
-              value={content}
-              onChange={(val) => setContent(val || "")}
-              preview="live"
-              height={500}
-            />
+            <RTEditor value={content} setValue={(val: any) => setContent(val || "")} />
+            {/* <div
+    className="prose max-w-full" // optional: for better styling
+    dangerouslySetInnerHTML={{ __html: content }}
+  /> */}
           </div>
         </div>
         
