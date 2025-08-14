@@ -7,7 +7,6 @@ import { useAuth } from "@/context/auth-context";
 import { firestore } from "@/lib/firebase";
 import { collection, getDocs, deleteDoc, doc, orderBy, query } from "firebase/firestore";
 import { Button } from "@/components/ui/button";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { MoreHorizontal, Trash2 } from "lucide-react";
 import {
   DropdownMenu,
@@ -28,7 +27,6 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import {
   Accordion,
   AccordionContent,
@@ -173,7 +171,7 @@ export default function MessagesPage() {
                         </AccordionTrigger>
                         <AccordionContent className="pt-2 pb-4">
                            <div className="prose prose-sm dark:prose-invert max-w-none">
-                                <h4>Email: <a href={`mailto:${message.email}`}>{message.email}</a></h4>
+                                <h4 className="!mb-2">Email: <a href={`mailto:${message.email}`} className="text-primary hover:underline">{message.email}</a></h4>
                                 <p>{message.message}</p>
                            </div>
                         </AccordionContent>
