@@ -124,6 +124,10 @@ export default function PostsPage() {
     );
   }
 
+  const handleRowClick = (slug: string) => {
+    router.push(`/studio/write/${slug}`);
+  };
+
   return (
     <div className="flex-1 space-y-4 p-4 md:p-8 pt-6 w-full">
         <div className="flex items-center justify-between">
@@ -148,7 +152,7 @@ export default function PostsPage() {
                     </TableHeader>
                     <TableBody>
                     {posts.length > 0 ? posts.map((post) => (
-                        <TableRow key={post.id}>
+                        <TableRow key={post.id} onClick={() => handleRowClick(post.slug)} className="cursor-pointer">
                         <TableCell className="font-medium">{post.title}</TableCell>
                         <TableCell>
                             <Badge variant={post.status === 'published' ? 'default' : 'secondary'}>
@@ -159,8 +163,12 @@ export default function PostsPage() {
                         <TableCell className="text-right">
                             <AlertDialog>
                             <DropdownMenu>
-                                <DropdownMenuTrigger asChild><Button variant="ghost" className="h-8 w-8 p-0"><MoreHorizontal className="h-4 w-4" /></Button></DropdownMenuTrigger>
-                                <DropdownMenuContent align="end">
+                                <DropdownMenuTrigger asChild>
+                                  <Button variant="ghost" className="h-8 w-8 p-0" onClick={(e) => e.stopPropagation()}>
+                                    <MoreHorizontal className="h-4 w-4" />
+                                  </Button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent align="end" onClick={(e) => e.stopPropagation()}>
                                 <DropdownMenuItem asChild><Link href={`/blog/${post.slug}`} target="_blank"><ExternalLink className="mr-2 h-4 w-4" />View</Link></DropdownMenuItem>
                                 <DropdownMenuItem asChild><Link href={`/studio/write/${post.slug}`}><Pencil className="mr-2 h-4 w-4" />Edit</Link></DropdownMenuItem>
                                 {post.status === 'draft' && (
@@ -171,7 +179,7 @@ export default function PostsPage() {
                                 <AlertDialogTrigger asChild><DropdownMenuItem className="text-red-500 focus:text-red-500"><Trash2 className="mr-2 h-4 w-4" />Delete</DropdownMenuItem></AlertDialogTrigger>
                                 </DropdownMenuContent>
                             </DropdownMenu>
-                            <AlertDialogContent>
+                            <AlertDialogContent onClick={(e) => e.stopPropagation()}>
                                 <AlertDialogHeader><AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle><AlertDialogDescription>This will permanently delete the post titled "{post.title}".</AlertDialogDescription></AlertDialogHeader>
                                 <AlertDialogFooter><AlertDialogCancel>Cancel</AlertDialogCancel><AlertDialogAction onClick={() => handleDelete(post.id, post.title)} className="bg-destructive hover:bg-destructive/90">Delete</AlertDialogAction></AlertDialogFooter>
                             </AlertDialogContent>
