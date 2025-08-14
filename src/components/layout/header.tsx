@@ -89,7 +89,7 @@ export default function Header() {
               {link.label}
             </Link>
           ))}
-          {user ? (
+          {user && (
             <>
               <Link href="/studio/write">
                 <Button variant="outline" size="sm">
@@ -102,13 +102,6 @@ export default function Header() {
                 Logout
               </Button>
             </>
-          ) : (
-             <Link href="/login">
-                <Button variant="outline" size="sm">
-                    <LogIn className="mr-2 h-4 w-4" />
-                    Login
-                </Button>
-              </Link>
           )}
 
           <ThemeToggle />
