@@ -19,7 +19,13 @@ function StudioHeader() {
             <div className="hidden md:block">
                 {state === 'collapsed' && <SidebarTrigger />}
             </div>
-            <h1 className="text-xl font-semibold">Studio</h1>
+             <div className="flex items-center gap-2">
+                 <Link href="/" className="flex items-center">
+                    <span className="font-bold text-lg font-headline">Techicious</span>
+                 </Link>
+                 <span className="text-muted-foreground">/</span>
+                <h1 className="text-xl font-semibold">Studio</h1>
+             </div>
         </header>
     );
 }
@@ -47,10 +53,7 @@ export default function StudioLayout({ children }: { children: React.ReactNode }
         <SidebarProvider>
           <Sidebar>
               <SidebarHeader>
-                  <div className="flex items-center justify-between">
-                      <Link href="/" className="flex items-center group-data-[collapsible=icon]:hidden">
-                          <span className="font-bold text-lg font-headline">Techicious</span>
-                      </Link>
+                  <div className="flex items-center justify-end">
                       <SidebarTrigger className="group-data-[collapsible=icon]:hidden"/>
                   </div>
               </SidebarHeader>
