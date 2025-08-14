@@ -1,7 +1,7 @@
 
 "use client";
 
-import { SidebarMenu, SidebarMenuItem, SidebarMenuButton } from "@/components/ui/sidebar";
+import { SidebarMenu, SidebarMenuItem, SidebarMenuButton, useSidebar } from "@/components/ui/sidebar";
 import { LayoutDashboard, PenSquare, LayoutGrid, Briefcase } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
@@ -15,15 +15,16 @@ const navLinks = [
 
 export default function StudioSidebar() {
   const pathname = usePathname();
+  const { state } = useSidebar();
 
   return (
     <SidebarMenu>
       {navLinks.map((link) => (
         <SidebarMenuItem key={link.href}>
             <Link href={link.href} className="w-full">
-                <SidebarMenuButton isActive={pathname === link.href}>
+                <SidebarMenuButton isActive={pathname === link.href} tooltip={link.label}>
                     <link.icon className="h-4 w-4" />
-                    <span>{link.label}</span>
+                    {state === 'expanded' && <span>{link.label}</span>}
                 </SidebarMenuButton>
             </Link>
         </SidebarMenuItem>

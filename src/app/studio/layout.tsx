@@ -10,14 +10,14 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 function StudioHeader() {
-    const { state } = useSidebar();
+    const { state, isMobile, toggleSidebar } = useSidebar();
     return (
         <header className="flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
             <div className="md:hidden">
-                <SidebarTrigger />
+                <SidebarTrigger onClick={toggleSidebar} />
             </div>
             <div className="hidden md:block">
-                {state === 'collapsed' && <SidebarTrigger />}
+                {state === 'collapsed' && <SidebarTrigger onClick={toggleSidebar} />}
             </div>
              <div className="flex items-center gap-2">
                  <Link href="/" className="flex items-center">
@@ -49,27 +49,36 @@ export default function StudioLayout({ children }: { children: React.ReactNode }
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen w-full">
         <SidebarProvider>
-          <Sidebar>
-              <SidebarHeader>
-                  <div className="flex items-center justify-end">
-                      <SidebarTrigger className="group-data-[collapsible=icon]:hidden"/>
-                  </div>
-              </SidebarHeader>
-              <SidebarContent>
-                  <StudioSidebar />
-              </SidebarContent>
-              <SidebarFooter>
-                  <Button variant="ghost" onClick={logout} className="w-full justify-start">Logout</Button>
-              </SidebarFooter>
-          </Sidebar>
-          <SidebarInset>
-              <StudioHeader />
-              <main>
-                {children}
-              </main>
-          </SidebarInset>
+            <div className="flex h-full">
+                <Sidebar>
+                    <SidebarHeader>
+                        <div className="flex items-center justify-between p-2">
+                             <div className="flex items-center gap-2">
+                                <Link href="/" className="flex items-center">
+                                    <span className="font-bold text-lg font-headline">Techicious</span>
+                                </Link>
+                                <span className="text-muted-foreground">/</span>
+                                <h1 className="text-xl font-semibold">Studio</h1>
+                            </div>
+                            <SidebarTrigger className="group-data-[collapsible=icon]:hidden"/>
+                        </div>
+                    </SidebarHeader>
+                    <SidebarContent>
+                        <StudioSidebar />
+                    </SidebarContent>
+                    <SidebarFooter>
+                        <Button variant="ghost" onClick={logout} className="w-full justify-start">Logout</Button>
+                    </SidebarFooter>
+                </Sidebar>
+                <div className="flex-1">
+                    <StudioHeader />
+                    <main>
+                        {children}
+                    </main>
+                </div>
+            </div>
         </SidebarProvider>
     </div>
   );
