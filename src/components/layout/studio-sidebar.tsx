@@ -2,7 +2,7 @@
 "use client";
 
 import { SidebarMenu, SidebarMenuItem, SidebarMenuButton, useSidebar } from "@/components/ui/sidebar";
-import { LayoutDashboard, PenSquare, LayoutGrid, Briefcase } from "lucide-react";
+import { LayoutDashboard, PenSquare, LayoutGrid, Briefcase, Inbox } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
@@ -11,6 +11,7 @@ const navLinks = [
   { href: "/studio/posts", label: "Posts", icon: PenSquare },
   { href: "/studio/projects", label: "Projects", icon: LayoutGrid },
   { href: "/studio/jobs", label: "Jobs", icon: Briefcase },
+  { href: "/studio/messages", label: "Messages", icon: Inbox },
 ];
 
 export default function StudioSidebar() {

@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { PenSquare, Briefcase, LayoutGrid } from "lucide-react";
+import { PenSquare, Briefcase, LayoutGrid, Inbox } from "lucide-react";
 
 
 export default function DashboardPage() {
@@ -80,6 +80,22 @@ export default function DashboardPage() {
                     </p>
                      <Button asChild size="sm" className="mt-4">
                         <Link href="/studio/jobs">Manage Jobs</Link>
+                    </Button>
+                </CardContent>
+            </Card>
+            <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">
+                        Messages
+                    </CardTitle>
+                    <Inbox className="h-4 w-4 text-muted-foreground" />
+                </CardHeader>
+                <CardContent>
+                    <p className="text-xs text-muted-foreground">
+                        View messages from your contact form.
+                    </p>
+                     <Button asChild size="sm" className="mt-4">
+                        <Link href="/studio/messages">View Messages</Link>
                     </Button>
                 </CardContent>
             </Card>
