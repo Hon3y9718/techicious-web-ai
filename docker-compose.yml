@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: next-app
+    container_name: techicious-web
     ports:
       - "3090:3000"
     environment:
