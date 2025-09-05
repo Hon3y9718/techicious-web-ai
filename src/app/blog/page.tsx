@@ -20,6 +20,7 @@ async function getBlogPosts() {
             id: doc.id,
             slug: data.slug,
             title: data.title,
+            summary: data.summary,
             content: data.content,
             heroImage: data.heroImage,
             publishedAt: data.publishedAt.toDate(),
@@ -66,7 +67,7 @@ export default async function BlogPage() {
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
-                    <p className="text-muted-foreground text-sm line-clamp-3">{post.content.substring(0, 150)}...</p>
+                    <p className="text-muted-foreground text-sm line-clamp-3">{post.summary || post.content.substring(0, 150) + '...'}</p>
                     <div className="flex justify-between items-center text-xs text-muted-foreground">
                        <div className="flex items-center gap-2">
                          <User className="h-4 w-4" />

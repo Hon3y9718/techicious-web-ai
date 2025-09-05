@@ -14,10 +14,12 @@ import { firestore } from "@/lib/firebase";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { useToast } from "@/hooks/use-toast";
 import RTEditor from "@/components/ui/RTEdition";
+import { Textarea } from "@/components/ui/textarea";
 
 export default function CreatePostPage() {
   const { theme } = useTheme();
   const [title, setTitle] = useState("");
+  const [summary, setSummary] = useState("");
   const [heroImage, setHeroImage] = useState("");
   const [content, setContent] = useState("Start writing here...");
   const [isLoading, setIsLoading] = useState(false);
@@ -54,6 +56,7 @@ export default function CreatePostPage() {
         const slug = createSlug(title);
         const postData: any = {
             title,
+            summary,
             heroImage,
             content,
             slug,
@@ -140,6 +143,19 @@ export default function CreatePostPage() {
               placeholder="https://example.com/your-image.png"
                className="h-12"
                disabled={isLoading}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="summary" className="text-lg font-semibold">
+              Summary
+            </Label>
+            <Textarea
+              id="summary"
+              value={summary}
+              onChange={(e) => setSummary(e.target.value)}
+              placeholder="A short summary for the blog card."
+              rows={3}
+              disabled={isLoading}
             />
           </div>
         </div>
