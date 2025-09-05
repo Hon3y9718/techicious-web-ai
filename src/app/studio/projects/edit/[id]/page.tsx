@@ -27,6 +27,9 @@ export default function EditProjectPage() {
   const [image, setImage] = useState("");
   const [tech, setTech] = useState("");
   const [hint, setHint] = useState("");
+  const [webLink, setWebLink] = useState("");
+  const [androidLink, setAndroidLink] = useState("");
+  const [iosLink, setIosLink] = useState("");
   const [status, setStatus] = useState<'draft' | 'published' | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isFetching, setIsFetching] = useState(true);
@@ -51,6 +54,9 @@ export default function EditProjectPage() {
           setImage(projectData.image || "");
           setTech(projectData.tech.join(", "));
           setHint(projectData.hint || "");
+          setWebLink(projectData.webLink || "");
+          setAndroidLink(projectData.appLinks?.android || "");
+          setIosLink(projectData.appLinks?.ios || "");
           setStatus(projectData.status || 'draft');
         } else {
           toast({ title: "Error", description: "Project not found.", variant: "destructive" });
@@ -86,6 +92,11 @@ export default function EditProjectPage() {
         image,
         tech: tech.split(',').map(t => t.trim()).filter(t => t),
         hint,
+        webLink: webLink || null,
+        appLinks: {
+            android: androidLink || null,
+            ios: iosLink || null,
+        },
         status: newStatus,
         updatedAt: serverTimestamp(),
       };
@@ -154,6 +165,22 @@ export default function EditProjectPage() {
             <Label htmlFor="tech">Technologies (comma-separated)</Label>
             <Input id="tech" placeholder="e.g. Next.js, Firebase, Tailwind CSS" value={tech} onChange={(e) => setTech(e.target.value)} disabled={isLoading} required />
           </div>
+
+          <div className="space-y-4 pt-4 border-t">
+             <h3 className="text-lg font-medium">Project Links</h3>
+             <div className="space-y-2">
+                <Label htmlFor="webLink">Website Link</Label>
+                <Input id="webLink" placeholder="https://example.com" value={webLink} onChange={(e) => setWebLink(e.target.value)} disabled={isLoading} />
+              </div>
+               <div className="space-y-2">
+                <Label htmlFor="androidLink">Google Play Link</Label>
+                <Input id="androidLink" placeholder="https://play.google.com/store/apps/details?id=..." value={androidLink} onChange={(e) => setAndroidLink(e.target.value)} disabled={isLoading} />
+              </div>
+               <div className="space-y-2">
+                <Label htmlFor="iosLink">Apple App Store Link</Label>
+                <Input id="iosLink" placeholder="https://apps.apple.com/app/..." value={iosLink} onChange={(e) => setIosLink(e.target.value)} disabled={isLoading} />
+              </div>
+          </div>
           
            <div className="flex justify-end gap-4 pt-4">
             {status === 'draft' ? (
@@ -176,5 +203,3 @@ export default function EditProjectPage() {
     </div>
   );
 }
-
-    

@@ -7,6 +7,12 @@ import { Badge } from "@/components/ui/badge";
 import { firestore } from "@/lib/firebase";
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { ArrowUpRight } from "lucide-react";
+import { GooglePlayButton } from "@/components/icons/google-play-button";
+import { AppStoreButton } from "@/components/icons/app-store-button";
+
 
 type Project = {
   id: string;
@@ -15,6 +21,11 @@ type Project = {
   image: string;
   tech: string[];
   hint: string;
+  webLink?: string;
+  appLinks?: {
+      android?: string;
+      ios?: string;
+  }
 };
 
 async function getPortfolioProjects() {
@@ -89,7 +100,7 @@ export default function PortfolioPage() {
             <div className="grid gap-8 md:grid-cols-2">
               {projects.map((project) => (
                 <div key={project.id} className="group">
-                  <Card className="h-full overflow-hidden transition-shadow duration-300 hover:shadow-2xl">
+                  <Card className="h-full overflow-hidden transition-shadow duration-300 hover:shadow-2xl flex flex-col">
                       <div className="overflow-hidden">
                           <Image
                               src={project.image || "https://placehold.co/600x400.png"}
@@ -103,13 +114,34 @@ export default function PortfolioPage() {
                     <CardHeader>
                       <CardTitle className="font-headline text-2xl">{project.title}</CardTitle>
                     </CardHeader>
-                    <CardContent className="space-y-4">
-                      <p className="text-muted-foreground">{project.description}</p>
+                    <CardContent className="space-y-4 flex-grow flex flex-col">
+                      <p className="text-muted-foreground flex-grow">{project.description}</p>
                       <div className="flex flex-wrap gap-2">
                           {project.tech.map(tech => (
                               <Badge key={tech} variant="secondary">{tech}</Badge>
                           ))}
                       </div>
+                       {(project.webLink || project.appLinks) && (
+                        <div className="flex flex-wrap items-center gap-4 pt-4">
+                            {project.webLink && (
+                                <Link href={project.webLink} target="_blank" rel="noopener noreferrer">
+                                    <Button variant="outline">
+                                        Visit Website <ArrowUpRight className="ml-2 h-4 w-4" />
+                                    </Button>
+                                </Link>
+                            )}
+                            {project.appLinks?.ios && (
+                                <Link href={project.appLinks.ios} target="_blank" rel="noopener noreferrer">
+                                    <AppStoreButton className="h-10" />
+                                </Link>
+                            )}
+                            {project.appLinks?.android && (
+                                <Link href={project.appLinks.android} target="_blank" rel="noopener noreferrer">
+                                   <GooglePlayButton className="h-10" />
+                                </Link>
+                            )}
+                        </div>
+                       )}
                     </CardContent>
                   </Card>
                 </div>
