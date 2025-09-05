@@ -101,13 +101,12 @@ export default function PortfolioPage() {
               {projects.map((project) => (
                 <div key={project.id} className="group">
                   <Card className="h-full overflow-hidden transition-shadow duration-300 hover:shadow-2xl flex flex-col">
-                      <div className="overflow-hidden">
+                      <div className="relative w-full h-64 overflow-hidden">
                           <Image
                               src={project.image || "https://placehold.co/600x400.png"}
                               alt={project.title}
-                              width={600}
-                              height={400}
-                              className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
+                              fill
+                              className="object-cover transition-transform duration-500 group-hover:scale-105"
                               data-ai-hint={project.hint}
                           />
                       </div>
