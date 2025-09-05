@@ -10,7 +10,7 @@ export const GooglePlayButton = React.forwardRef<
   return (
     <div ref={ref} className={cn("inline-block", className)} {...props}>
       <Image
-        src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
+        src="https://opapi.techicious.store/media/uploads/Google_Play.png"
         alt="Get it on Google Play"
         width={162} 
         height={48} 
