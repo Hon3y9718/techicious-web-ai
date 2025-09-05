@@ -16,22 +16,13 @@ export const GooglePlayButton = React.forwardRef<
       {...props}
     >
       <rect width="135" height="40" rx="5" fill="black" />
-      <path
-        d="M27.032 19.34L11.237 3.545a1.25 1.25 0 00-2.028.981v27.948a1.25 1.25 0 002.028.98L27.032 20.66a1.25 1.25 0 000-1.32z"
-        fill="#FFD966"
-      />
-      <path
-        d="M9.209 4.526a1.25 1.25 0 00-1.056 1.875l7.96 13.785-7.96 13.785a1.25 1.25 0 001.056 1.875l9.742-5.625H9.21z"
-        fill="#2196F3"
-      />
-       <path
-        d="M27.032 19.34l-9.923-5.664-7.872 13.804 7.872 4.456 9.923-5.732a1.25 1.25 0 000-1.32z"
-        fill="#4CAF50"
-      />
-      <path
-        d="M18.89 25.17l-9.68-5.626a1.25 1.25 0 00-1.057 1.875l.178.308 3.562 6.17-3.563 6.17-.178.307a1.25 1.25 0 001.057 1.875l9.68-5.625v-11.25z"
-        fill="#F44336"
-      />
+      <g clipPath="url(#clip0_10_2)">
+        <path d="M19.4361 20.0002L9.27344 9.83752V30.1625L19.4361 20.0002Z" fill="#FFD966"/>
+        <path d="M22.9365 23.499L20.4852 21.0477L19.4363 20L9.27344 30.1627V9.83738L19.4363 20L20.4852 21.0477L21.534 22.0954C22.2339 21.3956 22.9365 23.499 22.9365 23.499Z" fill="#F44336"/>
+        <path d="M22.9364 16.5009C22.9364 16.5009 22.2338 18.6043 21.5339 17.9045L20.4851 18.9522L9.27344 9.8374V9.8374L22.9364 16.5009Z" fill="#4CAF50"/>
+        <path d="M9.27344 9.83752V30.1625L19.4361 20.0002L9.27344 9.83752Z" fill="url(#paint0_linear_10_2)"/>
+        <path d="M22.9365 16.5012V23.5012L19.4362 20.0012L22.9365 16.5012Z" fill="#2196F3"/>
+      </g>
       <text x="45" y="18" fontFamily="Arial, sans-serif" fontSize="8" fill="white">
         GET IT ON
       </text>
@@ -45,6 +36,15 @@ export const GooglePlayButton = React.forwardRef<
       >
         Google Play
       </text>
+      <defs>
+        <linearGradient id="paint0_linear_10_2" x1="9.27344" y1="20.0002" x2="19.986" y2="20.0002" gradientUnits="userSpaceOnUse">
+            <stop stopColor="white" stopOpacity="0.25"/>
+            <stop offset="1" stopColor="white" stopOpacity="0"/>
+        </linearGradient>
+        <clipPath id="clip0_10_2">
+            <rect x="9.27344" y="9.8374" width="20.3252" height="20.3252" fill="white"/>
+        </clipPath>
+      </defs>
     </svg>
   );
 });
