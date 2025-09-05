@@ -15,6 +15,26 @@ import { useToast } from "@/hooks/use-toast";
 import { Send, Save, ArrowLeft } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
+const parseWebLinks = (text: string) => {
+    if (!text.trim()) return [];
+    return text
+        .split('\n')
+        .map(line => {
+            const parts = line.split(' - ');
+            if (parts.length < 2) return null;
+            const title = parts[0].trim();
+            const url = parts.slice(1).join(' - ').trim();
+            if (!title || !url) return null;
+            return { title, url };
+        })
+        .filter(Boolean) as { title: string; url: string }[];
+};
+
+const formatWebLinks = (links: { title: string; url: string }[]): string => {
+    if (!links || links.length === 0) return "";
+    return links.map(link => `${link.title} - ${link.url}`).join("\n");
+};
+
 export default function EditProductPage() {
   const { user, loading: authLoading } = useAuth();
   const router = useRouter();
@@ -26,7 +46,7 @@ export default function EditProductPage() {
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
   const [tags, setTags] = useState("");
-  const [link, setLink] = useState("");
+  const [webLinks, setWebLinks] = useState("");
   const [hint, setHint] = useState("");
   const [androidLink, setAndroidLink] = useState("");
   const [iosLink, setIosLink] = useState("");
@@ -53,7 +73,7 @@ export default function EditProductPage() {
           setDescription(productData.description);
           setImage(productData.image || "");
           setTags(productData.tags.join(", "));
-          setLink(productData.link || "");
+          setWebLinks(formatWebLinks(productData.webLinks || []));
           setHint(productData.hint || "");
           setAndroidLink(productData.appLinks?.android || "");
           setIosLink(productData.appLinks?.ios || "");
@@ -91,7 +111,7 @@ export default function EditProductPage() {
         description,
         image,
         tags: tags.split(',').map(t => t.trim()).filter(t => t),
-        link,
+        webLinks: parseWebLinks(webLinks),
         hint,
         appLinks: {
             android: androidLink || null,
@@ -165,9 +185,9 @@ export default function EditProductPage() {
             <Label htmlFor="tags">Tags (comma-separated)</Label>
             <Input id="tags" placeholder="e.g. SaaS, AI, Developer Tool" value={tags} onChange={(e) => setTags(e.target.value)} disabled={isLoading} required />
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="link">Product Link</Label>
-            <Input id="link" placeholder="https://example.com/my-product" value={link} onChange={(e) => setLink(e.target.value)} disabled={isLoading} />
+           <div className="space-y-2">
+            <Label htmlFor="webLinks">Website Links (one per line, format: Title - URL)</Label>
+            <Textarea id="webLinks" placeholder="e.g. Live Site - https://example.com" value={webLinks} onChange={(e) => setWebLinks(e.target.value)} disabled={isLoading} rows={4} />
           </div>
 
           <div className="space-y-4 pt-4 border-t">

@@ -11,6 +11,8 @@ import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { GooglePlayButton } from "@/components/icons/google-play-button";
 import { AppStoreButton } from "@/components/icons/app-store-button";
+import { Button } from "@/components/ui/button";
+
 
 type Product = {
   id: string;
@@ -18,8 +20,8 @@ type Product = {
   description: string;
   image: string;
   tags: string[];
-  link: string;
   hint: string;
+  webLinks?: { title: string; url: string }[];
   appLinks?: {
       android?: string;
       ios?: string;
@@ -98,8 +100,7 @@ export default function ProductsPage() {
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {products.map((product) => (
               <Card key={product.id} className="h-full overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2 flex flex-col group">
-                  <Link href={product.link || '#'} target="_blank" rel="noopener noreferrer" className="block">
-                    <div className="overflow-hidden">
+                    <div className="overflow-hidden relative">
                         <Image
                             src={product.image || "https://placehold.co/600x400.png"}
                             alt={product.title}
@@ -108,17 +109,20 @@ export default function ProductsPage() {
                             className="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-110"
                             data-ai-hint={product.hint}
                         />
+                        {(product.webLinks && product.webLinks.length > 0) && (
+                             <div className="absolute top-2 right-2">
+                                <Link href={product.webLinks[0].url || '#'} target="_blank" rel="noopener noreferrer" className="block">
+                                    <Button size="icon" variant="outline" className="rounded-full bg-background/70 backdrop-blur-sm">
+                                        <ArrowUpRight className="h-5 w-5 text-muted-foreground transition-transform duration-300 group-hover:text-primary group-hover:rotate-45" />
+                                    </Button>
+                                </Link>
+                            </div>
+                        )}
                     </div>
-                  </Link>
                   <CardHeader>
-                    <Link href={product.link || '#'} target="_blank" rel="noopener noreferrer" className="block">
-                      <div className="flex justify-between items-start">
-                        <CardTitle className="font-headline text-2xl group-hover:text-primary transition-colors">
-                          {product.title}
-                        </CardTitle>
-                        <ArrowUpRight className="h-5 w-5 text-muted-foreground transition-transform duration-300 group-hover:text-primary group-hover:rotate-45" />
-                      </div>
-                    </Link>
+                      <CardTitle className="font-headline text-2xl group-hover:text-primary transition-colors">
+                        {product.title}
+                      </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4 flex-grow flex flex-col">
                     <p className="text-muted-foreground flex-grow">{product.description}</p>
@@ -127,20 +131,33 @@ export default function ProductsPage() {
                             <Badge key={tag} variant="secondary">{tag}</Badge>
                         ))}
                     </div>
-                    {(product.appLinks?.android || product.appLinks?.ios) && (
-                        <div className="flex flex-wrap items-center gap-4 pt-4">
-                            {product.appLinks?.ios && (
-                                <Link href={product.appLinks.ios} target="_blank" rel="noopener noreferrer">
-                                    <AppStoreButton className="h-10" />
-                                </Link>
-                            )}
-                            {product.appLinks?.android && (
-                                <Link href={product.appLinks.android} target="_blank" rel="noopener noreferrer">
-                                <GooglePlayButton />
-                                </Link>
-                            )}
-                        </div>
-                    )}
+                    <div className="pt-4 space-y-4">
+                        {(product.appLinks?.android || product.appLinks?.ios) && (
+                            <div className="flex flex-wrap items-center gap-4">
+                                {product.appLinks?.ios && (
+                                    <Link href={product.appLinks.ios} target="_blank" rel="noopener noreferrer">
+                                        <AppStoreButton className="h-10" />
+                                    </Link>
+                                )}
+                                {product.appLinks?.android && (
+                                    <Link href={product.appLinks.android} target="_blank" rel="noopener noreferrer">
+                                        <GooglePlayButton />
+                                    </Link>
+                                )}
+                            </div>
+                        )}
+                        {(product.webLinks && product.webLinks.length > 0) && (
+                            <div className="flex flex-wrap items-center gap-4">
+                                {product.webLinks?.map(link => (
+                                    <Link key={link.url} href={link.url} target="_blank" rel="noopener noreferrer">
+                                        <Button variant="outline">
+                                            {link.title} <ArrowUpRight className="ml-2 h-4 w-4" />
+                                        </Button>
+                                    </Link>
+                                ))}
+                            </div>
+                        )}
+                    </div>
                   </CardContent>
               </Card>
             ))}
