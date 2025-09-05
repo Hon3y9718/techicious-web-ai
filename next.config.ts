@@ -40,6 +40,12 @@ const nextConfig: NextConfig = {
         hostname: 'admin.myfaithbook.in',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'play.google.com',
+        port: '',
+        pathname: '/**',
       }
     ],
   },

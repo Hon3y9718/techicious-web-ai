@@ -137,7 +137,7 @@ export default function PortfolioPage() {
                             )}
                             {project.appLinks?.android && (
                                 <Link href={project.appLinks.android} target="_blank" rel="noopener noreferrer">
-                                   <GooglePlayButton className="h-10" />
+                                   <GooglePlayButton />
                                 </Link>
                             )}
                         </div>
