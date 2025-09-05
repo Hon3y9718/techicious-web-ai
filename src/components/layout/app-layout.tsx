@@ -15,7 +15,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       {!isStudioPage && <Header />}
       <main className="flex-1">{children}</main>
       {!isStudioPage && <Footer />}
-      {!isStudioPage && <ChatWidget />}
+      {/* {!isStudioPage && <ChatWidget />} */}
     </div>
   );
 }
