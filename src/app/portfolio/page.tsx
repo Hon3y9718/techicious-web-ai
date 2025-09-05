@@ -121,7 +121,7 @@ export default function PortfolioPage() {
                               <Badge key={tech} variant="secondary">{tech}</Badge>
                           ))}
                       </div>
-                       {(project.webLinks?.length || (project.appLinks?.android || project.appLinks?.ios)) && (
+                       {(project.webLinks && project.webLinks.length > 0) || (project.appLinks?.android || project.appLinks?.ios) ? (
                         <div className="flex flex-wrap items-center gap-4 pt-4">
                             {project.webLinks?.map(link => (
                                 <Link key={link.url} href={link.url} target="_blank" rel="noopener noreferrer">
@@ -141,7 +141,7 @@ export default function PortfolioPage() {
                                 </Link>
                             )}
                         </div>
-                       )}
+                       ) : null}
                     </CardContent>
                   </Card>
                 </div>
