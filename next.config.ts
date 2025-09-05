@@ -30,7 +30,7 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       },
       {
-        protocol: 'https_link',
+        protocol: 'https',
         hostname: 'admin.myfaithbook.in',
         port: '',
         pathname: '/**',
