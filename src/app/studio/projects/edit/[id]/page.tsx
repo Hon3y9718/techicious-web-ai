@@ -175,7 +175,7 @@ export default function EditProjectPage() {
           </div>
           <div className="space-y-2">
             <Label htmlFor="image">Image URL</Label>
-            <Input id="image" placeholder="https://placehold.co/600x400.png" value={image} onChange={(e) => setImage(e.target.value)} disabled={isLoading} />
+            <Input id="image" placeholder="https://placehold.co/1200x600.png" value={image} onChange={(e) => setImage(e.target.value)} disabled={isLoading} />
           </div>
           <div className="space-y-2">
             <Label htmlFor="hint">Image AI Hint</Label>
