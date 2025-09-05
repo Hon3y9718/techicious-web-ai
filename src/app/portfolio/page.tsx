@@ -101,9 +101,9 @@ export default function PortfolioPage() {
               {projects.map((project) => (
                 <div key={project.id} className="group">
                   <Card className="h-full overflow-hidden transition-shadow duration-300 hover:shadow-2xl flex flex-col">
-                      <div className="relative w-full h-64 overflow-hidden">
+                      <div className="relative w-full h-64">
                           <Image
-                              src={project.image || "https://placehold.co/600x400.png"}
+                              src={project.image || "https://placehold.co/1200x600.png"}
                               alt={project.title}
                               fill
                               className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -120,27 +120,33 @@ export default function PortfolioPage() {
                               <Badge key={tech} variant="secondary">{tech}</Badge>
                           ))}
                       </div>
-                       {(project.webLinks && project.webLinks.length > 0) || (project.appLinks?.android || project.appLinks?.ios) ? (
-                        <div className="flex flex-wrap items-center gap-4 pt-4">
-                            {project.webLinks?.map(link => (
-                                <Link key={link.url} href={link.url} target="_blank" rel="noopener noreferrer">
-                                    <Button variant="outline">
-                                        {link.title} <ArrowUpRight className="ml-2 h-4 w-4" />
-                                    </Button>
-                                </Link>
-                            ))}
-                            {project.appLinks?.ios && (
-                                <Link href={project.appLinks.ios} target="_blank" rel="noopener noreferrer">
-                                    <AppStoreButton className="h-10" />
-                                </Link>
-                            )}
-                            {project.appLinks?.android && (
-                                <Link href={project.appLinks.android} target="_blank" rel="noopener noreferrer">
-                                   <GooglePlayButton />
-                                </Link>
-                            )}
+                       <div className="pt-4 space-y-4">
+                          {(project.appLinks?.android || project.appLinks?.ios) && (
+                            <div className="flex flex-wrap items-center gap-4">
+                                {project.appLinks?.ios && (
+                                    <Link href={project.appLinks.ios} target="_blank" rel="noopener noreferrer">
+                                        <AppStoreButton className="h-10" />
+                                    </Link>
+                                )}
+                                {project.appLinks?.android && (
+                                    <Link href={project.appLinks.android} target="_blank" rel="noopener noreferrer">
+                                       <GooglePlayButton />
+                                    </Link>
+                                )}
+                            </div>
+                           )}
+                           {(project.webLinks && project.webLinks.length > 0) && (
+                            <div className="flex flex-wrap items-center gap-4">
+                                {project.webLinks?.map(link => (
+                                    <Link key={link.url} href={link.url} target="_blank" rel="noopener noreferrer">
+                                        <Button variant="outline">
+                                            {link.title} <ArrowUpRight className="ml-2 h-4 w-4" />
+                                        </Button>
+                                    </Link>
+                                ))}
+                            </div>
+                           )}
                         </div>
-                       ) : null}
                     </CardContent>
                   </Card>
                 </div>
