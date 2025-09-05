@@ -14,6 +14,21 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Send, Save, ArrowLeft } from "lucide-react";
 
+const parseWebLinks = (text: string) => {
+    if (!text.trim()) return [];
+    return text
+        .split('\n')
+        .map(line => {
+            const parts = line.split(' - ');
+            if (parts.length < 2) return null;
+            const title = parts[0].trim();
+            const url = parts.slice(1).join(' - ').trim();
+            if (!title || !url) return null;
+            return { title, url };
+        })
+        .filter(Boolean) as { title: string; url: string }[];
+};
+
 export default function NewProjectPage() {
   const { user, loading: authLoading } = useAuth();
   const router = useRouter();
@@ -24,7 +39,7 @@ export default function NewProjectPage() {
   const [image, setImage] = useState("");
   const [tech, setTech] = useState("");
   const [hint, setHint] = useState("");
-  const [webLink, setWebLink] = useState("");
+  const [webLinks, setWebLinks] = useState("");
   const [androidLink, setAndroidLink] = useState("");
   const [iosLink, setIosLink] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -53,7 +68,7 @@ export default function NewProjectPage() {
         image,
         tech: tech.split(',').map(t => t.trim()).filter(t => t),
         hint,
-        webLink: webLink || null,
+        webLinks: parseWebLinks(webLinks),
         appLinks: {
             android: androidLink || null,
             ios: iosLink || null,
@@ -129,8 +144,8 @@ export default function NewProjectPage() {
           <div className="space-y-4 pt-4 border-t">
              <h3 className="text-lg font-medium">Project Links</h3>
              <div className="space-y-2">
-                <Label htmlFor="webLink">Website Link</Label>
-                <Input id="webLink" placeholder="https://example.com" value={webLink} onChange={(e) => setWebLink(e.target.value)} disabled={isLoading} />
+                <Label htmlFor="webLinks">Website Links (one per line, format: Title - URL)</Label>
+                <Textarea id="webLinks" placeholder="e.g. Live Site - https://example.com" value={webLinks} onChange={(e) => setWebLinks(e.target.value)} disabled={isLoading} rows={4} />
               </div>
                <div className="space-y-2">
                 <Label htmlFor="androidLink">Google Play Link</Label>

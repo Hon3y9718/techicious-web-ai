@@ -21,7 +21,7 @@ type Project = {
   image: string;
   tech: string[];
   hint: string;
-  webLink?: string;
+  webLinks?: { title: string; url: string }[];
   appLinks?: {
       android?: string;
       ios?: string;
@@ -121,15 +121,15 @@ export default function PortfolioPage() {
                               <Badge key={tech} variant="secondary">{tech}</Badge>
                           ))}
                       </div>
-                       {(project.webLink || project.appLinks) && (
+                       {(project.webLinks?.length || project.appLinks) && (
                         <div className="flex flex-wrap items-center gap-4 pt-4">
-                            {project.webLink && (
-                                <Link href={project.webLink} target="_blank" rel="noopener noreferrer">
+                            {project.webLinks?.map(link => (
+                                <Link key={link.url} href={link.url} target="_blank" rel="noopener noreferrer">
                                     <Button variant="outline">
-                                        Visit Website <ArrowUpRight className="ml-2 h-4 w-4" />
+                                        {link.title} <ArrowUpRight className="ml-2 h-4 w-4" />
                                     </Button>
                                 </Link>
-                            )}
+                            ))}
                             {project.appLinks?.ios && (
                                 <Link href={project.appLinks.ios} target="_blank" rel="noopener noreferrer">
                                     <AppStoreButton className="h-10" />
