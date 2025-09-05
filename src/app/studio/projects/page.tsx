@@ -162,8 +162,10 @@ export default function ProjectsPage() {
                                     </Button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end" onClick={(e) => e.stopPropagation()}>
-                                    <DropdownMenuItem>
-                                        <Pencil className="mr-2 h-4 w-4" /> Edit
+                                    <DropdownMenuItem asChild>
+                                        <Link href={`/studio/projects/edit/${project.id}`}>
+                                            <Pencil className="mr-2 h-4 w-4" /> Edit
+                                        </Link>
                                     </DropdownMenuItem>
                                     {project.status === 'draft' && (
                                         <DropdownMenuItem onClick={() => handlePublish(project.id, project.title)}>
