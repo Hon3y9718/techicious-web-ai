@@ -28,6 +28,8 @@ export default function EditProductPage() {
   const [tags, setTags] = useState("");
   const [link, setLink] = useState("");
   const [hint, setHint] = useState("");
+  const [androidLink, setAndroidLink] = useState("");
+  const [iosLink, setIosLink] = useState("");
   const [status, setStatus] = useState<'draft' | 'published' | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isFetching, setIsFetching] = useState(true);
@@ -53,6 +55,8 @@ export default function EditProductPage() {
           setTags(productData.tags.join(", "));
           setLink(productData.link || "");
           setHint(productData.hint || "");
+          setAndroidLink(productData.appLinks?.android || "");
+          setIosLink(productData.appLinks?.ios || "");
           setStatus(productData.status || 'draft');
         } else {
           toast({ title: "Error", description: "Product not found.", variant: "destructive" });
@@ -89,6 +93,10 @@ export default function EditProductPage() {
         tags: tags.split(',').map(t => t.trim()).filter(t => t),
         link,
         hint,
+        appLinks: {
+            android: androidLink || null,
+            ios: iosLink || null,
+        },
         status: newStatus,
         updatedAt: serverTimestamp(),
       };
@@ -160,6 +168,18 @@ export default function EditProductPage() {
           <div className="space-y-2">
             <Label htmlFor="link">Product Link</Label>
             <Input id="link" placeholder="https://example.com/my-product" value={link} onChange={(e) => setLink(e.target.value)} disabled={isLoading} />
+          </div>
+
+          <div className="space-y-4 pt-4 border-t">
+             <h3 className="text-lg font-medium">Application Links</h3>
+               <div className="space-y-2">
+                <Label htmlFor="androidLink">Google Play Link</Label>
+                <Input id="androidLink" placeholder="https://play.google.com/store/apps/details?id=..." value={androidLink} onChange={(e) => setAndroidLink(e.target.value)} disabled={isLoading} />
+              </div>
+               <div className="space-y-2">
+                <Label htmlFor="iosLink">Apple App Store Link</Label>
+                <Input id="iosLink" placeholder="https://apps.apple.com/app/..." value={iosLink} onChange={(e) => setIosLink(e.target.value)} disabled={isLoading} />
+              </div>
           </div>
           
            <div className="flex justify-end gap-4 pt-4">

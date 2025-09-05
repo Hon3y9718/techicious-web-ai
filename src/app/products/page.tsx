@@ -9,6 +9,8 @@ import { Badge } from "@/components/ui/badge";
 import { firestore } from "@/lib/firebase";
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import { GooglePlayButton } from "@/components/icons/google-play-button";
+import { AppStoreButton } from "@/components/icons/app-store-button";
 
 type Product = {
   id: string;
@@ -18,6 +20,10 @@ type Product = {
   tags: string[];
   link: string;
   hint: string;
+  appLinks?: {
+      android?: string;
+      ios?: string;
+  }
 };
 
 async function getProducts() {
@@ -91,8 +97,8 @@ export default function ProductsPage() {
           ) : products.length > 0 ? (
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {products.map((product) => (
-              <Link key={product.id} href={product.link || '#'} target="_blank" rel="noopener noreferrer" className="group">
-                <Card className="h-full overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
+              <Card key={product.id} className="h-full overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2 flex flex-col group">
+                  <Link href={product.link || '#'} target="_blank" rel="noopener noreferrer" className="block">
                     <div className="overflow-hidden">
                         <Image
                             src={product.image || "https://placehold.co/600x400.png"}
@@ -103,24 +109,40 @@ export default function ProductsPage() {
                             data-ai-hint={product.hint}
                         />
                     </div>
+                  </Link>
                   <CardHeader>
-                    <div className="flex justify-between items-start">
-                      <CardTitle className="font-headline text-2xl group-hover:text-primary transition-colors">
-                        {product.title}
-                      </CardTitle>
-                      <ArrowUpRight className="h-5 w-5 text-muted-foreground transition-transform duration-300 group-hover:text-primary group-hover:rotate-45" />
-                    </div>
+                    <Link href={product.link || '#'} target="_blank" rel="noopener noreferrer" className="block">
+                      <div className="flex justify-between items-start">
+                        <CardTitle className="font-headline text-2xl group-hover:text-primary transition-colors">
+                          {product.title}
+                        </CardTitle>
+                        <ArrowUpRight className="h-5 w-5 text-muted-foreground transition-transform duration-300 group-hover:text-primary group-hover:rotate-45" />
+                      </div>
+                    </Link>
                   </CardHeader>
-                  <CardContent className="space-y-4">
-                    <p className="text-muted-foreground">{product.description}</p>
-                    <div className="flex flex-wrap gap-2">
+                  <CardContent className="space-y-4 flex-grow flex flex-col">
+                    <p className="text-muted-foreground flex-grow">{product.description}</p>
+                     <div className="flex flex-wrap gap-2">
                         {product.tags.map(tag => (
                             <Badge key={tag} variant="secondary">{tag}</Badge>
                         ))}
                     </div>
+                    {(product.appLinks?.android || product.appLinks?.ios) && (
+                        <div className="flex flex-wrap items-center gap-4 pt-4">
+                            {product.appLinks?.ios && (
+                                <Link href={product.appLinks.ios} target="_blank" rel="noopener noreferrer">
+                                    <AppStoreButton className="h-10" />
+                                </Link>
+                            )}
+                            {product.appLinks?.android && (
+                                <Link href={product.appLinks.android} target="_blank" rel="noopener noreferrer">
+                                <GooglePlayButton />
+                                </Link>
+                            )}
+                        </div>
+                    )}
                   </CardContent>
-                </Card>
-              </Link>
+              </Card>
             ))}
           </div>
            ) : (
