@@ -35,7 +35,7 @@ export default function PrivacyPolicyPage() {
         </ul>
         
         <h2 className="font-headline text-2xl font-bold tracking-tighter mt-10 mb-4 sm:text-3xl">6. Contact Information</h2>
-        <p>Techicious Innovations Private Limited W-116A/103, T Hut, HMB Sardar Patel Camp, Jwala Puri, New Delhi, 110087. Support Email: umesh@techicious.com</p>
+        <p>Techicious Innovations Private Limited W-116A/103, T Hut, HMB Sardar Patel Camp, Jwala Puri, New Delhi, 110087. Support Email: <a href="mailto:umesh@techicious.com" className="text-primary hover:underline">umesh@techicious.com</a></p>
       </div>
     </div>
   );
