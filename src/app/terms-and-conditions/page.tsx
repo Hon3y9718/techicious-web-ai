@@ -4,43 +4,53 @@ export default function TermsAndConditionsPage() {
     <div className="container mx-auto max-w-4xl py-12 md:py-24">
       <div className="max-w-none">
         <h1 className="font-headline text-4xl font-bold tracking-tighter sm:text-5xl">Terms and Conditions</h1>
-        <p className="text-muted-foreground mt-2">Last updated: September 5, 2024</p>
+        <p className="text-muted-foreground mt-2">Effective Date: January 16, 2026</p>
 
-        <h2 className="font-headline text-2xl font-bold tracking-tighter mt-10 mb-4 sm:text-3xl">1. Introduction</h2>
-        <p>Welcome to Techicious! These terms and conditions outline the rules and regulations for the use of Techicious's Website, located at techicious.com.</p>
-        <p className="mt-4">By accessing this website we assume you accept these terms and conditions. Do not continue to use Techicious if you do not agree to take all of the terms and conditions stated on this page.</p>
+        <h2 className="font-headline text-2xl font-bold tracking-tighter mt-10 mb-4 sm:text-3xl">1. Agreement to Terms</h2>
+        <p>By accessing or using the Telegram Bot provided by Techicious Innovations Private Limited ("Company," "we," "us," or "our"), you agree to be bound by these Terms and Conditions. If you do not agree, please do not use the Bot.</p>
 
-        <h2 className="font-headline text-2xl font-bold tracking-tighter mt-10 mb-4 sm:text-3xl">2. Intellectual Property Rights</h2>
-        <p>Other than the content you own, under these Terms, Techicious Innovations Pvt. Ltd. and/or its licensors own all the intellectual property rights and materials contained in this Website.</p>
-        <p className="mt-4">You are granted a limited license only for purposes of viewing the material contained on this Website.</p>
-
-        <h2 className="font-headline text-2xl font-bold tracking-tighter mt-10 mb-4 sm:text-3xl">3. Restrictions</h2>
-        <p>You are specifically restricted from all of the following:</p>
+        <h2 className="font-headline text-2xl font-bold tracking-tighter mt-10 mb-4 sm:text-3xl">2. Description of Service</h2>
+        <p>The Bot provides an interface to manage your Google Calendar via Telegram. This includes, but is not limited to:</p>
         <ul className="list-disc list-inside space-y-2 mt-4 ml-4">
-            <li>publishing any Website material in any other media;</li>
-            <li>selling, sublicensing and/or otherwise commercializing any Website material;</li>
-            <li>publicly performing and/or showing any Website material;</li>
-            <li>using this Website in any way that is or may be damaging to this Website;</li>
-            <li>using this Website in any way that impacts user access to this Website;</li>
-            <li>using this Website contrary to applicable laws and regulations, or in any way may cause harm to the Website, or to any person or business entity;</li>
-            <li>engaging in any data mining, data harvesting, data extracting or any other similar activity in relation to this Website;</li>
-            <li>using this Website to engage in any advertising or marketing.</li>
+            <li>Viewing scheduled events.</li>
+            <li>Creating, updating, or deleting calendar entries.</li>
+            <li>Receiving automated notifications.</li>
+        </ul>
+
+        <h2 className="font-headline text-2xl font-bold tracking-tighter mt-10 mb-4 sm:text-3xl">3. Account Security</h2>
+        <p>You are responsible for the security of your Telegram account and the Google account connected to this service.</p>
+        <p className="mt-4">You agree to notify us immediately of any unauthorized use of your account.</p>
+        <p className="mt-4">We are not liable for any loss or damage arising from your failure to protect your login credentials.</p>
+
+        <h2 className="font-headline text-2xl font-bold tracking-tighter mt-10 mb-4 sm:text-3xl">4. Google API Integration & User Data</h2>
+        <p>Your use of this Bot requires granting access to your Google Calendar data.</p>
+        <p className="mt-4">We access this data strictly to perform the actions you command via the Bot.</p>
+        <p className="mt-4">Our use of data received from Google APIs adheres to the Google API Services User Data Policy, including the Limited Use requirements.</p>
+
+        <h2 className="font-headline text-2xl font-bold tracking-tighter mt-10 mb-4 sm:text-3xl">5. Prohibited Activities</h2>
+        <p>You agree not to use the Bot to:</p>
+        <ul className="list-disc list-inside space-y-2 mt-4 ml-4">
+            <li>Violate any local, state, national, or international law.</li>
+            <li>Send spam or unsolicited messages via the calendar invite system.</li>
+            <li>Attempt to reverse engineer or disrupt the Bot's infrastructure.</li>
         </ul>
         
-        <h2 className="font-headline text-2xl font-bold tracking-tighter mt-10 mb-4 sm:text-3xl">4. Your Content</h2>
-        <p>In these Website Standard Terms and Conditions, “Your Content” shall mean any audio, video text, images or other material you choose to display on this Website. By displaying Your Content, you grant Techicious Innovations Pvt. Ltd. a non-exclusive, worldwide irrevocable, sub-licensable license to use, reproduce, adapt, publish, translate and distribute it in any and all media.</p>
+        <h2 className="font-headline text-2xl font-bold tracking-tighter mt-10 mb-4 sm:text-3xl">6. Limitation of Liability</h2>
+        <p>To the maximum extent permitted by law, Techicious Innovations Private Limited shall not be liable for any indirect, incidental, or consequential damages, including loss of data or profits, arising from:</p>
+        <ul className="list-disc list-inside space-y-2 mt-4 ml-4">
+            <li>Errors or inaccuracies in the Bot's performance.</li>
+            <li>Any unauthorized access to or use of our servers and/or personal information stored therein.</li>
+            <li>Interruptions or cessation of service from third-party platforms (Google or Telegram).</li>
+        </ul>
 
-        <h2 className="font-headline text-2xl font-bold tracking-tighter mt-10 mb-4 sm:text-3xl">5. No warranties</h2>
-        <p>This Website is provided "as is," with all faults, and Techicious Innovations Pvt. Ltd. express no representations or warranties, of any kind related to this Website or the materials contained on this Website.</p>
+        <h2 className="font-headline text-2xl font-bold tracking-tighter mt-10 mb-4 sm:text-3xl">7. Disclaimer of Warranties</h2>
+        <p>The service is provided on an "AS IS" and "AS AVAILABLE" basis. We make no warranties that the Bot will be error-free or that access will be continuous or uninterrupted.</p>
 
-        <h2 className="font-headline text-2xl font-bold tracking-tighter mt-10 mb-4 sm:text-3xl">6. Limitation of liability</h2>
-        <p>In no event shall Techicious Innovations Pvt. Ltd., nor any of its officers, directors and employees, shall be held liable for anything arising out of or in any way connected with your use of this Website whether such liability is under contract. Techicious Innovations Pvt. Ltd., including its officers, directors and employees shall not be held liable for any indirect, consequential or special liability arising out of or in any way related to your use of this Website.</p>
-
-        <h2 className="font-headline text-2xl font-bold tracking-tighter mt-10 mb-4 sm:text-3xl">7. Governing Law & Jurisdiction</h2>
-        <p>These Terms will be governed by and interpreted in accordance with the laws of India, and you submit to the non-exclusive jurisdiction of the state and federal courts located in Delhi for the resolution of any disputes.</p>
+        <h2 className="font-headline text-2xl font-bold tracking-tighter mt-10 mb-4 sm:text-3xl">8. Governing Law</h2>
+        <p>These Terms shall be governed by and defined at the laws of India. You irrevocably consent that the courts of New Delhi shall have exclusive jurisdiction to resolve any dispute which may arise in connection with these terms.</p>
         
-        <h2 className="font-headline text-2xl font-bold tracking-tighter mt-10 mb-4 sm:text-3xl">8. Contact Us</h2>
-        <p>If you have any questions about these Terms, please contact us at sales@techicious.com.</p>
+        <h2 className="font-headline text-2xl font-bold tracking-tighter mt-10 mb-4 sm:text-3xl">9. Contact Information</h2>
+        <p>For any legal inquiries, please contact: Techicious Innovations Private Limited Address: W-116A/103, T Hut, HMB Sardar Patel Camp, Jwala Puri, New Delhi, 110087. Email: <a href="mailto:umesh@techicious.com" className="text-primary hover:underline">umesh@techicious.com</a></p>
       </div>
     </div>
   );
