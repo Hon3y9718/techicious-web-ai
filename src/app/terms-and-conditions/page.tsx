@@ -2,21 +2,21 @@
 export default function TermsAndConditionsPage() {
   return (
     <div className="container mx-auto max-w-4xl py-12 md:py-24">
-      <div className="prose dark:prose-invert max-w-none">
+      <div className="max-w-none">
         <h1 className="font-headline text-4xl font-bold tracking-tighter sm:text-5xl">Terms and Conditions</h1>
-        <p className="text-muted-foreground">Last updated: September 5, 2024</p>
+        <p className="text-muted-foreground mt-2">Last updated: September 5, 2024</p>
 
-        <h2>1. Introduction</h2>
+        <h2 className="font-headline text-2xl font-bold tracking-tighter mt-10 mb-4 sm:text-3xl">1. Introduction</h2>
         <p>Welcome to Techicious! These terms and conditions outline the rules and regulations for the use of Techicious's Website, located at techicious.com.</p>
-        <p>By accessing this website we assume you accept these terms and conditions. Do not continue to use Techicious if you do not agree to take all of the terms and conditions stated on this page.</p>
+        <p className="mt-4">By accessing this website we assume you accept these terms and conditions. Do not continue to use Techicious if you do not agree to take all of the terms and conditions stated on this page.</p>
 
-        <h2>2. Intellectual Property Rights</h2>
+        <h2 className="font-headline text-2xl font-bold tracking-tighter mt-10 mb-4 sm:text-3xl">2. Intellectual Property Rights</h2>
         <p>Other than the content you own, under these Terms, Techicious Innovations Pvt. Ltd. and/or its licensors own all the intellectual property rights and materials contained in this Website.</p>
-        <p>You are granted a limited license only for purposes of viewing the material contained on this Website.</p>
+        <p className="mt-4">You are granted a limited license only for purposes of viewing the material contained on this Website.</p>
 
-        <h2>3. Restrictions</h2>
+        <h2 className="font-headline text-2xl font-bold tracking-tighter mt-10 mb-4 sm:text-3xl">3. Restrictions</h2>
         <p>You are specifically restricted from all of the following:</p>
-        <ul>
+        <ul className="list-disc list-inside space-y-2 mt-4 ml-4">
             <li>publishing any Website material in any other media;</li>
             <li>selling, sublicensing and/or otherwise commercializing any Website material;</li>
             <li>publicly performing and/or showing any Website material;</li>
@@ -27,19 +27,19 @@ export default function TermsAndConditionsPage() {
             <li>using this Website to engage in any advertising or marketing.</li>
         </ul>
         
-        <h2>4. Your Content</h2>
+        <h2 className="font-headline text-2xl font-bold tracking-tighter mt-10 mb-4 sm:text-3xl">4. Your Content</h2>
         <p>In these Website Standard Terms and Conditions, “Your Content” shall mean any audio, video text, images or other material you choose to display on this Website. By displaying Your Content, you grant Techicious Innovations Pvt. Ltd. a non-exclusive, worldwide irrevocable, sub-licensable license to use, reproduce, adapt, publish, translate and distribute it in any and all media.</p>
 
-        <h2>5. No warranties</h2>
+        <h2 className="font-headline text-2xl font-bold tracking-tighter mt-10 mb-4 sm:text-3xl">5. No warranties</h2>
         <p>This Website is provided "as is," with all faults, and Techicious Innovations Pvt. Ltd. express no representations or warranties, of any kind related to this Website or the materials contained on this Website.</p>
 
-        <h2>6. Limitation of liability</h2>
+        <h2 className="font-headline text-2xl font-bold tracking-tighter mt-10 mb-4 sm:text-3xl">6. Limitation of liability</h2>
         <p>In no event shall Techicious Innovations Pvt. Ltd., nor any of its officers, directors and employees, shall be held liable for anything arising out of or in any way connected with your use of this Website whether such liability is under contract. Techicious Innovations Pvt. Ltd., including its officers, directors and employees shall not be held liable for any indirect, consequential or special liability arising out of or in any way related to your use of this Website.</p>
 
-        <h2>7. Governing Law & Jurisdiction</h2>
+        <h2 className="font-headline text-2xl font-bold tracking-tighter mt-10 mb-4 sm:text-3xl">7. Governing Law & Jurisdiction</h2>
         <p>These Terms will be governed by and interpreted in accordance with the laws of India, and you submit to the non-exclusive jurisdiction of the state and federal courts located in Delhi for the resolution of any disputes.</p>
         
-        <h2>8. Contact Us</h2>
+        <h2 className="font-headline text-2xl font-bold tracking-tighter mt-10 mb-4 sm:text-3xl">8. Contact Us</h2>
         <p>If you have any questions about these Terms, please contact us at sales@techicious.com.</p>
       </div>
     </div>
