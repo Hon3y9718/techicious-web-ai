@@ -24,14 +24,14 @@ export default function PrivacyPolicyPage() {
         </ul>
 
         <h2 className="font-headline text-2xl font-bold tracking-tighter mt-10 mb-4 sm:text-3xl">4. Google API Limited Use Disclosure</h2>
-        <p>Techicious Innovations Private Limited’s use and transfer of information received from Google APIs to any other app (including the Telegram platform) will adhere to the Google API Services User Data Policy, including the Limited Use requirements.</p>
+        <p>Techicious Innovations Private Limited’s use and transfer of information received from Google APIs to any other app (including the Telegram platform) will adhere to the <a href="https://developers.google.com/terms/api-services-user-data-policy" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">Google API Services User Data Policy</a>, including the Limited Use requirements.</p>
         <p className="mt-4"><em>Note for Google Reviewers: We use the Telegram Bot API as a transit layer to deliver calendar management features to the user. We do not share Google User Data with Telegram for any purpose other than displaying it to the user within the Bot interface.</em></p>
 
         <h2 className="font-headline text-2xl font-bold tracking-tighter mt-10 mb-4 sm:text-3xl">5. Data Security & Retention</h2>
         <ul className="list-disc list-inside space-y-2 mt-4 ml-4">
           <li><strong>Encryption:</strong> Data in transit between Google, our servers, and Telegram is encrypted using industry-standard SSL/TLS.</li>
           <li><strong>Retention:</strong> We only retain your OAuth refresh tokens (encrypted) to keep the bot connected. We do not store your calendar events permanently.</li>
-          <li><strong>Revocation:</strong> You can stop the Bot’s access at any time by sending the /logout command or by visiting Google Security Settings.</li>
+          <li><strong>Revocation:</strong> You can stop the Bot’s access at any time by sending the /logout command or by visiting <a href="https://myaccount.google.com/connections?filters=3,4&hl=en" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">Google Security Settings</a>.</li>
         </ul>
         
         <h2 className="font-headline text-2xl font-bold tracking-tighter mt-10 mb-4 sm:text-3xl">6. Contact Information</h2>
