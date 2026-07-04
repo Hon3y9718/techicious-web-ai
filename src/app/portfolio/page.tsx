@@ -16,6 +16,11 @@ type Project = {
   image: string;
   tech: string[];
   hint: string;
+  webLinks?: { title: string; url: string }[];
+  appLinks?: {
+      android?: string;
+      ios?: string;
+  }
 };
 
 async function getPortfolioProjects() {
@@ -90,28 +95,61 @@ export default function PortfolioPage() {
             <div className="grid gap-8 md:grid-cols-2">
               {projects.map((project) => (
                 <div key={project.id} className="group">
+<<<<<<< HEAD
                   <Card className="h-full overflow-hidden transition-shadow duration-300 hover:shadow-2xl">
                       <div className="overflow-hidden">
                           <SafeImage
                               src={sanitizeImageUrl(project.image, "/images/fallback/portfolio-project.svg")}
                               fallback="/images/fallback/portfolio-project.svg"
+=======
+                  <Card className="h-full overflow-hidden transition-shadow duration-300 hover:shadow-2xl flex flex-col">
+                      <div className="relative w-full h-64 bg-white p-[5px]">
+                          <Image
+                              src={project.image || "https://placehold.co/1200x600.png"}
+>>>>>>> 38fb5a7895ac1307d803f5afc5e7318290fd1b4a
                               alt={project.title}
-                              width={600}
-                              height={400}
-                              className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+                              fill
+                              className="object-contain transition-transform duration-500 group-hover:scale-105"
                               data-ai-hint={project.hint}
                           />
                       </div>
                     <CardHeader>
                       <CardTitle className="font-headline text-2xl">{project.title}</CardTitle>
                     </CardHeader>
-                    <CardContent className="space-y-4">
-                      <p className="text-muted-foreground">{project.description}</p>
+                    <CardContent className="space-y-4 flex-grow flex flex-col">
+                      <p className="text-muted-foreground flex-grow">{project.description}</p>
                       <div className="flex flex-wrap gap-2">
                           {project.tech.map(tech => (
                               <Badge key={tech} variant="secondary">{tech}</Badge>
                           ))}
                       </div>
+                      <div className="pt-4 space-y-4">
+                            {(project.appLinks?.android || project.appLinks?.ios) && (
+                                <div className="flex flex-wrap items-center gap-4">
+                                    {project.appLinks?.ios && (
+                                        <Link href={project.appLinks.ios} target="_blank" rel="noopener noreferrer">
+                                            <AppStoreButton className="h-10" />
+                                        </Link>
+                                    )}
+                                    {project.appLinks?.android && (
+                                        <Link href={project.appLinks.android} target="_blank" rel="noopener noreferrer">
+                                        <GooglePlayButton />
+                                        </Link>
+                                    )}
+                                </div>
+                            )}
+                            {(project.webLinks && project.webLinks.length > 0) && (
+                                <div className="flex flex-wrap items-center gap-4">
+                                    {project.webLinks?.map(link => (
+                                        <Link key={link.url} href={link.url} target="_blank" rel="noopener noreferrer">
+                                            <Button variant="outline">
+                                                {link.title} <ArrowUpRight className="ml-2 h-4 w-4" />
+                                            </Button>
+                                        </Link>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
                     </CardContent>
                   </Card>
                 </div>

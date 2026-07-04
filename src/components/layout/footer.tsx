@@ -1,3 +1,4 @@
+
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Github, Twitter, Linkedin, Instagram } from "lucide-react";
@@ -29,7 +30,7 @@ export default function Footer() {
                 </Button>
             </div>
           </div>
-          <div className="grid grid-cols-2 md:col-span-2 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 md:col-span-2 md:grid-cols-4 gap-8">
             <div>
               <h4 className="font-semibold font-headline mb-2">Company</h4>
               <ul className="space-y-2 text-sm">
@@ -52,6 +53,13 @@ export default function Footer() {
                 <li><Link href="/contact" className="text-muted-foreground hover:text-primary">Contact Us</Link></li>
                 <li><Link href="/portfolio" className="text-muted-foreground hover:text-primary">Portfolio</Link></li>
                 <li><Link href="/products" className="text-muted-foreground hover:text-primary">Products</Link></li>
+              </ul>
+            </div>
+             <div>
+              <h4 className="font-semibold font-headline mb-2">Legal</h4>
+              <ul className="space-y-2 text-sm">
+                <li><Link href="/privacy-policy" className="text-muted-foreground hover:text-primary">Privacy Policy</Link></li>
+                <li><Link href="/terms-and-conditions" className="text-muted-foreground hover:text-primary">Terms & Conditions</Link></li>
               </ul>
             </div>
           </div>

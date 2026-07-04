@@ -29,7 +29,8 @@ const parseWebLinks = (text: string) => {
         .filter(Boolean) as { title: string; url: string }[];
 };
 
-export default function NewProjectPage() {
+
+export default function NewProductPage() {
   const { user, loading: authLoading } = useAuth();
   const router = useRouter();
   const { toast } = useToast();
@@ -37,9 +38,9 @@ export default function NewProjectPage() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
-  const [tech, setTech] = useState("");
-  const [hint, setHint] = useState("");
+  const [tags, setTags] = useState("");
   const [webLinks, setWebLinks] = useState("");
+  const [hint, setHint] = useState("");
   const [androidLink, setAndroidLink] = useState("");
   const [iosLink, setIosLink] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -55,20 +56,20 @@ export default function NewProjectPage() {
       toast({ title: "Error", description: "You must be logged in.", variant: "destructive" });
       return;
     }
-    if (!title || !description || !tech) {
+    if (!title || !description || !tags) {
       toast({ title: "Error", description: "Please fill all required fields.", variant: "destructive" });
       return;
     }
 
     setIsLoading(true);
     try {
-      const projectData: any = {
+      const productData: any = {
         title,
         description,
         image,
-        tech: tech.split(',').map(t => t.trim()).filter(t => t),
-        hint,
+        tags: tags.split(',').map(t => t.trim()).filter(t => t),
         webLinks: parseWebLinks(webLinks),
+        hint,
         appLinks: {
             android: androidLink || null,
             ios: iosLink || null,
@@ -80,20 +81,20 @@ export default function NewProjectPage() {
       };
 
       if (status === 'published') {
-        projectData.publishedAt = serverTimestamp();
+        productData.publishedAt = serverTimestamp();
       }
 
-      await addDoc(collection(firestore, "portfolio"), projectData);
+      await addDoc(collection(firestore, "products"), productData);
       toast({
-        title: status === 'published' ? "Project Published!" : "Draft Saved!",
-        description: `The project "${title}" has been saved.`,
+        title: status === 'published' ? "Product Published!" : "Draft Saved!",
+        description: `The product "${title}" has been saved.`,
       });
-      router.push("/studio/projects");
+      router.push("/studio/products");
     } catch (error) {
-      console.error("Error creating project:", error);
+      console.error("Error creating product:", error);
       toast({
         title: "Error",
-        description: "Failed to create project.",
+        description: "Failed to create product.",
         variant: "destructive",
       });
     } finally {
@@ -110,18 +111,18 @@ export default function NewProjectPage() {
       <div className="max-w-3xl mx-auto">
         <div className="mb-6">
             <Button variant="ghost" asChild className="mb-4">
-                <Link href="/studio/projects">
+                <Link href="/studio/products">
                     <ArrowLeft className="mr-2 h-4 w-4" />
-                    Back to Projects
+                    Back to Products
                 </Link>
             </Button>
-          <h2 className="text-3xl font-bold tracking-tight">Create New Project</h2>
-          <p className="text-muted-foreground">Fill in the details for your new portfolio piece.</p>
+          <h2 className="text-3xl font-bold tracking-tight">Create New Product</h2>
+          <p className="text-muted-foreground">Fill in the details for your new product.</p>
         </div>
 
         <form onSubmit={(e) => e.preventDefault()} className="space-y-6">
           <div className="space-y-2">
-            <Label htmlFor="title">Project Title</Label>
+            <Label htmlFor="title">Product Title</Label>
             <Input id="title" value={title} onChange={(e) => setTitle(e.target.value)} disabled={isLoading} required />
           </div>
           <div className="space-y-2">
@@ -130,23 +131,23 @@ export default function NewProjectPage() {
           </div>
           <div className="space-y-2">
             <Label htmlFor="image">Image URL</Label>
-            <Input id="image" placeholder="https://placehold.co/1200x600.png" value={image} onChange={(e) => setImage(e.target.value)} disabled={isLoading} />
+            <Input id="image" placeholder="https://placehold.co/600x400.png" value={image} onChange={(e) => setImage(e.target.value)} disabled={isLoading} />
           </div>
-          <div className="space-y-2">
+           <div className="space-y-2">
             <Label htmlFor="hint">Image AI Hint</Label>
-            <Input id="hint" placeholder="e.g. 'website mockup' (max 2 words)" value={hint} onChange={(e) => setHint(e.target.value)} disabled={isLoading} />
+            <Input id="hint" placeholder="e.g. 'SaaS dashboard' (max 2 words)" value={hint} onChange={(e) => setHint(e.target.value)} disabled={isLoading} />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="tech">Technologies (comma-separated)</Label>
-            <Input id="tech" placeholder="e.g. Next.js, Firebase, Tailwind CSS" value={tech} onChange={(e) => setTech(e.target.value)} disabled={isLoading} required />
+            <Label htmlFor="tags">Tags (comma-separated)</Label>
+            <Input id="tags" placeholder="e.g. SaaS, AI, Developer Tool" value={tags} onChange={(e) => setTags(e.target.value)} disabled={isLoading} required />
           </div>
-
+          <div className="space-y-2">
+            <Label htmlFor="webLinks">Website Links (one per line, format: Title - URL)</Label>
+            <Textarea id="webLinks" placeholder="e.g. Live Site - https://example.com" value={webLinks} onChange={(e) => setWebLinks(e.target.value)} disabled={isLoading} rows={4} />
+          </div>
+          
           <div className="space-y-4 pt-4 border-t">
-             <h3 className="text-lg font-medium">Project Links</h3>
-             <div className="space-y-2">
-                <Label htmlFor="webLinks">Website Links (one per line, format: Title - URL)</Label>
-                <Textarea id="webLinks" placeholder="e.g. Live Site - https://example.com" value={webLinks} onChange={(e) => setWebLinks(e.target.value)} disabled={isLoading} rows={4} />
-              </div>
+             <h3 className="text-lg font-medium">Application Links</h3>
                <div className="space-y-2">
                 <Label htmlFor="androidLink">Google Play Link</Label>
                 <Input id="androidLink" placeholder="https://play.google.com/store/apps/details?id=..." value={androidLink} onChange={(e) => setAndroidLink(e.target.value)} disabled={isLoading} />
@@ -162,7 +163,7 @@ export default function NewProjectPage() {
                   {isLoading ? "Saving..." : <><Save className="mr-2 h-4 w-4" /> Save as Draft</>}
               </Button>
               <Button onClick={() => handleSave('published')} disabled={isLoading} size="lg">
-                  {isLoading ? "Publishing..." : <> <Send className="mr-2 h-4 w-4" /> Publish Project</>}
+                  {isLoading ? "Publishing..." : <> <Send className="mr-2 h-4 w-4" /> Publish Product</>}
               </Button>
           </div>
         </form>

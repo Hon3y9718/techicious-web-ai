@@ -15,10 +15,12 @@ import { doc, getDocs, updateDoc, serverTimestamp, collection, query, where } fr
 import { useToast } from "@/hooks/use-toast";
 import { Badge } from "@/components/ui/badge";
 import RTEditor from "@/components/ui/RTEdition";
+import { Textarea } from "@/components/ui/textarea";
 
 export default function EditPostPage() {
   const { theme } = useTheme();
   const [title, setTitle] = useState("");
+  const [summary, setSummary] = useState("");
   const [heroImage, setHeroImage] = useState("");
   const [content, setContent] = useState("");
   const [status, setStatus] = useState<'draft' | 'published' | null>(null);
@@ -51,6 +53,7 @@ export default function EditPostPage() {
             const postData = postDoc.data();
             setPostId(postDoc.id);
             setTitle(postData.title);
+            setSummary(postData.summary || "");
             setHeroImage(postData.heroImage || "");
             setContent(postData.content);
             setStatus(postData.status || 'draft');
@@ -83,6 +86,7 @@ export default function EditPostPage() {
         const postRef = doc(firestore, "blogs", postId);
         const updateData: any = {
             title,
+            summary,
             heroImage,
             content,
             status: newStatus,
@@ -166,6 +170,19 @@ export default function EditPostPage() {
               onChange={(e) => setHeroImage(e.target.value)}
               placeholder="https://example.com/your-image.png"
               className="h-12"
+              disabled={isLoading}
+            />
+          </div>
+           <div className="space-y-2">
+            <Label htmlFor="summary" className="text-lg font-semibold">
+              Summary
+            </Label>
+            <Textarea
+              id="summary"
+              value={summary}
+              onChange={(e) => setSummary(e.target.value)}
+              placeholder="A short summary for the blog card."
+              rows={3}
               disabled={isLoading}
             />
           </div>

@@ -35,19 +35,19 @@ const formatWebLinks = (links: { title: string; url: string }[]): string => {
     return links.map(link => `${link.title} - ${link.url}`).join("\n");
 };
 
-export default function EditProjectPage() {
+export default function EditProductPage() {
   const { user, loading: authLoading } = useAuth();
   const router = useRouter();
   const params = useParams();
   const { toast } = useToast();
-  const projectId = params.id as string;
+  const productId = params.id as string;
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
-  const [tech, setTech] = useState("");
-  const [hint, setHint] = useState("");
+  const [tags, setTags] = useState("");
   const [webLinks, setWebLinks] = useState("");
+  const [hint, setHint] = useState("");
   const [androidLink, setAndroidLink] = useState("");
   const [iosLink, setIosLink] = useState("");
   const [status, setStatus] = useState<'draft' | 'published' | null>(null);
@@ -61,58 +61,58 @@ export default function EditProjectPage() {
   }, [user, authLoading, router]);
 
   useEffect(() => {
-    if (!projectId) return;
+    if (!productId) return;
 
-    const fetchProject = async () => {
+    const fetchProduct = async () => {
       setIsFetching(true);
       try {
-        const projectDoc = await getDoc(doc(firestore, "portfolio", projectId));
-        if (projectDoc.exists()) {
-          const projectData = projectDoc.data();
-          setTitle(projectData.title);
-          setDescription(projectData.description);
-          setImage(projectData.image || "");
-          setTech(projectData.tech.join(", "));
-          setHint(projectData.hint || "");
-          setWebLinks(formatWebLinks(projectData.webLinks || []));
-          setAndroidLink(projectData.appLinks?.android || "");
-          setIosLink(projectData.appLinks?.ios || "");
-          setStatus(projectData.status || 'draft');
+        const productDoc = await getDoc(doc(firestore, "products", productId));
+        if (productDoc.exists()) {
+          const productData = productDoc.data();
+          setTitle(productData.title);
+          setDescription(productData.description);
+          setImage(productData.image || "");
+          setTags(productData.tags.join(", "));
+          setWebLinks(formatWebLinks(productData.webLinks || []));
+          setHint(productData.hint || "");
+          setAndroidLink(productData.appLinks?.android || "");
+          setIosLink(productData.appLinks?.ios || "");
+          setStatus(productData.status || 'draft');
         } else {
-          toast({ title: "Error", description: "Project not found.", variant: "destructive" });
-          router.push("/studio/projects");
+          toast({ title: "Error", description: "Product not found.", variant: "destructive" });
+          router.push("/studio/products");
         }
       } catch (error) {
-        console.error("Error fetching project:", error);
-        toast({ title: "Error", description: "Failed to fetch project details.", variant: "destructive" });
+        console.error("Error fetching product:", error);
+        toast({ title: "Error", description: "Failed to fetch product details.", variant: "destructive" });
       } finally {
         setIsFetching(false);
       }
     };
 
-    fetchProject();
-  }, [projectId, router, toast]);
+    fetchProduct();
+  }, [productId, router, toast]);
 
   const handleUpdate = async (newStatus: 'draft' | 'published') => {
     if (!user) {
       toast({ title: "Error", description: "You must be logged in.", variant: "destructive" });
       return;
     }
-    if (!title || !description || !tech) {
+    if (!title || !description || !tags) {
       toast({ title: "Error", description: "Please fill all required fields.", variant: "destructive" });
       return;
     }
 
     setIsLoading(true);
     try {
-      const projectRef = doc(firestore, "portfolio", projectId);
+      const productRef = doc(firestore, "products", productId);
       const updateData: any = {
         title,
         description,
         image,
-        tech: tech.split(',').map(t => t.trim()).filter(t => t),
-        hint,
+        tags: tags.split(',').map(t => t.trim()).filter(t => t),
         webLinks: parseWebLinks(webLinks),
+        hint,
         appLinks: {
             android: androidLink || null,
             ios: iosLink || null,
@@ -125,17 +125,17 @@ export default function EditProjectPage() {
         updateData.publishedAt = serverTimestamp();
       }
 
-      await updateDoc(projectRef, updateData);
+      await updateDoc(productRef, updateData);
       toast({
-        title: newStatus === 'published' ? "Project Published!" : "Draft Updated!",
-        description: `The project "${title}" has been successfully updated.`,
+        title: newStatus === 'published' ? "Product Published!" : "Draft Updated!",
+        description: `The product "${title}" has been successfully updated.`,
       });
-      router.push("/studio/projects");
+      router.push("/studio/products");
     } catch (error) {
-      console.error("Error updating project:", error);
+      console.error("Error updating product:", error);
       toast({
         title: "Error",
-        description: "Failed to update project.",
+        description: "Failed to update product.",
         variant: "destructive",
       });
     } finally {
@@ -152,21 +152,21 @@ export default function EditProjectPage() {
       <div className="max-w-3xl mx-auto">
         <div className="mb-6">
             <Button variant="ghost" asChild className="mb-4">
-                <Link href="/studio/projects">
+                <Link href="/studio/products">
                     <ArrowLeft className="mr-2 h-4 w-4" />
-                    Back to Projects
+                    Back to Products
                 </Link>
             </Button>
           <div className="flex items-center gap-4">
-            <h2 className="text-3xl font-bold tracking-tight">Edit Project</h2>
+            <h2 className="text-3xl font-bold tracking-tight">Edit Product</h2>
             {status && <Badge variant={status === 'published' ? 'default' : 'secondary'}>{status}</Badge>}
           </div>
-          <p className="text-muted-foreground">Update the details for your portfolio piece.</p>
+          <p className="text-muted-foreground">Update the details for your product.</p>
         </div>
 
         <form onSubmit={(e) => e.preventDefault()} className="space-y-6">
-          <div className="space-y-2">
-            <Label htmlFor="title">Project Title</Label>
+           <div className="space-y-2">
+            <Label htmlFor="title">Product Title</Label>
             <Input id="title" value={title} onChange={(e) => setTitle(e.target.value)} disabled={isLoading} required />
           </div>
           <div className="space-y-2">
@@ -175,23 +175,23 @@ export default function EditProjectPage() {
           </div>
           <div className="space-y-2">
             <Label htmlFor="image">Image URL</Label>
-            <Input id="image" placeholder="https://placehold.co/1200x600.png" value={image} onChange={(e) => setImage(e.target.value)} disabled={isLoading} />
+            <Input id="image" placeholder="https://placehold.co/600x400.png" value={image} onChange={(e) => setImage(e.target.value)} disabled={isLoading} />
           </div>
-          <div className="space-y-2">
+           <div className="space-y-2">
             <Label htmlFor="hint">Image AI Hint</Label>
-            <Input id="hint" placeholder="e.g. 'website mockup' (max 2 words)" value={hint} onChange={(e) => setHint(e.target.value)} disabled={isLoading} />
+            <Input id="hint" placeholder="e.g. 'SaaS dashboard' (max 2 words)" value={hint} onChange={(e) => setHint(e.target.value)} disabled={isLoading} />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="tech">Technologies (comma-separated)</Label>
-            <Input id="tech" placeholder="e.g. Next.js, Firebase, Tailwind CSS" value={tech} onChange={(e) => setTech(e.target.value)} disabled={isLoading} required />
+            <Label htmlFor="tags">Tags (comma-separated)</Label>
+            <Input id="tags" placeholder="e.g. SaaS, AI, Developer Tool" value={tags} onChange={(e) => setTags(e.target.value)} disabled={isLoading} required />
+          </div>
+           <div className="space-y-2">
+            <Label htmlFor="webLinks">Website Links (one per line, format: Title - URL)</Label>
+            <Textarea id="webLinks" placeholder="e.g. Live Site - https://example.com" value={webLinks} onChange={(e) => setWebLinks(e.target.value)} disabled={isLoading} rows={4} />
           </div>
 
           <div className="space-y-4 pt-4 border-t">
-             <h3 className="text-lg font-medium">Project Links</h3>
-             <div className="space-y-2">
-                <Label htmlFor="webLinks">Website Links (one per line, format: Title - URL)</Label>
-                <Textarea id="webLinks" placeholder="e.g. Live Site - https://example.com" value={webLinks} onChange={(e) => setWebLinks(e.target.value)} disabled={isLoading} rows={4} />
-              </div>
+             <h3 className="text-lg font-medium">Application Links</h3>
                <div className="space-y-2">
                 <Label htmlFor="androidLink">Google Play Link</Label>
                 <Input id="androidLink" placeholder="https://play.google.com/store/apps/details?id=..." value={androidLink} onChange={(e) => setAndroidLink(e.target.value)} disabled={isLoading} />
@@ -214,7 +214,7 @@ export default function EditProjectPage() {
                 </>
             ) : (
                  <Button onClick={() => handleUpdate('published')} disabled={isLoading} size="lg" className="w-full">
-                    {isLoading ? "Saving..." : <> <Send className="mr-2 h-4 w-4" /> Update Project</>}
+                    {isLoading ? "Saving..." : <> <Send className="mr-2 h-4 w-4" /> Update Product</>}
                 </Button>
             )}
         </div>

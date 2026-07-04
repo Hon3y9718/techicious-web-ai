@@ -13,6 +13,7 @@ import { useAuth } from "@/context/auth-context";
 
 const navLinks = [
   { href: "/about", label: "About" },
+  { href: "/products", label: "Products" },
   { href: "/blog", label: "Resources" },
   { href: "/portfolio", label: "Portfolio" },
   { href: "/careers", label: "Careers" },
@@ -101,7 +102,7 @@ export default function Header() {
             <div className="flex items-center gap-2">
                <Link href="/studio/dashboard" className={cn(
                   "text-sm font-medium transition-colors hover:text-primary",
-                  pathname === "/studio/dashboard" ? "text-primary" : "text-muted-foreground"
+                  pathname.startsWith("/studio") ? "text-primary" : "text-muted-foreground"
               )}>
                 Dashboard
               </Link>
