@@ -14,7 +14,14 @@
       "Bash(curl -s http://localhost:3000)",
       "Bash(pkill -f \"next dev\")",
       "Bash(xargs -r kill)",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(npx vercel *)",
+      "Bash(vercel env *)",
+      "Bash(vercel --prod --yes)",
+      "Bash(curl -s https://techicious.com)",
+      "Bash(git check-ignore *)",
+      "Bash(git push *)"
     ]
   }
 }

@@ -16,6 +16,7 @@ export const metadata: Metadata = {
 };
 
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
+const APOLLO_APP_ID = process.env.NEXT_PUBLIC_APOLLO_APP_ID;
 
 export default function RootLayout({
   children,
@@ -36,6 +37,14 @@ export default function RootLayout({
             j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
             })(window,document,'script','dataLayer','${GTM_ID}');`}
+          </Script>
+        )}
+        {APOLLO_APP_ID && (
+          <Script id="apollo-tracker" strategy="afterInteractive">
+            {`function initApollo(){var n=Math.random().toString(36).substring(7),o=document.createElement("script");
+            o.src="https://assets.apollo.io/micro/website-tracker/tracker.iife.js?nocache="+n,o.async=!0,o.defer=!0,
+            o.onload=function(){window.trackingFunctions.onLoad({appId:"${APOLLO_APP_ID}"})},
+            document.head.appendChild(o)}initApollo();`}
           </Script>
         )}
       </head>
