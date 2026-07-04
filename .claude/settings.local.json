@@ -8,7 +8,13 @@
       "Bash(curl -s -o python.svg \"https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg\")",
       "Bash(npx tsc *)",
       "Bash(curl -s -o /Users/umeshkumar/Development/Techicious/TechiciousTools/techicious-web-ai/public/images/uploads/leadership.png https://opapi.techicious.store/media/uploads/leadership.png -w '%{http_code}')",
-      "Bash(curl -v --max-time 10 \"https://opapi.techicious.store/media/uploads/leadership.png\")"
+      "Bash(curl -v --max-time 10 \"https://opapi.techicious.store/media/uploads/leadership.png\")",
+      "Bash(lsof -ti:3000)",
+      "Bash(npm run *)",
+      "Bash(curl -s http://localhost:3000)",
+      "Bash(pkill -f \"next dev\")",
+      "Bash(xargs -r kill)",
+      "Bash(git add *)"
     ]
   }
 }

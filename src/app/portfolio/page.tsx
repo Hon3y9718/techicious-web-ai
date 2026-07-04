@@ -4,10 +4,15 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { SafeImage } from "@/components/ui/safe-image";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { firestore } from "@/lib/firebase";
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { sanitizeImageUrl } from "@/lib/utils";
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
+import { AppStoreButton } from "@/components/icons/app-store-button";
+import { GooglePlayButton } from "@/components/icons/google-play-button";
 
 type Project = {
   id: string;
@@ -95,18 +100,11 @@ export default function PortfolioPage() {
             <div className="grid gap-8 md:grid-cols-2">
               {projects.map((project) => (
                 <div key={project.id} className="group">
-<<<<<<< HEAD
                   <Card className="h-full overflow-hidden transition-shadow duration-300 hover:shadow-2xl">
                       <div className="overflow-hidden">
                           <SafeImage
                               src={sanitizeImageUrl(project.image, "/images/fallback/portfolio-project.svg")}
                               fallback="/images/fallback/portfolio-project.svg"
-=======
-                  <Card className="h-full overflow-hidden transition-shadow duration-300 hover:shadow-2xl flex flex-col">
-                      <div className="relative w-full h-64 bg-white p-[5px]">
-                          <Image
-                              src={project.image || "https://placehold.co/1200x600.png"}
->>>>>>> 38fb5a7895ac1307d803f5afc5e7318290fd1b4a
                               alt={project.title}
                               fill
                               className="object-contain transition-transform duration-500 group-hover:scale-105"
