@@ -1,8 +1,9 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import Image from "next/image";
+import { SafeImage } from "@/components/ui/safe-image";
 import Link from "next/link";
 import { ArrowRight, Calendar, User } from "lucide-react";
+import { sanitizeImageUrl } from "@/lib/utils";
 import { firestore } from "@/lib/firebase";
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 
@@ -52,8 +53,9 @@ export default async function BlogPage() {
             {blogPosts.map((post) => (
               <Link key={post.slug} href={`/blog/${post.slug}`} className="group">
                 <Card className="h-full overflow-hidden transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-2">
-                  <Image
-                    src={post.heroImage || "https://placehold.co/800x400.png"}
+                  <SafeImage
+                    src={sanitizeImageUrl(post.heroImage, "/images/fallback/blog-hero.svg")}
+                    fallback="/images/fallback/blog-hero.svg"
                     alt={post.title}
                     width={800}
                     height={400}

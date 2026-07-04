@@ -35,7 +35,7 @@ export const techiciousProducts = [
     slug: 'dev-utility-kit',
     title: 'Dev Utility Kit',
     description: 'A collection of essential tools for developers, including a code formatter, a JSON validator, and a JWT debugger.',
-    image: 'https://placehold.co/600x400.png',
+    image: '/images/products/dev-utility-kit.svg',
     hint: 'developer toolbox',
     tags: ['Developer Tool', 'Utility', 'Free'],
     link: '#'
@@ -44,7 +44,7 @@ export const techiciousProducts = [
     slug: 'ai-image-enhancer',
     title: 'AI Image Enhancer',
     description: 'Upscale and enhance your images with our powerful AI. Perfect for photographers, designers, and social media managers.',
-    image: 'https://placehold.co/600x400.png',
+    image: '/images/products/ai-image-enhancer.svg',
     hint: 'ai vision',
     tags: ['AI', 'SaaS', 'Freemium'],
     link: '#'
@@ -53,7 +53,7 @@ export const techiciousProducts = [
     slug: 'project-management-suite',
     title: 'Project Management Suite',
     description: 'An intuitive and collaborative project management tool designed for agile teams. Plan, track, and deliver projects with ease.',
-    image: 'https://placehold.co/600x400.png',
+    image: '/images/products/project-management-suite.svg',
     hint: 'team collaboration',
     tags: ['SaaS', 'Productivity', 'Collaboration'],
     link: '#'

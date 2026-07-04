@@ -2,11 +2,12 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import Image from "next/image";
+import { SafeImage } from "@/components/ui/safe-image";
 import { Badge } from "@/components/ui/badge";
 import { firestore } from "@/lib/firebase";
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import { sanitizeImageUrl } from "@/lib/utils";
 
 type Project = {
   id: string;
@@ -91,8 +92,9 @@ export default function PortfolioPage() {
                 <div key={project.id} className="group">
                   <Card className="h-full overflow-hidden transition-shadow duration-300 hover:shadow-2xl">
                       <div className="overflow-hidden">
-                          <Image
-                              src={project.image || "https://placehold.co/600x400.png"}
+                          <SafeImage
+                              src={sanitizeImageUrl(project.image, "/images/fallback/portfolio-project.svg")}
+                              fallback="/images/fallback/portfolio-project.svg"
                               alt={project.title}
                               width={600}
                               height={400}

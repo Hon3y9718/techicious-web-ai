@@ -1,13 +1,14 @@
 
 "use client";
 import { notFound } from "next/navigation";
-import Image from "next/image";
+import { SafeImage } from "@/components/ui/safe-image";
 import { Calendar, User } from "lucide-react";
 import { firestore } from "@/lib/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import { marked } from "marked";
+import { sanitizeImageUrl } from "@/lib/utils";
 
 
 async function getPost(slug: string) {
@@ -82,8 +83,9 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
                </div>
             </div>
           </div>
-          <Image
-            src={post.heroImage || "https://placehold.co/1200x600.png"}
+          <SafeImage
+            src={sanitizeImageUrl(post.heroImage, "/images/fallback/blog-hero.svg")}
+            fallback="/images/fallback/blog-hero.svg"
             alt={post.title}
             width={1200}
             height={600}
