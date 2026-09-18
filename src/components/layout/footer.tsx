@@ -37,6 +37,7 @@ export default function Footer() {
                 <li><Link href="/about" className="text-muted-foreground hover:text-primary">About Us</Link></li>
                 <li><Link href="/blog" className="text-muted-foreground hover:text-primary">Blog</Link></li>
                 <li><Link href="/careers" className="text-muted-foreground hover:text-primary">Careers</Link></li>
+                <li><Link href="https://education.techicious.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary">Techicious Education</Link></li>
               </ul>
             </div>
             <div>
