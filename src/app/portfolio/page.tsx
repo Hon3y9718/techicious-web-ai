@@ -2,7 +2,7 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { SafeImage } from "@/components/ui/safe-image";
+import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { firestore } from "@/lib/firebase";
@@ -27,6 +27,25 @@ type Project = {
       ios?: string;
   }
 };
+
+function ProjectThumbnail({ src, alt, hint }: { src: string | null; alt: string; hint: string }) {
+  const [errored, setErrored] = useState(false);
+
+  if (!src || errored) return null;
+
+  return (
+    <div className="relative h-64 overflow-hidden bg-muted">
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        className="object-contain transition-transform duration-500 group-hover:scale-105"
+        data-ai-hint={hint}
+        onError={() => setErrored(true)}
+      />
+    </div>
+  );
+}
 
 async function getPortfolioProjects() {
     const projectsCollection = collection(firestore, 'portfolio');
@@ -101,16 +120,11 @@ export default function PortfolioPage() {
               {projects.map((project) => (
                 <div key={project.id} className="group">
                   <Card className="h-full overflow-hidden transition-shadow duration-300 hover:shadow-2xl">
-                      <div className="overflow-hidden">
-                          <SafeImage
-                              src={sanitizeImageUrl(project.image, "/images/fallback/portfolio-project.svg")}
-                              fallback="/images/fallback/portfolio-project.svg"
-                              alt={project.title}
-                              fill
-                              className="object-contain transition-transform duration-500 group-hover:scale-105"
-                              data-ai-hint={project.hint}
-                          />
-                      </div>
+                      <ProjectThumbnail
+                          src={sanitizeImageUrl(project.image)}
+                          alt={project.title}
+                          hint={project.hint}
+                      />
                     <CardHeader>
                       <CardTitle className="font-headline text-2xl">{project.title}</CardTitle>
                     </CardHeader>

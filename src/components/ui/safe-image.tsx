@@ -4,17 +4,16 @@ import Image, { ImageProps } from "next/image";
 import { useState } from "react";
 
 interface SafeImageProps extends Omit<ImageProps, "onError"> {
-  fallback?: string;
+  fallback?: string | null;
 }
 
 export function SafeImage({ src, fallback = "/images/fallback/blog-hero.svg", ...props }: SafeImageProps) {
-  const [imgSrc, setImgSrc] = useState(src);
+  const [errored, setErrored] = useState(false);
 
-  return (
-    <Image
-      {...props}
-      src={imgSrc}
-      onError={() => setImgSrc(fallback)}
-    />
-  );
+  if (errored) {
+    if (!fallback) return null;
+    return <Image {...props} src={fallback} />;
+  }
+
+  return <Image {...props} src={src} onError={() => setErrored(true)} />;
 }

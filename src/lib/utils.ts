@@ -7,7 +7,9 @@ export function cn(...inputs: ClassValue[]) {
 
 const DEAD_HOSTS = ['opapi.techicious.store'];
 
-export function sanitizeImageUrl(url: string | null | undefined, fallback: string): string {
+export function sanitizeImageUrl(url: string | null | undefined, fallback: string): string;
+export function sanitizeImageUrl(url: string | null | undefined): string | null;
+export function sanitizeImageUrl(url: string | null | undefined, fallback: string | null = null): string | null {
   if (!url) return fallback;
   try {
     const { hostname } = new URL(url);
